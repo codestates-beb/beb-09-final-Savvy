@@ -1,11 +1,23 @@
 require('dotenv').config();
-const express = require("express");
+const express = require('express');
 const app = express();
-const routes = require("./routes");
+const routes = require('./routes');
+const cookieParser = require('cookie-parser');
 const { swaggerUi, specs } = require('./swagger/swagger');
+const cors = require('cors');
 
+app.use(
+  cors({
+    origin: ['http://localhost:3000'],
+    credentials: true,
+    methods: ['GET', 'POST', 'OPTIONS', 'PUT', 'DELETE'],
+  })
+);
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use("/",routes);
+app.use(cookieParser());
+
+app.use('/', routes);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 const PORT = process.env.PORT || 8080;
@@ -14,7 +26,7 @@ const mongoose = require('mongoose');
 // const userInfo = require('./config/userinfo.json');
 
 mongoose
-  .connect('mongodb+srv://cluster0.ymfbwvv.mongodb.net/', {
+  .connect(process.env.MONGODB_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     user: process.env.MONGODB_USERNAME,
@@ -24,7 +36,5 @@ mongoose
   .catch((err) => console.error('MongoDB에 연결할 수 없습니다.', err));
 
 module.exports = app.listen(PORT, () => {
-
-    console.log(`Server is running on port ${PORT}.`);
-
+  console.log(`Server is running on port ${PORT}.`);
 });
