@@ -1,6 +1,0 @@
-{
-  "dependencies": {
-    "@web3auth/modal": "^6.1.4",
-    "ethers": "^6.6.4"
-  }
-}
