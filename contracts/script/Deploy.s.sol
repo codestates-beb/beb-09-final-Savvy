@@ -7,7 +7,7 @@ import {NFTLootBox} from "../src/NFTLootBox.sol";
 contract DeployScript is Script {
     function setUp() public {}
 
-    function run() public {
+    function run() external returns (NFTLootBox) {
         uint256 deployerPrivatekey = vm.envUint("PRIVATE_KEY");
 
         vm.startBroadcast(deployerPrivatekey);
@@ -16,5 +16,7 @@ contract DeployScript is Script {
         NFTLootBox nftLootBox = new NFTLootBox();
 
         vm.stopBroadcast();
+
+        return nftLootBox;
     }
 }
