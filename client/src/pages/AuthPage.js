@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { Web3Auth } from "@web3auth/modal";
-import Login from "../components/Login.js";
-import Signup from "../components/Signup.js";
-import ethersRPC from "../ethersRPC.js";
-import { getPublicCompressed } from "@toruslabs/eccrypto";
+import React, { useEffect, useState } from 'react';
+import { Web3Auth } from '@web3auth/modal';
+import Login from '../components/Login.js';
+import Signup from '../components/Signup.js';
+import ethersRPC from '../ethersRPC.js';
+import { getPublicCompressed } from '@toruslabs/eccrypto';
 
 // api
-import { postLogin } from "../api/post-login.js";
+import { postLogin } from '../api/post-login.js';
 
 export default function AuthPage() {
   const [isLogin, setIsLogin] = useState(false);
@@ -15,8 +15,8 @@ export default function AuthPage() {
   const web3Auth = new Web3Auth({
     clientId: `${process.env.REACT_APP_WEB3_CLIENT_ID}`,
     chainConfig: {
-      chainNamespace: "eip155",
-      chainId: "0xAA36A7", // 0x1(mainet)
+      chainNamespace: 'eip155',
+      chainId: '0xAA36A7', // 0x1(mainet)
       rpcTarget: `https://rpc.ankr.com/eth_sepolia`, // https://rpc.ankr.com/eth(mainet)
     },
   });
@@ -37,13 +37,13 @@ export default function AuthPage() {
         const chainId = await rpc.getChainId();
         const userInfo = await web3Auth.getUserInfo();
         const { email, name, profileImage, idToken } = userInfo;
-        localStorage.setItem("token", idToken);
+        localStorage.setItem('token', idToken);
         const app_scoped_privkey = await web3Auth.provider?.request({
-          method: "eth_private_key", // use "private_key" for other non-evm chains
+          method: 'eth_private_key', // use "private_key" for other non-evm chains
         });
         const app_pub_key = getPublicCompressed(
-          Buffer.from(app_scoped_privkey.padStart(64, "0"), "hex")
-        ).toString("hex");
+          Buffer.from(app_scoped_privkey.padStart(64, '0'), 'hex')
+        ).toString('hex');
 
         const result = await postLogin(
           address,
@@ -68,13 +68,13 @@ export default function AuthPage() {
 
   const handleLogout = async () => {
     try {
-      localStorage.removeItem("token");
+      localStorage.removeItem('token');
       const result = await web3Auth.logout();
       setIsLogin(false);
       setProvider(result);
     } catch (error) {
       console.log(error);
-      console.log("web3auth not initialized yet");
+      console.log('web3auth not initialized yet');
       return;
     }
   };

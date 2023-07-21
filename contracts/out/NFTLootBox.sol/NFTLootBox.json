@@ -1141,7 +1141,7 @@
   },
   "ast": {
     "absolutePath": "src/NFTLootBox.sol",
-    "id": 41909,
+    "id": 41910,
     "exportedSymbols": {
       "Address": [
         40555
@@ -1177,7 +1177,7 @@
         41708
       ],
       "NFTLootBox": [
-        41908
+        41909
       ],
       "Ownable": [
         38953
@@ -1193,7 +1193,7 @@
     "src": "32:661:31",
     "nodes": [
       {
-        "id": 41856,
+        "id": 41857,
         "nodeType": "PragmaDirective",
         "src": "32:24:31",
         "nodes": [],
@@ -1205,51 +1205,51 @@
         ]
       },
       {
-        "id": 41857,
+        "id": 41858,
         "nodeType": "ImportDirective",
         "src": "58:57:31",
         "nodes": [],
         "absolutePath": "lib/openzeppelin-contracts/contracts/token/ERC721/ERC721.sol",
         "file": "@openzeppelin/contracts/token/ERC721/ERC721.sol",
         "nameLocation": "-1:-1:-1",
-        "scope": 41909,
+        "scope": 41910,
         "sourceUnit": 39909,
-        "symbolAliases": [],
-        "unitAlias": ""
-      },
-      {
-        "id": 41858,
-        "nodeType": "ImportDirective",
-        "src": "116:52:31",
-        "nodes": [],
-        "absolutePath": "lib/openzeppelin-contracts/contracts/access/Ownable.sol",
-        "file": "@openzeppelin/contracts/access/Ownable.sol",
-        "nameLocation": "-1:-1:-1",
-        "scope": 41909,
-        "sourceUnit": 38954,
         "symbolAliases": [],
         "unitAlias": ""
       },
       {
         "id": 41859,
         "nodeType": "ImportDirective",
+        "src": "116:52:31",
+        "nodes": [],
+        "absolutePath": "lib/openzeppelin-contracts/contracts/access/Ownable.sol",
+        "file": "@openzeppelin/contracts/access/Ownable.sol",
+        "nameLocation": "-1:-1:-1",
+        "scope": 41910,
+        "sourceUnit": 38954,
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "id": 41860,
+        "nodeType": "ImportDirective",
         "src": "169:78:31",
         "nodes": [],
         "absolutePath": "lib/openzeppelin-contracts/contracts/token/ERC721/extensions/ERC721URIStorage.sol",
         "file": "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol",
         "nameLocation": "-1:-1:-1",
-        "scope": 41909,
+        "scope": 41910,
         "sourceUnit": 40199,
         "symbolAliases": [],
         "unitAlias": ""
       },
       {
-        "id": 41908,
+        "id": 41909,
         "nodeType": "ContractDefinition",
         "src": "249:443:31",
         "nodes": [
           {
-            "id": 41865,
+            "id": 41866,
             "nodeType": "VariableDeclaration",
             "src": "304:25:31",
             "nodes": [],
@@ -1257,7 +1257,7 @@
             "mutability": "mutable",
             "name": "_tokenIds",
             "nameLocation": "320:9:31",
-            "scope": 41908,
+            "scope": 41909,
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
@@ -1265,7 +1265,7 @@
               "typeString": "uint256"
             },
             "typeName": {
-              "id": 41864,
+              "id": 41865,
               "name": "uint256",
               "nodeType": "ElementaryTypeName",
               "src": "304:7:31",
@@ -1277,12 +1277,12 @@
             "visibility": "private"
           },
           {
-            "id": 41873,
+            "id": 41874,
             "nodeType": "FunctionDefinition",
             "src": "336:43:31",
             "nodes": [],
             "body": {
-              "id": 41872,
+              "id": 41873,
               "nodeType": "Block",
               "src": "377:2:31",
               "nodes": [],
@@ -1295,7 +1295,7 @@
                 "arguments": [
                   {
                     "hexValue": "5361767679204e4654",
-                    "id": 41868,
+                    "id": 41869,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": true,
@@ -1311,7 +1311,7 @@
                   },
                   {
                     "hexValue": "534654",
-                    "id": 41869,
+                    "id": 41870,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": true,
@@ -1326,10 +1326,10 @@
                     "value": "SFT"
                   }
                 ],
-                "id": 41870,
+                "id": 41871,
                 "kind": "baseConstructorSpecifier",
                 "modifierName": {
-                  "id": 41867,
+                  "id": 41868,
                   "name": "ERC721",
                   "nameLocations": [
                     "350:6:31"
@@ -1345,46 +1345,46 @@
             "name": "",
             "nameLocation": "-1:-1:-1",
             "parameters": {
-              "id": 41866,
+              "id": 41867,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "347:2:31"
             },
             "returnParameters": {
-              "id": 41871,
+              "id": 41872,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "377:0:31"
             },
-            "scope": 41908,
+            "scope": 41909,
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "public"
           },
           {
-            "id": 41907,
+            "id": 41908,
             "nodeType": "FunctionDefinition",
             "src": "385:305:31",
             "nodes": [],
             "body": {
-              "id": 41906,
+              "id": 41907,
               "nodeType": "Block",
               "src": "502:188:31",
               "nodes": [],
               "statements": [
                 {
                   "expression": {
-                    "id": 41888,
+                    "id": 41889,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
-                      "id": 41884,
+                      "id": 41885,
                       "name": "_tokenIds",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 41865,
+                      "referencedDeclaration": 41866,
                       "src": "512:9:31",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
@@ -1398,17 +1398,17 @@
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
                       },
-                      "id": 41887,
+                      "id": 41888,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
                       "lValueRequested": false,
                       "leftExpression": {
-                        "id": 41885,
+                        "id": 41886,
                         "name": "_tokenIds",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 41865,
+                        "referencedDeclaration": 41866,
                         "src": "524:9:31",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint256",
@@ -1419,7 +1419,7 @@
                       "operator": "+",
                       "rightExpression": {
                         "hexValue": "31",
-                        "id": 41886,
+                        "id": 41887,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
@@ -1445,23 +1445,23 @@
                       "typeString": "uint256"
                     }
                   },
-                  "id": 41889,
+                  "id": 41890,
                   "nodeType": "ExpressionStatement",
                   "src": "512:25:31"
                 },
                 {
                   "assignments": [
-                    41891
+                    41892
                   ],
                   "declarations": [
                     {
                       "constant": false,
-                      "id": 41891,
+                      "id": 41892,
                       "mutability": "mutable",
                       "name": "newItemId",
                       "nameLocation": "555:9:31",
                       "nodeType": "VariableDeclaration",
-                      "scope": 41906,
+                      "scope": 41907,
                       "src": "547:17:31",
                       "stateVariable": false,
                       "storageLocation": "default",
@@ -1470,7 +1470,7 @@
                         "typeString": "uint256"
                       },
                       "typeName": {
-                        "id": 41890,
+                        "id": 41891,
                         "name": "uint256",
                         "nodeType": "ElementaryTypeName",
                         "src": "547:7:31",
@@ -1482,13 +1482,13 @@
                       "visibility": "internal"
                     }
                   ],
-                  "id": 41893,
+                  "id": 41894,
                   "initialValue": {
-                    "id": 41892,
+                    "id": 41893,
                     "name": "_tokenIds",
                     "nodeType": "Identifier",
                     "overloadedDeclarations": [],
-                    "referencedDeclaration": 41865,
+                    "referencedDeclaration": 41866,
                     "src": "567:9:31",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
@@ -1502,11 +1502,11 @@
                   "expression": {
                     "arguments": [
                       {
-                        "id": 41895,
+                        "id": 41896,
                         "name": "recipient",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 41875,
+                        "referencedDeclaration": 41876,
                         "src": "592:9:31",
                         "typeDescriptions": {
                           "typeIdentifier": "t_address",
@@ -1514,11 +1514,11 @@
                         }
                       },
                       {
-                        "id": 41896,
+                        "id": 41897,
                         "name": "newItemId",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 41891,
+                        "referencedDeclaration": 41892,
                         "src": "603:9:31",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint256",
@@ -1537,7 +1537,7 @@
                           "typeString": "uint256"
                         }
                       ],
-                      "id": 41894,
+                      "id": 41895,
                       "name": "_mint",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
@@ -1548,7 +1548,7 @@
                         "typeString": "function (address,uint256)"
                       }
                     },
-                    "id": 41897,
+                    "id": 41898,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -1564,7 +1564,7 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 41898,
+                  "id": 41899,
                   "nodeType": "ExpressionStatement",
                   "src": "586:27:31"
                 },
@@ -1572,11 +1572,11 @@
                   "expression": {
                     "arguments": [
                       {
-                        "id": 41900,
+                        "id": 41901,
                         "name": "newItemId",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 41891,
+                        "referencedDeclaration": 41892,
                         "src": "636:9:31",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint256",
@@ -1584,11 +1584,11 @@
                         }
                       },
                       {
-                        "id": 41901,
+                        "id": 41902,
                         "name": "tokenURI",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 41877,
+                        "referencedDeclaration": 41878,
                         "src": "647:8:31",
                         "typeDescriptions": {
                           "typeIdentifier": "t_string_memory_ptr",
@@ -1607,7 +1607,7 @@
                           "typeString": "string memory"
                         }
                       ],
-                      "id": 41899,
+                      "id": 41900,
                       "name": "_setTokenURI",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
@@ -1618,7 +1618,7 @@
                         "typeString": "function (uint256,string memory)"
                       }
                     },
-                    "id": 41902,
+                    "id": 41903,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -1634,25 +1634,25 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 41903,
+                  "id": 41904,
                   "nodeType": "ExpressionStatement",
                   "src": "623:33:31"
                 },
                 {
                   "expression": {
-                    "id": 41904,
+                    "id": 41905,
                     "name": "newItemId",
                     "nodeType": "Identifier",
                     "overloadedDeclarations": [],
-                    "referencedDeclaration": 41891,
+                    "referencedDeclaration": 41892,
                     "src": "674:9:31",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
                     }
                   },
-                  "functionReturnParameters": 41883,
-                  "id": 41905,
+                  "functionReturnParameters": 41884,
+                  "id": 41906,
                   "nodeType": "Return",
                   "src": "667:16:31"
                 }
@@ -1663,10 +1663,10 @@
             "kind": "function",
             "modifiers": [
               {
-                "id": 41880,
+                "id": 41881,
                 "kind": "modifierInvocation",
                 "modifierName": {
-                  "id": 41879,
+                  "id": 41880,
                   "name": "onlyOwner",
                   "nameLocations": [
                     "474:9:31"
@@ -1682,17 +1682,17 @@
             "name": "mintNFT",
             "nameLocation": "394:7:31",
             "parameters": {
-              "id": 41878,
+              "id": 41879,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 41875,
+                  "id": 41876,
                   "mutability": "mutable",
                   "name": "recipient",
                   "nameLocation": "419:9:31",
                   "nodeType": "VariableDeclaration",
-                  "scope": 41907,
+                  "scope": 41908,
                   "src": "411:17:31",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1701,7 +1701,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 41874,
+                    "id": 41875,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "411:7:31",
@@ -1715,12 +1715,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 41877,
+                  "id": 41878,
                   "mutability": "mutable",
                   "name": "tokenURI",
                   "nameLocation": "452:8:31",
                   "nodeType": "VariableDeclaration",
-                  "scope": 41907,
+                  "scope": 41908,
                   "src": "438:22:31",
                   "stateVariable": false,
                   "storageLocation": "memory",
@@ -1729,7 +1729,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 41876,
+                    "id": 41877,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "438:6:31",
@@ -1744,17 +1744,17 @@
               "src": "401:65:31"
             },
             "returnParameters": {
-              "id": 41883,
+              "id": 41884,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 41882,
+                  "id": 41883,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 41907,
+                  "scope": 41908,
                   "src": "493:7:31",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1763,7 +1763,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 41881,
+                    "id": 41882,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "493:7:31",
@@ -1777,7 +1777,7 @@
               ],
               "src": "492:9:31"
             },
-            "scope": 41908,
+            "scope": 41909,
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "public"
@@ -1787,7 +1787,7 @@
         "baseContracts": [
           {
             "baseName": {
-              "id": 41860,
+              "id": 41861,
               "name": "ERC721URIStorage",
               "nameLocations": [
                 "272:16:31"
@@ -1796,13 +1796,13 @@
               "referencedDeclaration": 40198,
               "src": "272:16:31"
             },
-            "id": 41861,
+            "id": 41862,
             "nodeType": "InheritanceSpecifier",
             "src": "272:16:31"
           },
           {
             "baseName": {
-              "id": 41862,
+              "id": 41863,
               "name": "Ownable",
               "nameLocations": [
                 "290:7:31"
@@ -1811,7 +1811,7 @@
               "referencedDeclaration": 38953,
               "src": "290:7:31"
             },
-            "id": 41863,
+            "id": 41864,
             "nodeType": "InheritanceSpecifier",
             "src": "290:7:31"
           }
@@ -1821,7 +1821,7 @@
         "contractKind": "contract",
         "fullyImplemented": true,
         "linearizedBaseContracts": [
-          41908,
+          41909,
           38953,
           40198,
           39908,
@@ -1834,7 +1834,7 @@
         ],
         "name": "NFTLootBox",
         "nameLocation": "258:10:31",
-        "scope": 41909,
+        "scope": 41910,
         "usedErrors": [],
         "usedEvents": [
           38854,
