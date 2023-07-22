@@ -1,5 +1,12 @@
 import React from "react";
+import MainHeader from "../components/MainHeader";
+import MainFooter from "../components/MainFooter";
 
 export default function HomePage() {
-  return <h1>Hello from Home Page</h1>;
+  return (
+    <div>
+      <MainHeader />
+      <MainFooter />
+    </div>
+  );
 }
