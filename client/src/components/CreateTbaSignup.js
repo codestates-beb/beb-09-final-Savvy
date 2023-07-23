@@ -5,11 +5,11 @@ import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Typography from "@mui/material/Typography";
-import WalletIcon from '@mui/icons-material/Wallet';
+import WalletIcon from "@mui/icons-material/Wallet";
 
 export default function Login() {
   const [address, setAddress] = useState("");
-  const [password, setPassword] = useState("");
+  const [nftId, setNftId] = useState("");
   const [checked, setChecked] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -41,7 +41,7 @@ export default function Login() {
     if (!emailRegex.test(address)) {
       setErrorMessage("유효한 NFT Collection address 형식이 아닙니다.");
       isValid = false;
-    } else if (password.length < 8) {
+    } else if (nftId.length == 0) {
       setErrorMessage("유효한 NFT ID가 아닙니다.");
       isValid = false;
     } else {
@@ -51,8 +51,8 @@ export default function Login() {
     return isValid;
   };
 
-  const handlePasswordChange = (event) => {
-    setPassword(event.target.value);
+  const handleNftIdChange = (event) => {
+    setNftId(event.target.value);
   };
 
   return (
@@ -89,103 +89,128 @@ export default function Login() {
           }}
         />
       </Box>
-      <Typography style={{ color: '#9a9ab5', fontFamily: 'Dongle', fontWeight: 'bold', fontSize: '15px', marginTop: '20px', marginBottom: '-10px' }}>
+      <Typography
+        style={{
+          color: "#9a9ab5",
+          fontFamily: "Dongle",
+          fontWeight: "bold",
+          fontSize: "15px",
+          marginTop: "20px",
+          marginBottom: "-10px",
+        }}
+      >
         NFT Collection address
       </Typography>
       <Box
-  sx={{
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 2,
-    width: "40%",
-    margin: "0 auto",
-  }}
->
-  <TextField
-      value={address}
-      onChange={(event) => setAddress(event.target.value)}
-    margin="normal"
-    required
-    sx={{
-      width: "100%",
-      "& .MuiOutlinedInput-root": {
-        backgroundColor: "rgba(255, 255, 255, 0.07)",
-        borderRadius: "12px",
-        boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.2)",
-        color: "#576ff6",
-      },
-      "& .MuiOutlinedInput-notchedOutline": {
-        boxShadow: "inset 0 3px 8px rgba(255, 255, 255, 0.25)",
-        borderRadius: "12px",
-        borderColor: "#576ff6", 
-      },
-    }}
-  />
-</Box>
-      <Typography style={{ color: '#9a9ab5', fontFamily: 'Dongle', fontWeight: 'bold', fontSize: '15px', marginTop: '20px', marginBottom: '-10px' }}>
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+          gap: 2,
+          width: "40%",
+          margin: "0 auto",
+        }}
+      >
+        <TextField
+          value={address}
+          onChange={(event) => setAddress(event.target.value)}
+          margin="normal"
+          required
+          sx={{
+            width: "100%",
+            "& .MuiOutlinedInput-root": {
+              backgroundColor: "rgba(255, 255, 255, 0.07)",
+              borderRadius: "12px",
+              boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.2)",
+              color: "#576ff6",
+            },
+            "& .MuiOutlinedInput-notchedOutline": {
+              boxShadow: "inset 0 3px 8px rgba(255, 255, 255, 0.25)",
+              borderRadius: "12px",
+              borderColor: "#576ff6",
+            },
+          }}
+        />
+      </Box>
+      <Typography
+        style={{
+          color: "#9a9ab5",
+          fontFamily: "Dongle",
+          fontWeight: "bold",
+          fontSize: "15px",
+          marginTop: "20px",
+          marginBottom: "-10px",
+        }}
+      >
         NFT ID
       </Typography>
       <Box
-  sx={{
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 2,
-    width: "40%",
-    margin: "0 auto",
-    borderRadius: "12px",  
-  }}
->
-  <TextField
-    value={password}
-    onChange={handlePasswordChange}
-    margin="normal"
-    required
-    sx={{
-      width: "100%",
-      "& .MuiOutlinedInput-root": {
-        backgroundColor: "rgba(255, 255, 255, 0.07)",
-        borderRadius: "12px",
-        boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.2)",
-        color: "#576ff6",
-      },
-      "& .MuiOutlinedInput-notchedOutline": {
-        boxShadow: "inset 0 3px 8px rgba(255, 255, 255, 0.25)", 
-        borderRadius: "12px",
-        borderColor: "#576ff6", 
-      },
-    }}
-  />
-</Box>
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+          gap: 2,
+          width: "40%",
+          margin: "0 auto",
+          borderRadius: "12px",
+        }}
+      >
+        <TextField
+          value={nftId}
+          onChange={handleNftIdChange}
+          margin="normal"
+          required
+          sx={{
+            width: "100%",
+            "& .MuiOutlinedInput-root": {
+              backgroundColor: "rgba(255, 255, 255, 0.07)",
+              borderRadius: "12px",
+              boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.2)",
+              color: "#576ff6",
+            },
+            "& .MuiOutlinedInput-notchedOutline": {
+              boxShadow: "inset 0 3px 8px rgba(255, 255, 255, 0.25)",
+              borderRadius: "12px",
+              borderColor: "#576ff6",
+            },
+          }}
+        />
+      </Box>
 
-<Box
-  sx={{
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 2,
-    width: "40%",
-    margin: "0 auto",
-    justifyContent: "flex-start",
-  }}
->
-  <Checkbox
-    checked={checked}
-    onChange={(event) => setChecked(event.target.checked)}
-    sx={{
-      "& .MuiSvgIcon-root": {
-        marginTop: "3px",
-        marginLeft: "-5px",
-        fontSize: "22px",
-        color: "#82829c",
-      },
-    }}
-  />
-  <span style={{ fontWeight: "600", color: "#82829c", fontSize: "13px", marginLeft: "-20px" }}>
-    Remember me
-  </span>
-</Box>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+          gap: 2,
+          width: "40%",
+          margin: "0 auto",
+          justifyContent: "flex-start",
+        }}
+      >
+        <Checkbox
+          checked={checked}
+          onChange={(event) => setChecked(event.target.checked)}
+          sx={{
+            "& .MuiSvgIcon-root": {
+              marginTop: "3px",
+              marginLeft: "-5px",
+              fontSize: "22px",
+              color: "#82829c",
+            },
+          }}
+        />
+        <span
+          style={{
+            fontWeight: "600",
+            color: "#82829c",
+            fontSize: "13px",
+            marginLeft: "-20px",
+          }}
+        >
+          Remember me
+        </span>
+      </Box>
 
       <Box
         sx={{
@@ -207,20 +232,23 @@ export default function Login() {
             height: 55,
             borderRadius: "12px",
             backgroundImage: "linear-gradient(to bottom, #6c61fe, #2a3da7)",
-            boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.4), 0px 4px 10px rgba(0, 0, 0, 0.1)",
+            boxShadow:
+              "0px 2px 5px rgba(0, 0, 0, 0.4), 0px 4px 10px rgba(0, 0, 0, 0.1)",
             transition: "all 0.3s ease-in-out",
-            "&:hover": { backgroundImage: "linear-gradient(to bottom, #554ae4, #1c2e92)" },
+            "&:hover": {
+              backgroundImage: "linear-gradient(to bottom, #554ae4, #1c2e92)",
+            },
             position: "sticky",
             top: "12vh",
             fontSize: "13px",
             fontWeight: "800",
-            fontFamily: 'Dongle',
+            fontFamily: "Dongle",
             color: "#e9ebf7",
             display: "flex",
-            alignItems: "center", 
+            alignItems: "center",
           }}
         >
-          <WalletIcon sx={{ marginRight: 1, marginTop: -0.2, }} /> Create Wallet
+          <WalletIcon sx={{ marginRight: 1, marginTop: -0.2 }} /> Create Wallet
         </Button>
       </Box>
 
@@ -238,8 +266,7 @@ export default function Login() {
           margin: "0 auto",
           marginTop: "2.5%",
         }}
-      >
-      </Box>
+      ></Box>
     </Box>
   );
 }

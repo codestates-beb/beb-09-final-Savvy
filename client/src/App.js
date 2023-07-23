@@ -15,7 +15,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/erc6551" element={<CreateTbaPage />} />
+        <Route path="/community" element={<CreateTbaPage />} />
         <Route path="/authentication" element={<AuthPage />} />
         <Route path="/main" element={<DashboardPage />} />
         <Route path="/tbalist" element={<TbaListPage />} />

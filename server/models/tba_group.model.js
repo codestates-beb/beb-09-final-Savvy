@@ -1,4 +1,4 @@
-var mongoose = require('mongoose');
+var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 
 var Tba_groupSchema = new Schema({
@@ -11,4 +11,4 @@ var Tba_groupSchema = new Schema({
   },
 });
 
-module.exports = mongoose.model('Tba_group', Tba_groupSchema);
+module.exports = mongoose.model("Tba_group", Tba_groupSchema);

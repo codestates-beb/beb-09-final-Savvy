@@ -1,4 +1,4 @@
-var mongoose = require('mongoose');
+var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 
 var TestSchema = new Schema(
@@ -7,7 +7,7 @@ var TestSchema = new Schema(
     content: String,
     date: { type: Date, default: Date.now },
   },
-  { versionKey: '_somethingElse' }
+  { versionKey: "_somethingElse" }
 );
 
-module.exports = mongoose.model('Test', TestSchema);
+module.exports = mongoose.model("Test", TestSchema);
