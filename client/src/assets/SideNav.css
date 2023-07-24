@@ -5,3 +5,14 @@
 #admin {
   bottom: 0;
 }
+
+#sidebar-footer {
+  margin: 0.5rem auto;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border: 0.2rem solid #e5e5e5;
+  border-radius: 0.5rem;
+  box-sizing: border-box;
+  width: 80%;
+}

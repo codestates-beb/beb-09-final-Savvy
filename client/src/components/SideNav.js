@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Sidebar, Menu, MenuItem, useProSidebar } from "react-pro-sidebar";
 import SidebarFooter from "./SidebarFooter";
@@ -15,10 +15,10 @@ import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import "../assets/SideNav.css";
 
 export default function SideNav() {
-  const { collapseSidebar } = useProSidebar();
+  const [collapsed, setCollapsed] = useState(false);
 
   return (
-    <Sidebar id="sideNav">
+    <Sidebar collapsed={collapsed} id="sideNav">
       <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
         <div icon={<MenuIcon />} style={{ textAlign: "center" }}>
           <h2>Savvy</h2>
@@ -27,7 +27,7 @@ export default function SideNav() {
           <Menu>
             <MenuItem
               onClick={() => {
-                collapseSidebar();
+                setCollapsed((prev) => !prev);
               }}
               icon={<SpaceDashboardIcon />}
               component={<Link to="/main" />}
@@ -36,7 +36,7 @@ export default function SideNav() {
             </MenuItem>
             <MenuItem
               onClick={() => {
-                collapseSidebar();
+                setCollapsed((prev) => !prev);
               }}
               icon={<SwitchAccountIcon />}
               component={<Link to="/tbalist" />}
@@ -45,7 +45,7 @@ export default function SideNav() {
             </MenuItem>
             <MenuItem
               onClick={() => {
-                collapseSidebar();
+                setCollapsed((prev) => !prev);
               }}
               icon={<LibraryBooksIcon />}
               component={<Link to="/contract" />}
@@ -54,7 +54,7 @@ export default function SideNav() {
             </MenuItem>
             <MenuItem
               onClick={() => {
-                collapseSidebar();
+                setCollapsed((prev) => !prev);
               }}
               icon={<CardGiftcardIcon />}
               component={<Link to="/airdrop" />}
@@ -63,7 +63,7 @@ export default function SideNav() {
             </MenuItem>
             <MenuItem
               onClick={() => {
-                collapseSidebar();
+                setCollapsed((prev) => !prev);
               }}
               icon={<ManageAccountsIcon />}
               component={<Link to="/manager" />}
@@ -72,7 +72,7 @@ export default function SideNav() {
             </MenuItem>
           </Menu>
         </div>
-        <SidebarFooter />
+        <SidebarFooter collapsed={collapsed} />
       </div>
     </Sidebar>
   );
