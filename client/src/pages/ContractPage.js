@@ -1,5 +1,16 @@
 import React from "react";
+import SideNav from "../components/SideNav";
+import ContractPageContent from "../components/ContractPageContent";
+
+// css
+import "../App.css";
+import "../assets/ContractPage.css";
 
 export default function ContractPage() {
-  return <h1>Hello from Contract Page</h1>;
+  return (
+    <div className="dashboard" style={{ height: "100vh" }}>
+      <SideNav />
+      <ContractPageContent />
+    </div>
+  );
 }
