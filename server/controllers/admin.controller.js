@@ -24,8 +24,10 @@ module.exports = {
 
         console.log(user);
         if (user) {
+          console.log('user exists');
           res.status(200).json({ message: 'Verification successful and user exists' });
         } else {
+          console.log('user does not exist');
           res
             .status(201)
             .json({ message: 'Verification successful. Welcome, new user!' });

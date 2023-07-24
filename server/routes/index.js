@@ -3,7 +3,7 @@ const router = express.Router();
 
 const test = require('./test.route');
 
-const user = require('./user.route');
+const admin = require('./admin.route');
 const information = require('./information.route');
 const createTba = require('./createTba.route');
 const dashboard = require('./dashboard.route');
@@ -15,7 +15,7 @@ const manager = require('./manager.route');
 //console.log("indexFile.js");
 //router.use("/test",test);
 
-router.use('/user', user);
+router.use('/admin', admin);
 router.use('/information', information);
 router.use('/createTba', createTba);
 router.use('/dashboard', dashboard);
