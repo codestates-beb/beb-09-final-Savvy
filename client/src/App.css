@@ -40,3 +40,7 @@
 body {
   background-color: black;
 }
+
+body.white-bg-page {
+  background-color: white;
+}
