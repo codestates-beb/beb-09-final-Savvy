@@ -6,3 +6,6 @@ body {
   height: 100vh;
   display: flex;
 }
+body.white-bg-page {
+  background-color: white;
+}
