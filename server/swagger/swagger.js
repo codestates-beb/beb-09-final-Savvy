@@ -2,6 +2,7 @@
 
 const swaggerUi = require('swagger-ui-express');
 const swaggerJSDoc = require('swagger-jsdoc');
+const swaggerAutogen = require('swagger-autogen')({ openapi: '3.0.0' });
 
 const options = {
   swaggerDefinition: {
@@ -22,5 +23,9 @@ const options = {
 };
 
 const specs = swaggerJSDoc(options);
+
+const outputFile = './swagger/swagger-output.json';
+const endpointsFiles = ['./app.js'];
+//swaggerAutogen(outputFile, endpointsFiles, specs);
 
 module.exports = { swaggerUi, specs };

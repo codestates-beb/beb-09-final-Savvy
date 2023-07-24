@@ -1,13 +1,19 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var AdminSchema = new Schema(
+const AdminSchema = new Schema(
   {
     address: String,
     ethBalance: String,
+    chainId: Number,
+    email: String,
+    name: String,
+    profileImage: String,
+    appPubKey: String,
     createdAt: { type: Date, default: Date.now },
   },
   { versionKey: '_somethingElse' }
 );
 
-module.exports = mongoose.model('Admin', AdminSchema);
+const Admin = mongoose.model('Admin', AdminSchema);
+module.exports = Admin;
