@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Sidebar, Menu, MenuItem, useProSidebar } from "react-pro-sidebar";
+import SidebarFooter from "./SidebarFooter";
 
 // icon
 import MenuIcon from "@mui/icons-material/Menu";
@@ -18,49 +19,61 @@ export default function SideNav() {
 
   return (
     <Sidebar id="sideNav">
-      <Menu
-        onClick={() => {
-          collapseSidebar();
-        }}
-      >
-        <MenuItem icon={<MenuIcon />} style={{ textAlign: "center" }}>
+      <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
+        <div icon={<MenuIcon />} style={{ textAlign: "center" }}>
           <h2>Savvy</h2>
-        </MenuItem>
-        <MenuItem icon={<SpaceDashboardIcon />} component={<Link to="/main" />}>
-          Dashboard
-        </MenuItem>
-        <MenuItem
-          icon={<SwitchAccountIcon />}
-          component={<Link to="/tbalist" />}
-        >
-          TBAs
-        </MenuItem>
-        <MenuItem
-          icon={<LibraryBooksIcon />}
-          component={<Link to="/contract" />}
-        >
-          Contracts
-        </MenuItem>
-        <MenuItem
-          icon={<CardGiftcardIcon />}
-          component={<Link to="/airdrop" />}
-        >
-          Airdrop
-        </MenuItem>
-        <MenuItem
-          icon={<ManageAccountsIcon />}
-          component={<Link to="/manager" />}
-        >
-          Manager
-        </MenuItem>
-        <MenuItem
-          id="admin"
-          icon={<MenuIcon />}
-          component={<Link to="/manager" />}
-        >
-          Admin
-        </MenuItem>
-      </Menu>
+        </div>
+        <div style={{ flex: "1" }}>
+          <Menu>
+            <MenuItem
+              onClick={() => {
+                collapseSidebar();
+              }}
+              icon={<SpaceDashboardIcon />}
+              component={<Link to="/main" />}
+            >
+              Dashboard
+            </MenuItem>
+            <MenuItem
+              onClick={() => {
+                collapseSidebar();
+              }}
+              icon={<SwitchAccountIcon />}
+              component={<Link to="/tbalist" />}
+            >
+              TBAs
+            </MenuItem>
+            <MenuItem
+              onClick={() => {
+                collapseSidebar();
+              }}
+              icon={<LibraryBooksIcon />}
+              component={<Link to="/contract" />}
+            >
+              Contracts
+            </MenuItem>
+            <MenuItem
+              onClick={() => {
+                collapseSidebar();
+              }}
+              icon={<CardGiftcardIcon />}
+              component={<Link to="/airdrop" />}
+            >
+              Airdrop
+            </MenuItem>
+            <MenuItem
+              onClick={() => {
+                collapseSidebar();
+              }}
+              icon={<ManageAccountsIcon />}
+              component={<Link to="/manager" />}
+            >
+              Manager
+            </MenuItem>
+          </Menu>
+        </div>
+        <SidebarFooter />
+      </div>
     </Sidebar>
   );
 }

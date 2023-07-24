@@ -1,5 +1,12 @@
 import React from "react";
+import SideNav from "../components/SideNav";
+import DashboardPageContent from "../components/DashboardPageContent";
 
 export default function DashboardPage() {
-  return <h1>Hello from Dashboard Page</h1>;
+  return (
+    <div className="dashboard" style={{ height: "100vh" }}>
+      <SideNav />
+      <DashboardPageContent />
+    </div>
+  );
 }

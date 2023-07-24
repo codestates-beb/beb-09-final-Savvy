@@ -4,7 +4,7 @@ import ContractPageContent from "../components/ContractPageContent";
 
 // css
 import "../App.css";
-import "../assets/ContractPage.css";
+import "../assets/Admin.css";
 
 export default function ContractPage() {
   return (
