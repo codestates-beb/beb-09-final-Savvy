@@ -6,12 +6,30 @@ import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Typography from "@mui/material/Typography";
 import WalletIcon from "@mui/icons-material/Wallet";
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
+} from "@mui/material";
+
+// api
+import { createTba, postTxHash } from "../api/post-createTba.js";
+
+const ETHERSCAN_SEPOLIA_NETWORK = "https://sepolia.etherscan.io/tx/";
 
 export default function Login() {
   const [address, setAddress] = useState("");
   const [nftId, setNftId] = useState("");
   const [checked, setChecked] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [open, setOpen] = useState(false);
+  const [createTbaResult, setCreateTbaResult] = useState("");
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -20,28 +38,29 @@ export default function Login() {
     }
 
     try {
-      const response = {
-        data: { msg: "로그인에 성공했습니다.", token: "dummyToken" },
-      };
-
-      if (response.data.msg === "지갑이 생성 되었습니다.") {
-        localStorage.setItem("accessToken", response.data.token);
-        alert("지갑 생성에 성공했습니다.");
+      const txHash = await createTba(address, nftId);
+      console.log(txHash);
+      setOpen(true);
+      setCreateTbaResult(txHash);
+      setAddress("");
+      setNftId("");
+      try {
+        const result = await postTxHash(txHash);
+      } catch (e) {
+        console.log(e);
       }
     } catch (error) {
-      console.error("Error during login:", error);
-      setErrorMessage("지갑 생성에 실패했습니다. 다시 시도해주세요.");
+      console.log(error);
     }
   };
 
   const validateForm = () => {
     let isValid = true;
 
-    const emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
-    if (!emailRegex.test(address)) {
+    if (address.length == 0) {
       setErrorMessage("유효한 NFT Collection address 형식이 아닙니다.");
       isValid = false;
-    } else if (nftId.length == 0) {
+    } else if (nftId.length === 0) {
       setErrorMessage("유효한 NFT ID가 아닙니다.");
       isValid = false;
     } else {
@@ -69,6 +88,33 @@ export default function Login() {
         marginTop: "11vh",
       }}
     >
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {`Check your transaction on Etherscan`}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            {createTbaResult && (
+              <a
+                href={`${ETHERSCAN_SEPOLIA_NETWORK}${createTbaResult}`}
+                target="_blank"
+              >
+                {createTbaResult}
+              </a>
+            )}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} autoFocus>
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
       <Box
         component="h2"
         sx={{

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
@@ -8,46 +8,45 @@ import Grid from "@mui/material/Grid";
 import detectEthereumProvider from "@metamask/detect-provider";
 
 const MainHeader = () => {
-  let provider = null;
+  const initialState = { accounts: [], chainId: "", ethBalance: "" };
+  const [wallet, setWallet] = useState(initialState);
 
-  detectEthereumProvider()
-    .then((res) => {
-      if (res) {
-        provider = res;
-      }
-    })
-    .then(() => {
-      if (provider) {
-        console.log("Ethereum successfully detected!");
-        startApp(provider);
+  // 새로고침 시, wallet 정보 다시 받아오는 useEffect
+  useEffect(() => {
+    const refreshAccounts = (accounts) => {
+      if (accounts.length > 0) {
+        setWallet({ accounts });
       } else {
-        console.log("Please install MetaMask!");
+        // if length 0, user is disconnected
+        setWallet(initialState);
       }
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+    };
 
-  const startApp = async (provider) => {
-    if (provider !== window.ethereum) {
-      console.error("Do you have multiple wallets installed?");
-    }
-    const accounts = await window.ethereum
-      .request({
-        method: "eth_requestAccounts",
-      })
-      .catch((err) => {
-        if (err.code === 4001) {
-          // EIP-1193 userRejectedRequest error
-          console.log("Please connect to MetaMask.");
-        } else {
-          console.error(err);
-        }
-      });
-    const account = accounts[0];
-    console.log(accounts);
-    console.log(account);
-  };
+    const refreshChain = (chainId) => {
+      console.log("chainId", chainId);
+      setWallet((wallet) => ({ ...wallet, chainId }));
+    };
+
+    const getProvider = async () => {
+      const provider = await detectEthereumProvider({ silent: true });
+
+      if (provider) {
+        const accounts = await window.ethereum.request({
+          method: "eth_accounts",
+        });
+        refreshAccounts(accounts);
+        window.ethereum.on("accountsChanged", refreshAccounts);
+        window.ethereum.on("chainChanged", refreshChain);
+      }
+    };
+
+    getProvider();
+
+    return () => {
+      window.ethereum?.removeListener("accountsChanged", refreshAccounts);
+      window.ethereum?.removeListener("chainChanged", refreshChain);
+    };
+  }, []);
 
   const handleLogoClick = () => {
     window.location.href = "http://localhost:3000";
@@ -62,8 +61,46 @@ const MainHeader = () => {
 
   const isCreateTBAActive = window.location.href.includes("community");
 
-  const handleConnectWallet = () => {
-    alert("Connect Wallet");
+  // Connect Wallet 버튼 클릭 시, MetaMask 연결
+  const handleConnectWallet = async () => {
+    const provider = await detectEthereumProvider();
+
+    const startApp = async (provider) => {
+      if (provider !== window.ethereum) {
+        console.error("Do you have multiple wallets installed?");
+      }
+
+      const accounts = await window.ethereum
+        .request({
+          method: "eth_requestAccounts",
+        })
+        .catch((err) => {
+          if (err.code === 4001) {
+            // EIP-1193 userRejectedRequest error
+            console.log("Please connect to MetaMask.");
+          } else {
+            console.error(err);
+          }
+        });
+      if (!accounts) {
+        return;
+      }
+      const chainId = await window.ethereum.request({
+        method: "eth_chainId",
+      });
+      const ethBalance = await window.ethereum.request({
+        method: "eth_getBalance",
+        params: [accounts[0], "latest"],
+      });
+      setWallet({ accounts, chainId, ethBalance });
+    };
+
+    if (provider) {
+      console.log("Ethereum successfully detected!");
+      startApp(provider);
+    } else {
+      console.log("Please install MetaMask!");
+    }
   };
 
   const connectWalletStyles = isCreateTBAActive
@@ -134,29 +171,7 @@ const MainHeader = () => {
         />
         <Grid container justifyContent="flex-end">
           <Grid item>
-            {isCreateTBAActive ? (
-              <Button
-                variant="contained"
-                color="primary"
-                size="small"
-                sx={{
-                  backgroundColor: "#000",
-                  color: "#576ff6",
-                  marginTop: "25px",
-                  fontFamily: "Dongle",
-                  fontWeight: "800",
-                  transition: "background-color 0.5s, color 0.5s",
-                  ...connectWalletStyles,
-                  "&:hover": {
-                    backgroundColor: "#576ff6",
-                    color: "#fff",
-                  },
-                }}
-                onClick={handleConnectWallet}
-              >
-                Connect Wallet
-              </Button>
-            ) : (
+            {!isCreateTBAActive ? (
               <Button
                 variant="contained"
                 color="primary"
@@ -178,26 +193,63 @@ const MainHeader = () => {
               >
                 Create TBA
               </Button>
+            ) : wallet.accounts.length > 0 ? (
+              <Button
+                variant="contained"
+                color="primary"
+                size="small"
+                sx={{
+                  backgroundColor: "#000",
+                  color: "#576ff6",
+                  marginTop: "25px",
+                  fontFamily: "Dongle",
+                  fontWeight: "800",
+                  transition: "background-color 0.5s, color 0.5s",
+                  ...connectWalletStyles,
+                  "&:hover": {
+                    backgroundColor: "#576ff6",
+                    color: "#fff",
+                  },
+                }}
+                onClick={handleConnectWallet}
+              >
+                {`${wallet.accounts[0].substring(0, 8)}...`}
+              </Button>
+            ) : (
+              <Button
+                variant="contained"
+                color="primary"
+                size="small"
+                sx={{
+                  backgroundColor: "#000",
+                  color: "#576ff6",
+                  marginTop: "25px",
+                  fontFamily: "Dongle",
+                  fontWeight: "800",
+                  transition: "background-color 0.5s, color 0.5s",
+                  ...connectWalletStyles,
+                  "&:hover": {
+                    backgroundColor: "#576ff6",
+                    color: "#fff",
+                  },
+                }}
+                onClick={handleConnectWallet}
+              >
+                Connect Wallet
+              </Button>
             )}
-
-            <Button
-              variant="contained"
-              color="primary"
-              size="small"
-              sx={loginButtonStyles}
-            >
-              Log in
-            </Button>
           </Grid>
           <Grid item>
-            <Button
-              variant="contained"
-              color="primary"
-              size="small"
-              sx={signUpButtonStyles}
-            >
-              Sign up
-            </Button>
+            <a href="http://localhost:3000/authentication">
+              <Button
+                variant="contained"
+                color="primary"
+                size="small"
+                sx={signUpButtonStyles}
+              >
+                Log in
+              </Button>
+            </a>
           </Grid>
         </Grid>
       </Toolbar>
