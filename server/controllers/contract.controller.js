@@ -1,13 +1,13 @@
 const Contract = require('../models/contract.model');
+const Community = require('../models/community.model');
 
 module.exports = {
   contract: async (req, res) => {
     const contractData = req.body;
-    console.log(contractData);
 
-    existContract = await Contract.findOne({ address: contractData.contractAddress });
+    existedContract = await Contract.findOne({ address: contractData.contractAddress });
     try {
-      if (existContract) {
+      if (existedContract) {
         console.log('Contract already exists');
         await Contract.updateOne(
           { address: contractData.contractAddress },
@@ -15,7 +15,6 @@ module.exports = {
             $set: {
               type: contractData.ercType,
               alias: contractData.contractName,
-              community_id: '',
             },
           }
         );
@@ -28,11 +27,16 @@ module.exports = {
         });
       } else {
         console.log('Contract does not exist');
+
+        const community = await Community.findOne({
+          address: contractData.contractAddress,
+        });
+
         const newContract = await Contract.create({
           address: contractData.contractAddress,
           type: contractData.ercType,
           alias: contractData.contractName,
-          community_id: '',
+          community_id: community._id,
         });
         res.status(200).json({
           message: 'created new contract data',

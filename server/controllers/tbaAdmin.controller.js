@@ -9,8 +9,8 @@ require('dotenv').config();
 const provider = new ethers.providers.JsonRpcProvider(process.env.INFURA_URL);
 
 module.exports = {
-  tbaAdmin: async (req, res) => {
-    const nftContract = req.body.nftContract;
+  getTbaByAddress: async (req, res) => {
+    const nftContract = req.params.nftContract;
 
     try {
       const ERC6551RegistryAddress = process.env.ERC6551REGISTRY;
@@ -29,33 +29,32 @@ module.exports = {
 
       const events = await contract.queryFilter(filter, fromBlock, toBlock);
 
-      events.forEach((event) => {
-        if (event.args.tokenContract == nftContract) {
-          TBAs.push(event.args.account);
+      await Promise.all(
+        events.map(async (event) => {
+          if (event.args.tokenContract == nftContract) {
+            TBAs.push(event.args.account);
 
-          Tba.findOne({ address: event.args.account })
-            .then((tba) => {
-              if (tba) {
-                console.log('TBA already exists');
-                Tba.updateOne(
-                  { address: event.args.account },
-                  { $set: { owner: '', level: '', community_id: '' } }
-                );
-              } else {
-                console.log('TBA does not exist');
-                Tba.create({
-                  address: event.args.account,
-                  owner: '',
-                  level: '',
-                  community_id: '',
-                });
-              }
-            })
-            .catch((err) => {
-              console.error(err);
-            });
-        }
-      });
+            const tba = await Tba.findOne({ address: event.args.account });
+            if (tba) {
+              console.log('TBA already exists');
+              Tba.updateOne(
+                { address: event.args.account },
+                { $set: { owner: '', level: '' } }
+              );
+            } else {
+              console.log('TBA does not exist');
+              const community = await Community.findOne({ address: nftContract });
+              console.log(community);
+              Tba.create({
+                address: event.args.account,
+                owner: '',
+                level: '',
+                community_id: community._id,
+              });
+            }
+          }
+        })
+      );
 
       if (TBAs.length == 0) {
         res.status(404).json({
@@ -75,4 +74,8 @@ module.exports = {
       });
     }
   },
+  getTbaDetail: async (req, res) => {
+		const tba = req.params.tba;
+		
+	},
 };
