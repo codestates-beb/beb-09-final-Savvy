@@ -1,0 +1,53 @@
+.content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.balance-category {
+  font-weight: 500;
+  text-align: center;
+  margin: 0.5rem;
+}
+
+.balance-ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.balance-ul > li {
+  padding: 0.5rem;
+  text-align: center;
+}
+
+.community-category {
+  font-weight: 500;
+  text-align: center;
+  margin: 0.5rem;
+}
+
+.community-ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.community-ul > li {
+  padding: 0.5rem;
+  text-align: center;
+}
+
+.nft-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  justify-items: center;
+  margin: 0.5rem;
+}
+
+.nft-list > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0.5rem;
+}
