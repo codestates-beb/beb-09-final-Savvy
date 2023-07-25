@@ -1,5 +1,12 @@
 import React from "react";
+import SideNav from "../components/SideNav";
+import ManagerPageContent from "../components/ManagerPageContent";
 
 export default function ManagerPage() {
-  return <h1>Hello from Manager Page</h1>;
+  return (
+    <div className="dashboard" style={{ height: "100vh" }}>
+      <SideNav />
+      <ManagerPageContent />
+    </div>
+  );
 }

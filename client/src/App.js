@@ -12,19 +12,21 @@ import ManagerPage from "./pages/ManagerPage";
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/community" element={<CreateTbaPage />} />
-        <Route path="/authentication" element={<AuthPage />} />
-        <Route path="/main" element={<DashboardPage />} />
-        <Route path="/tbalist" element={<TbaListPage />} />
-        <Route path="/contract" element={<ContractPage />} />
-        <Route path="/airdrop" element={<AirdropPage />} />
-        <Route path="/manager" element={<ManagerPage />} />
-        <Route path="*" element={<h1>Not Found</h1>} />
-      </Routes>
-    </Router>
+    <div id="App">
+      <Router>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/community" element={<CreateTbaPage />} />
+          <Route path="/authentication" element={<AuthPage />} />
+          <Route path="/main" element={<DashboardPage />} />
+          <Route path="/tbalist" element={<TbaListPage />} />
+          <Route path="/contract" element={<ContractPage />} />
+          <Route path="/airdrop" element={<AirdropPage />} />
+          <Route path="/manager" element={<ManagerPage />} />
+          <Route path="*" element={<h1>Not Found</h1>} />
+        </Routes>
+      </Router>
+    </div>
   );
 }
 
