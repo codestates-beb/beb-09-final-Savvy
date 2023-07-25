@@ -6,7 +6,6 @@ var ContractSchema = new Schema(
     address: String,
     type: String,
     alias: String,
-    createdAt: { type: Date, default: Date.now },
     community_id: {
       // community의 id
       // type: mongoose.Schema.Types.ObjectId,
