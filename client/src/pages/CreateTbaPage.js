@@ -8,10 +8,11 @@ import { styled } from "@mui/system";
 const Container = styled("div")({
   position: "relative",
   zIndex: 0,
+  backgroundColor: "black", 
 });
 
 const SignupContainer = styled("div")(({ theme }) => ({
-  position: "absolute",
+  position: "fixed",
   width: "100%", 
   height: "auto",
   marginLeft: "0%", 
