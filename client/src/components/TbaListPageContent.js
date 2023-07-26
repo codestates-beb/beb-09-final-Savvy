@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function ContractPageContent() {
+export default function TbaListPageContent() {
   const styles = {
     pageContent: {
       display: "flex",
@@ -12,7 +12,7 @@ export default function ContractPageContent() {
       fontWeight: "800",
       marginLeft: "40px",
       marginTop: "-15px",
-      userSelect: 'none',
+      userSelect: "none",
     },
   };
 
