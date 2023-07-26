@@ -49,6 +49,8 @@ const rows = [
 
 export default function ContractPageContent() {
   const [openEnroll, setOpenEnroll] = useState(false);
+  const [openUpdate, setOpenUpdate] = useState(false);
+  const [rowSelectionModel, setRowSelectionModel] = useState([]);
 
   const handleCloseEnroll = () => {
     setOpenEnroll(false);
@@ -58,19 +60,125 @@ export default function ContractPageContent() {
     setOpenEnroll(true);
   };
 
+  const handleEnroll = () => {
+    // TODO: enroll contract
+    setOpenEnroll(false);
+  };
+
+  const handleRowSelectionModelChange = (newRowSelectionModel) => {
+    setRowSelectionModel(newRowSelectionModel);
+    console.log(newRowSelectionModel);
+  };
+
+  const handleOpenUpdate = () => {
+    if (rowSelectionModel.length > 1) {
+      alert("Please select only one contract to update.");
+      return;
+    }
+    setOpenUpdate(true);
+  };
+
+  const handleUpdate = () => {
+    // TODO: update contract
+    setOpenUpdate(false);
+  };
+
+  const handleDelete = () => {
+    console.log("delete", rowSelectionModel);
+  };
+
   return (
     <div className="page-content">
       <h1>Contract</h1>
       <div style={{ display: "flex", justifyContent: "space-between" }}>
-        <div style={{ color: "lightslategray", marginTop: "-0.8rem" }}>
-          Manage your contracts
+        <div>
+          <div style={{ color: "lightslategray", marginTop: "-0.8rem" }}>
+            Manage your contracts
+          </div>
+          {rowSelectionModel.length > 0 ? (
+            <div>
+              <Button
+                onClick={handleDelete}
+                size="small"
+                color="secondary"
+                variant="contained"
+              >
+                Delete
+              </Button>
+              <Button
+                onClick={handleOpenUpdate}
+                size="small"
+                color="secondary"
+                variant="contained"
+              >
+                Update
+              </Button>
+            </div>
+          ) : null}
+
+          <Dialog open={openUpdate} onClose={() => setOpenUpdate(false)}>
+            <DialogTitle>Update Contract</DialogTitle>
+            <DialogContent>
+              <DialogContentText>
+                To airdrop items to community members, please enroll your
+                contract here. Then, you can send items at airdrop page.
+              </DialogContentText>
+              <TextField
+                autoFocus
+                margin="dense"
+                id="name"
+                label="Name"
+                type="text"
+                fullWidth
+                variant="standard"
+                placeholder="e.g. My NFT"
+              />
+              <TextField
+                margin="dense"
+                id="type"
+                label="Type"
+                select
+                fullWidth
+                variant="standard"
+                defaultValue={"ERC721"}
+              >
+                {["ERC20", "ERC721", "ERC1155"].map((option) => (
+                  <MenuItem key={option} value={option}>
+                    {option}
+                  </MenuItem>
+                ))}
+              </TextField>
+              <TextField
+                autoFocus
+                margin="dense"
+                id="address"
+                label="Address"
+                type="text"
+                fullWidth
+                variant="standard"
+                placeholder="e.g. 0x0xAdeb833eee668e50761B4BC8b3Ef476Dc2C869461234"
+              />
+            </DialogContent>
+            <DialogActions>
+              <Button color="secondary" onClick={() => setOpenUpdate(false)}>
+                Cancel
+              </Button>
+              <Button
+                color="secondary"
+                variatn="contained"
+                onClick={handleUpdate}
+              >
+                Enroll
+              </Button>
+            </DialogActions>
+          </Dialog>
         </div>
         <Button onClick={handleOpenEnroll} color="secondary">
           Enroll new contract
         </Button>
       </div>
       <Dialog open={openEnroll} onClose={handleCloseEnroll}>
-        <DialogTitle>Subscribe</DialogTitle>
+        <DialogTitle>Enroll new Contract</DialogTitle>
         <DialogContent>
           <DialogContentText>
             To airdrop items to community members, please enroll your contract
@@ -113,8 +221,12 @@ export default function ContractPageContent() {
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCloseEnroll}>Cancel</Button>
-          <Button onClick={handleCloseEnroll}>Subscribe</Button>
+          <Button color="secondary" onClick={handleCloseEnroll}>
+            Cancel
+          </Button>
+          <Button color="secondary" variatn="contained" onClick={handleEnroll}>
+            Enroll
+          </Button>
         </DialogActions>
       </Dialog>
       <div>
@@ -125,6 +237,10 @@ export default function ContractPageContent() {
             checkboxSelection
             disableRowSelectionOnClick
             slots={{ toolbar: GridToolbar }}
+            rowSelectionModel={rowSelectionModel}
+            onRowSelectionModelChange={(newRowSelectionModel) => {
+              handleRowSelectionModelChange(newRowSelectionModel);
+            }}
             sx={{
               "& .MuiDataGrid-root": {
                 border: "none",
