@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { Sidebar, Menu, MenuItem, useProSidebar } from "react-pro-sidebar";
+import { Link, useLocation } from "react-router-dom";
+import { Sidebar, Menu, MenuItem } from "react-pro-sidebar";
 import SidebarFooter from "./SidebarFooter";
 
 // icon
@@ -16,21 +16,97 @@ import "../assets/SideNav.css";
 
 export default function SideNav() {
   const [collapsed, setCollapsed] = useState(false);
+  const location = useLocation();
+
+  const preventImageActions = (event) => {
+    if (event.target.tagName === 'IMG') {
+      event.preventDefault();
+    }
+  };
+
+  const logopurpleStyle = {
+    width: "25px",
+    height: "auto",
+    marginTop: "27px",
+    marginBottom: "25px",
+  };
+
+  const logoblackStyle = {
+    width: "98px",
+    height: "auto",
+    marginTop: "25px",
+    marginBottom: "25px",
+  };
+
+  const activeStyle = {
+    color: "#576ff6",
+    background: "linear-gradient(to right, #e0e3f7, #fff)",
+    fontWeight: "800",
+    marginTop: "20px",
+    transform: "scale(1.03)", 
+    boxShadow: "0 2px 5px rgba(0, 0, 0, 0.15)", 
+    transition: "transform 0.3s ease, box-shadow 0.3s ease",
+    letterSpacing: '0.5px',
+  };
+
+  const inactiveStyle = {
+    color: "#757575",
+    fontWeight: "bold",
+    marginTop: "20px",
+    transition: "transform 0.3s ease, box-shadow 0.3s ease",
+  };
+
+  const iconStyles = {
+    marginTop: "-1.5px",
+  };
+
+  const lineStyle = {
+    borderBottom: "1px solid #a6a6a6",
+    marginBottom: "10px",
+    marginLeft: "20px",
+    marginRight: "20px",
+  };
+
+  const preventImageCopy = (event) => {
+    event.preventDefault();
+  };
 
   return (
-    <Sidebar collapsed={collapsed} id="sideNav">
+    <Sidebar collapsed={collapsed} id="sideNav" onContextMenu={preventImageActions} onDragStart={preventImageActions}>
       <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
-        <div icon={<MenuIcon />} style={{ textAlign: "center" }}>
-          <h2>Savvy</h2>
-        </div>
-        <div style={{ flex: "1" }}>
+        {collapsed ? ( 
+          <div style={{ textAlign: "center" }}>
+            <Link to="/">
+              <img
+                src="/logopurple.png"
+                alt="Logopurple"
+                style={logopurpleStyle}
+                onContextMenu={preventImageCopy}
+              />
+            </Link>
+          </div>
+        ) : ( 
+          <div icon={<MenuIcon />} style={{ textAlign: "center" }}>
+            <Link to="/">
+              <img
+                src="/logoblack.png"
+                alt="Logoblack"
+                style={logoblackStyle}
+                onContextMenu={preventImageCopy}
+              />
+            </Link>
+          </div>
+        )}
+        <div style={lineStyle} />
+        <div style={{ flex: "1", userSelect: 'none' }}>
           <Menu>
             <MenuItem
               onClick={() => {
                 setCollapsed((prev) => !prev);
               }}
-              icon={<SpaceDashboardIcon />}
+              icon={<SpaceDashboardIcon style={iconStyles} />}
               component={<Link to="/main" />}
+              style={location.pathname === "/main" ? activeStyle : inactiveStyle}
             >
               Dashboard
             </MenuItem>
@@ -38,8 +114,9 @@ export default function SideNav() {
               onClick={() => {
                 setCollapsed((prev) => !prev);
               }}
-              icon={<SwitchAccountIcon />}
+              icon={<SwitchAccountIcon style={iconStyles} />}
               component={<Link to="/tbalist" />}
+              style={location.pathname === "/tbalist" ? activeStyle : inactiveStyle}
             >
               TBAs
             </MenuItem>
@@ -47,8 +124,9 @@ export default function SideNav() {
               onClick={() => {
                 setCollapsed((prev) => !prev);
               }}
-              icon={<LibraryBooksIcon />}
+              icon={<LibraryBooksIcon style={iconStyles} />}
               component={<Link to="/contract" />}
+              style={location.pathname === "/contract" ? activeStyle : inactiveStyle}
             >
               Contracts
             </MenuItem>
@@ -56,8 +134,9 @@ export default function SideNav() {
               onClick={() => {
                 setCollapsed((prev) => !prev);
               }}
-              icon={<CardGiftcardIcon />}
+              icon={<CardGiftcardIcon style={iconStyles} />}
               component={<Link to="/airdrop" />}
+              style={location.pathname === "/airdrop" ? activeStyle : inactiveStyle}
             >
               Airdrop
             </MenuItem>
@@ -65,8 +144,9 @@ export default function SideNav() {
               onClick={() => {
                 setCollapsed((prev) => !prev);
               }}
-              icon={<ManageAccountsIcon />}
+              icon={<ManageAccountsIcon style={iconStyles} />}
               component={<Link to="/manager" />}
+              style={location.pathname === "/manager" ? activeStyle : inactiveStyle}
             >
               Manager
             </MenuItem>
