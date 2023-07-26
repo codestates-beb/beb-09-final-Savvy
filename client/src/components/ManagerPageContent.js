@@ -15,19 +15,21 @@ import {
 import "../assets/ManagerPageContent.css";
 
 const boxStyle1 = {
-  backgroundColor: "white",
+  backgroundColor: "#f8f8f8",
   borderRadius: "1rem",
   padding: "1rem",
   minWidth: "29rem",
   height: "13rem",
+  boxShadow: "0 0 3px rgba(0, 0, 0, 0.2)",
 };
 
 const boxStyle2 = {
-  backgroundColor: "white",
+  backgroundColor: "#f8f8f8",
   borderRadius: "1rem",
   padding: "1rem",
   minWidth: "29rem",
   height: "17rem",
+  boxShadow: "0 0 3px rgba(0, 0, 0, 0.2)",
 };
 
 const dummyData1 = {

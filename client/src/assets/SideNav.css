@@ -1,5 +1,6 @@
 #sideNav {
   height: 100vh;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
 }
 
 #admin {
