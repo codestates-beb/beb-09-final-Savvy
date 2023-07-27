@@ -90,14 +90,15 @@ const MainHeader = () => {
   };
 
   const connectWalletStyles = {
-    fontFamily: "Dongle",
+    fontFamily: "'tektur', sans-serif",
+    fontSize: "10px",
+    fontWeight: "800",
     marginLeft: "-135px",
     marginTop: "24px",
     border: "2px solid #576ff6",
     borderRadius: "20px",
     width: "129px",
     height: "40px",
-    fontSize: "12px",
   };
 
   const loginButtonStyles = {
@@ -106,7 +107,8 @@ const MainHeader = () => {
     marginTop: "23px",
     marginLeft: "8px",
     marginRight: "-1px",
-    fontFamily: "Dongle",
+    fontFamily: "'tektur', sans-serif",
+    fontSize: "10px",
     fontWeight: "800",
     borderRadius: "20px",
     width: "80px",
@@ -159,7 +161,6 @@ const MainHeader = () => {
                 color="primary"
                 size="small"
                 sx={{
-                  fontFamily: "Dongle",
                   marginLeft: "-244px",
                   border: "2px solid #576ff6",
                   borderRadius: "20px",
@@ -168,8 +169,8 @@ const MainHeader = () => {
                   backgroundColor: "#000",
                   color: "#fff",
                   marginTop: "24px",
-                  fontSize: "12px",
-                  fontFamily: "Dongle",
+                  fontSize: "10px",
+                  fontFamily: "'tektur', sans-serif",
                   fontWeight: "800",
                   transition: "background-color 0.5s, color 0.5s",
                   "&:hover": {
@@ -191,8 +192,9 @@ const MainHeader = () => {
                 backgroundColor: "#000",
                 color: "#fff",
                 marginTop: "24px",
-                fontFamily: "Dongle",
+                fontFamily: "'tektur', sans-serif",
                 fontWeight: "800",
+                fontSize: "10px",
                 transition: "background-color 0.5s, color 0.5s",
                 ...connectWalletStyles,
                 "&:hover": {

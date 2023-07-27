@@ -43,21 +43,26 @@ export default function SideNav() {
     background: "linear-gradient(to right, #e0e3f7, #fff)",
     fontWeight: "800",
     marginTop: "20px",
-    transform: "scale(1.03)",
-    boxShadow: "0 2px 5px rgba(0, 0, 0, 0.15)",
+    transform: "scale(1.03)", 
+    boxShadow: "0 2px 5px rgba(0, 0, 0, 0.15)", 
+    fontWeight: "800",
+    fontFamily: "'tektur', sans-serif",
     transition: "transform 0.3s ease, box-shadow 0.3s ease",
-    letterSpacing: "0.5px",
+    letterSpacing: "0.8px",
   };
 
   const inactiveStyle = {
     color: "#757575",
     fontWeight: "bold",
-    marginTop: "20px",
+    marginTop: "25px",
+    fontWeight: "800",
+    fontFamily: "'tektur', sans-serif",
     transition: "transform 0.3s ease, box-shadow 0.3s ease",
   };
 
   const iconStyles = {
-    marginTop: "-1.5px",
+    width: "22px",
+    marginTop: "-1px",
   };
 
   const lineStyle = {
@@ -79,7 +84,7 @@ export default function SideNav() {
       onDragStart={preventImageActions}
     >
       <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
-        {collapsed ? (
+        {collapsed ? ( 
           <div style={{ textAlign: "center" }}>
             <Link to="/main">
               <img
@@ -90,7 +95,7 @@ export default function SideNav() {
               />
             </Link>
           </div>
-        ) : (
+        ) : ( 
           <div icon={<MenuIcon />} style={{ textAlign: "center" }}>
             <Link to="/main">
               <img
