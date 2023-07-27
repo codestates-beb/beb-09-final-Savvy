@@ -57,7 +57,7 @@ export default function Login() {
   const validateForm = () => {
     let isValid = true;
 
-    if (address.length == 0) {
+    if (address.length === 0) {
       setErrorMessage("유효한 NFT Collection address 형식이 아닙니다.");
       isValid = false;
     } else if (nftId.length === 0) {
@@ -74,12 +74,17 @@ export default function Login() {
     setNftId(event.target.value);
   };
 
+  const caprasimoFont = {
+    fontFamily: "'Caprasimo', sans-serif",
+  };
+
   return (
     <Box
       component="form"
       onSubmit={handleSubmit}
       noValidate
       sx={{
+        ...caprasimoFont, 
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
@@ -118,9 +123,9 @@ export default function Login() {
       <Box
         component="h2"
         sx={{
+          ...caprasimoFont, 
           fontWeight: "bold",
           fontSize: "45px",
-          fontFamily: "Dongle",
           my: 2,
           position: "relative",
           marginLeft: "80px",
@@ -136,9 +141,9 @@ export default function Login() {
         />
       </Box>
       <Typography
-        style={{
+        sx={{
+          ...caprasimoFont, 
           color: "#9a9ab5",
-          fontFamily: "Dongle",
           fontWeight: "bold",
           fontSize: "15px",
           marginTop: "20px",
@@ -163,6 +168,7 @@ export default function Login() {
           margin="normal"
           required
           sx={{
+            ...caprasimoFont, 
             width: "100%",
             "& .MuiOutlinedInput-root": {
               backgroundColor: "rgba(255, 255, 255, 0.07)",
@@ -179,9 +185,9 @@ export default function Login() {
         />
       </Box>
       <Typography
-        style={{
+        sx={{
+          ...caprasimoFont, // 폰트 스타일 적용
           color: "#9a9ab5",
-          fontFamily: "Dongle",
           fontWeight: "bold",
           fontSize: "15px",
           marginTop: "20px",
@@ -207,6 +213,7 @@ export default function Login() {
           margin="normal"
           required
           sx={{
+            ...caprasimoFont,
             width: "100%",
             "& .MuiOutlinedInput-root": {
               backgroundColor: "rgba(255, 255, 255, 0.07)",
@@ -225,6 +232,7 @@ export default function Login() {
 
       <Box
         sx={{
+          ...caprasimoFont,
           display: "flex",
           flexDirection: "row",
           alignItems: "center",
@@ -238,6 +246,7 @@ export default function Login() {
           checked={checked}
           onChange={(event) => setChecked(event.target.checked)}
           sx={{
+            ...caprasimoFont, 
             "& .MuiSvgIcon-root": {
               marginTop: "3px",
               marginLeft: "-5px",
@@ -247,7 +256,8 @@ export default function Login() {
           }}
         />
         <span
-          style={{
+          sx={{
+            ...caprasimoFont, 
             fontWeight: "600",
             color: "#82829c",
             fontSize: "13px",
@@ -260,6 +270,7 @@ export default function Login() {
 
       <Box
         sx={{
+          ...caprasimoFont, 
           display: "flex",
           flexDirection: "row",
           alignItems: "center",
@@ -273,6 +284,7 @@ export default function Login() {
           type="submit"
           variant="contained"
           sx={{
+            ...caprasimoFont,
             mt: 2,
             width: "100%",
             height: 55,
@@ -288,7 +300,6 @@ export default function Login() {
             top: "12vh",
             fontSize: "13px",
             fontWeight: "800",
-            fontFamily: "Dongle",
             color: "#e9ebf7",
             display: "flex",
             alignItems: "center",
@@ -299,11 +310,12 @@ export default function Login() {
       </Box>
 
       {errorMessage && (
-        <span style={{ color: "red", marginTop: "1rem" }}>{errorMessage}</span>
+        <span sx={{ color: "red", marginTop: "1rem" }}>{errorMessage}</span>
       )}
 
       <Box
         sx={{
+          ...caprasimoFont, 
           display: "flex",
           flexDirection: "row",
           alignItems: "center",

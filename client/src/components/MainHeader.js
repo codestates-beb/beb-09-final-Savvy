@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
-
 import detectEthereumProvider from "@metamask/detect-provider";
 
 const MainHeader = () => {
@@ -48,19 +47,6 @@ const MainHeader = () => {
     };
   }, []);
 
-  const handleLogoClick = () => {
-    window.location.href = "http://localhost:3000";
-  };
-
-  const handleCreateTBAClick = () => {
-    if (window.location.href.includes("community")) {
-      return;
-    }
-    window.location.href = "http://localhost:3000/community";
-  };
-
-  const isCreateTBAActive = window.location.href.includes("community");
-
   // Connect Wallet 버튼 클릭 시, MetaMask 연결
   const handleConnectWallet = async () => {
     const provider = await detectEthereumProvider();
@@ -103,42 +89,23 @@ const MainHeader = () => {
     }
   };
 
-  const connectWalletStyles = isCreateTBAActive
-    ? {
-        fontFamily: "Dongle",
-        marginLeft: "-150px",
-        marginTop: "24px",
-        border: "2px solid #576ff6",
-        borderRadius: "20px",
-        width: "130px",
-        height: "40px",
-        fontSize: "12px",
-      }
-    : {};
-
-  const loginButtonStyles = {
-    backgroundColor: "#000",
-    color: "#fff",
-    marginTop: "24px",
-    marginLeft: "10px",
+  const connectWalletStyles = {
     fontFamily: "Dongle",
-    fontWeight: "800",
+    marginLeft: "-135px",
+    marginTop: "24px",
+    border: "2px solid #576ff6",
     borderRadius: "20px",
-    width: "80px",
+    width: "129px",
     height: "40px",
-    transition: "background-color 0.5s, color 0.5s",
-    "&:hover": {
-      backgroundColor: "#000",
-      color: "#b4b4b4",
-    },
+    fontSize: "12px",
   };
 
-  const signUpButtonStyles = {
+  const loginButtonStyles = {
     backgroundColor: "#fff",
     color: "#000",
     marginTop: "23px",
     marginLeft: "8px",
-    marginRight: "16px",
+    marginRight: "-1px",
     fontFamily: "Dongle",
     fontWeight: "800",
     borderRadius: "20px",
@@ -151,105 +118,106 @@ const MainHeader = () => {
     },
   };
 
+  const location = useLocation();
+
+  const getAppBarPosition = () => {
+    if (location.pathname === "/") {
+      return "fixed"; 
+    } else {
+      return "relative"; 
+    }
+  };
+
   return (
     <AppBar
-      position="static"
-      sx={{ backgroundColor: "#000", boxShadow: "none", height: "85px" }}
+      position={getAppBarPosition()}
+      sx={{
+        backgroundColor: "rgba(0, 0, 0, 0.15)",
+        boxShadow: "none",
+        height: "85px",
+      }}
     >
       <Toolbar>
-        <img
-          src={process.env.PUBLIC_URL + "/logo.png"}
-          alt="Logo"
-          style={{
-            width: "110px",
-            height: "auto",
-            marginTop: "18px",
-            marginLeft: "25px",
-            cursor: "pointer",
-          }}
-          onClick={handleLogoClick}
-        />
+        <Link to="/">
+          <img
+            src={process.env.PUBLIC_URL + "/logo.png"}
+            alt="Logo"
+            style={{
+              width: "110px",
+              height: "auto",
+              marginTop: "18px",
+              marginLeft: "10px",
+              cursor: "pointer",
+            }}
+          />
+        </Link>
         <Grid container justifyContent="flex-end">
           <Grid item>
-            {!isCreateTBAActive ? (
+            <Link to="/community">
               <Button
                 variant="contained"
                 color="primary"
                 size="small"
                 sx={{
+                  fontFamily: "Dongle",
+                  marginLeft: "-244px",
+                  border: "2px solid #576ff6",
+                  borderRadius: "20px",
+                  width: "95px",
+                  height: "40px",
                   backgroundColor: "#000",
                   color: "#fff",
-                  marginTop: "25px",
+                  marginTop: "24px",
+                  fontSize: "12px",
                   fontFamily: "Dongle",
                   fontWeight: "800",
                   transition: "background-color 0.5s, color 0.5s",
-                  ...connectWalletStyles,
                   "&:hover": {
                     backgroundColor: "#000",
-                    color: "#fff",
+                    color: "#576ff6",
                   },
                 }}
-                onClick={handleCreateTBAClick}
               >
                 Create TBA
               </Button>
-            ) : wallet.accounts.length > 0 ? (
-              <Button
-                variant="contained"
-                color="primary"
-                size="small"
-                sx={{
-                  backgroundColor: "#000",
-                  color: "#576ff6",
-                  marginTop: "25px",
-                  fontFamily: "Dongle",
-                  fontWeight: "800",
-                  transition: "background-color 0.5s, color 0.5s",
-                  ...connectWalletStyles,
-                  "&:hover": {
-                    backgroundColor: "#576ff6",
-                    color: "#fff",
-                  },
-                }}
-                onClick={handleConnectWallet}
-              >
-                {`${wallet.accounts[0].substring(0, 8)}...`}
-              </Button>
-            ) : (
-              <Button
-                variant="contained"
-                color="primary"
-                size="small"
-                sx={{
-                  backgroundColor: "#000",
-                  color: "#576ff6",
-                  marginTop: "25px",
-                  fontFamily: "Dongle",
-                  fontWeight: "800",
-                  transition: "background-color 0.5s, color 0.5s",
-                  ...connectWalletStyles,
-                  "&:hover": {
-                    backgroundColor: "#576ff6",
-                    color: "#fff",
-                  },
-                }}
-                onClick={handleConnectWallet}
-              >
-                Connect Wallet
-              </Button>
-            )}
+            </Link>
           </Grid>
           <Grid item>
-            <a href="http://localhost:3000/authentication">
+            <Button
+              variant="contained"
+              color="primary"
+              size="small"
+              sx={{
+                backgroundColor: "#000",
+                color: "#fff",
+                marginTop: "24px",
+                fontFamily: "Dongle",
+                fontWeight: "800",
+                transition: "background-color 0.5s, color 0.5s",
+                ...connectWalletStyles,
+                "&:hover": {
+                  backgroundColor: "#000",
+                  color: "#576ff6",
+                },
+              }}
+              onClick={handleConnectWallet}
+            >
+              {wallet.accounts.length > 0
+                ? `${wallet.accounts[0].substring(0, 8)}...`
+                : "Connect Wallet"}
+            </Button>
+          </Grid>
+          <Grid item>
+            <Link to="/authentication">
               <Button
                 variant="contained"
                 color="primary"
                 size="small"
-                sx={signUpButtonStyles}
+                sx={loginButtonStyles}
               >
                 Log in
               </Button>
-            </a>
+            </Link>
           </Grid>
         </Grid>
       </Toolbar>

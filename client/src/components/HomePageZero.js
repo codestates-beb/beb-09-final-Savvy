@@ -7,7 +7,7 @@ const HomePageZero = () => {
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY;
-      const maxFontSize = 60; // You can adjust the maximum font size here
+      const maxFontSize = 100; // You can adjust the maximum font size here
       const fontSizeIncrement = 0.1; // You can adjust the increment rate here
 
       // Calculate the new font size based on the scroll position

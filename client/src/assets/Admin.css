@@ -5,5 +5,6 @@ body {
 }
 
 .page-content {
-  margin-left: 2rem;
+  margin: 2rem;
+  width: 100%;
 }

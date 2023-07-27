@@ -14,7 +14,9 @@ module.exports = {
       const jwks = jose.createRemoteJWKSet(new URL('https://api.openlogin.com/jwks'));
 
       // Verify the JWT using Web3Auth's JWKS
-      const jwtDecoded = await jose.jwtVerify(idToken, jwks, { algorithms: ['ES256'] });
+      const jwtDecoded = await jose.jwtVerify(idToken, jwks, {
+        algorithms: ['ES256'],
+      });
 
       // Checking `app_pub_key` against the decoded JWT wallet's public_key
       if (jwtDecoded.payload.wallets[0].public_key === adminData.appPubKey) {

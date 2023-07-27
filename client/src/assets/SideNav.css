@@ -1,5 +1,6 @@
 #sideNav {
   height: 100vh;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 #admin {
@@ -14,5 +15,6 @@
   border: 0.2rem solid #e5e5e5;
   border-radius: 0.5rem;
   box-sizing: border-box;
-  width: 80%;
+  width: 85%;
+  padding: 0.5rem;
 }
