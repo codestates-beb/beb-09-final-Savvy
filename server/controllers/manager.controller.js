@@ -88,7 +88,7 @@ module.exports = {
             );
 
             const tokenURI = await nftContract.tokenURI(token.tokenId);
-            console.log(tokenURI);
+            //console.log(tokenURI);
 
             const newTba = await Tba.create({
               address: event.args.account,
@@ -136,7 +136,7 @@ module.exports = {
       const community = await Community.findOne({ _id: communityData.id });
       if (community) {
         await Community.findOneAndUpdate(
-          { address: communityData.address },
+          { _id: communityData.id },
           {
             $set: {
               address: communityData.address,
