@@ -40,8 +40,6 @@ const erc6551RegistryContract = new ethers.Contract(
     provider
 );
 
-// 원하는 NFT 컨트랙트 주소 배열 (미리 지정한 배열 -> 지금은 임시로 배포해놓은 nftContractAddress값이 들어가있지만 DB에서 받아와야함.)
-// const nftContractAddresses = ["0xFe5FE303b9d0D03E72A8859ad77CA7c0b6353DF9"];
 
 const eventFilter = erc6551RegistryContract.filters.AccountCreated();
 
