@@ -1,18 +1,19 @@
 import React from "react";
+import "../assets/Admin.css";
 
 export default function TbaListPageContent() {
   const styles = {
     pageContent: {
       display: "flex",
       justifyContent: "center",
-      alignItems: "center",
       height: "10vh",
       color: "#576ff6",
-      fontSize: "36px",
-      fontWeight: "800",
+      fontSize: "38px",
+      fontWeight: "bold",
       marginLeft: "40px",
-      marginTop: "-15px",
+      marginTop: "20px",
       userSelect: "none",
+      fontFamily: "'tektur', sans-serif",
     },
   };
 

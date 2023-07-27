@@ -75,7 +75,7 @@ export default function Login() {
   };
 
   const caprasimoFont = {
-    fontFamily: "'Caprasimo', sans-serif",
+    fontFamily: "'tektur', sans-serif",
   };
 
   return (
@@ -186,7 +186,7 @@ export default function Login() {
       </Box>
       <Typography
         sx={{
-          ...caprasimoFont, // 폰트 스타일 적용
+          ...caprasimoFont, 
           color: "#9a9ab5",
           fontWeight: "bold",
           fontSize: "15px",
@@ -260,7 +260,7 @@ export default function Login() {
             ...caprasimoFont, 
             fontWeight: "600",
             color: "#82829c",
-            fontSize: "13px",
+            fontSize: "13 px",
             marginLeft: "-20px",
           }}
         >
@@ -300,6 +300,7 @@ export default function Login() {
             top: "12vh",
             fontSize: "13px",
             fontWeight: "800",
+            fontFamily: "'tektur', sans-serif",
             color: "#e9ebf7",
             display: "flex",
             alignItems: "center",

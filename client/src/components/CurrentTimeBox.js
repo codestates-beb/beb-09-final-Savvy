@@ -54,11 +54,12 @@ function CurrentTimeBox() {
     >
       <Typography
         style={{
-          color: '#414141',
-          fontWeight: '800',
-          fontSize: '14px',
+          color: '#6a6a6a',
+          fontSize: '21px',
           fontFamily: 'dongle',
+          fontWeight: '800',
           marginLeft: '7px',
+          marginTop: '-3px',
         }}
       >
         {formatDate(currentDate)}
