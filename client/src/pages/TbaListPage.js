@@ -1,6 +1,6 @@
 import React from "react";
-import TbaListPageContent from "../components/TbaListPageContent";
 import SideNav from "../components/SideNav";
+import TbaListPageContent from "../components/TbaListPageContent";
 import CurrentTimeBox from "../components/CurrentTimeBox";
 import TbaListParent from "../components/TbaListParent";
 

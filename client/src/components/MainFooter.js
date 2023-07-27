@@ -9,7 +9,7 @@ const MainFooter = () => {
     textAlign: 'center',
     fontFamily: 'Dongle',
     color: '#fff',
-    marginTop: '-4px',
+    marginTop: '-6px',
   };
 
   const logoStyle = {
@@ -20,11 +20,11 @@ const MainFooter = () => {
 
   const titleStyle = {
     color: '#fff',
-    fontWeight: '800',
+    fontWeight: '600',
     fontSize: '16px',
     marginTop: '5px',
     marginLeft: '-10px',
-    fontFamily: 'Dongle',
+    fontFamily: "'tektur', sans-serif",
   };
 
   const linkStyle = {
@@ -43,8 +43,8 @@ const MainFooter = () => {
     sx: {
       backgroundColor: '#000',
       marginLeft: '5px',
-      fontFamily: 'Dongle',
-      fontWeight: '800',
+      fontFamily: "'tektur', sans-serif",
+      fontWeight: '600',
       transition: 'background-color 0.3s, color 0.3s',
       '&:hover': {
         backgroundColor: '#000',
