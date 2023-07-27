@@ -5,6 +5,8 @@ var TbaSchema = new Schema({
   address: String,
   owner: String,
   level: String,
+  ethBalance: String,
+  tokenURI:String,
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
   community_id: {
