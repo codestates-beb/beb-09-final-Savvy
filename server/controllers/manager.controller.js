@@ -87,7 +87,12 @@ module.exports = {
               provider
             );
 
-            const tokenURI = await nftContract.tokenURI(token.tokenId);
+            let tokenURI = null;
+            try {
+              const tokenURI = await nftContract.tokenURI(token.tokenId);
+            } catch (error) {
+              console.log('Error occurred while getting tokenURI');
+            }
             //console.log(tokenURI);
 
             const newTba = await Tba.create({
