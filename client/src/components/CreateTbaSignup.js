@@ -56,8 +56,9 @@ export default function Login() {
 
   const validateForm = () => {
     let isValid = true;
+    const addressRegex = /^0x[a-fA-F0-9]{40}$/;
 
-    if (address.length === 0) {
+    if (!addressRegex.test(address)) {
       setErrorMessage("유효한 NFT Collection address 형식이 아닙니다.");
       isValid = false;
     } else if (nftId.length === 0) {
@@ -84,7 +85,7 @@ export default function Login() {
       onSubmit={handleSubmit}
       noValidate
       sx={{
-        ...caprasimoFont, 
+        ...caprasimoFont,
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
@@ -96,11 +97,15 @@ export default function Login() {
       <Dialog
         open={open}
         onClose={handleClose}
+        fullWidth
+        maxWidth="md"
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title">
-          {`Check your transaction on Etherscan`}
+          {createTbaResult
+            ? `Check your transaction on Etherscan`
+            : `Failed to create TBA`}
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
@@ -115,7 +120,7 @@ export default function Login() {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} autoFocus>
+          <Button onClick={handleClose} sx={{ color: "#5270ff" }} autoFocus>
             Close
           </Button>
         </DialogActions>
@@ -123,7 +128,7 @@ export default function Login() {
       <Box
         component="h2"
         sx={{
-          ...caprasimoFont, 
+          ...caprasimoFont,
           fontWeight: "bold",
           fontSize: "45px",
           my: 2,
@@ -142,7 +147,7 @@ export default function Login() {
       </Box>
       <Typography
         sx={{
-          ...caprasimoFont, 
+          ...caprasimoFont,
           color: "#9a9ab5",
           fontWeight: "bold",
           fontSize: "15px",
@@ -168,7 +173,7 @@ export default function Login() {
           margin="normal"
           required
           sx={{
-            ...caprasimoFont, 
+            ...caprasimoFont,
             width: "100%",
             "& .MuiOutlinedInput-root": {
               backgroundColor: "rgba(255, 255, 255, 0.07)",
@@ -230,7 +235,7 @@ export default function Login() {
         />
       </Box>
 
-      <Box
+      {/* <Box
         sx={{
           ...caprasimoFont,
           display: "flex",
@@ -266,17 +271,17 @@ export default function Login() {
         >
           Remember me
         </span>
-      </Box>
+      </Box> */}
 
       <Box
         sx={{
-          ...caprasimoFont, 
+          ...caprasimoFont,
           display: "flex",
           flexDirection: "row",
           alignItems: "center",
           gap: 2,
           width: "40%",
-          margin: "0 auto",
+          margin: "2rem auto 0",
           justifyContent: "center",
         }}
       >
@@ -305,17 +310,14 @@ export default function Login() {
             alignItems: "center",
           }}
         >
-          <WalletIcon sx={{ marginRight: 1, marginTop: -0.2 }} /> Create Wallet
+          <WalletIcon sx={{ marginRight: 1, marginTop: -0.2 }} /> Create NFT
+          Wallet
         </Button>
       </Box>
 
-      {errorMessage && (
-        <span sx={{ color: "red", marginTop: "1rem" }}>{errorMessage}</span>
-      )}
-
       <Box
         sx={{
-          ...caprasimoFont, 
+          ...caprasimoFont,
           display: "flex",
           flexDirection: "row",
           alignItems: "center",
@@ -324,7 +326,13 @@ export default function Login() {
           margin: "0 auto",
           marginTop: "2.5%",
         }}
-      ></Box>
+      >
+        {errorMessage && (
+          <span style={{ color: "red", marginTop: "1rem", zIndex: "1" }}>
+            {errorMessage}
+          </span>
+        )}
+      </Box>
     </Box>
   );
 }

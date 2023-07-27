@@ -1,10 +1,10 @@
-const ethers = require('ethers');
-const axios = require('axios');
+const ethers = require("ethers");
+const axios = require("axios");
 
-const erc6551RegistryAbi = require('../abi/ERC6551Registry.json');
-const accountAbi = require('../abi/Account.json');
+const erc6551RegistryAbi = require("../abi/ERC6551Registry.json");
+const accountAbi = require("../abi/Account.json");
 
-require('dotenv').config();
+require("dotenv").config();
 
 const provider = new ethers.providers.JsonRpcProvider(process.env.INFURA_URL);
 
@@ -14,22 +14,22 @@ module.exports = {
       const txHash = req.body.txHash;
 
       //const tx = await provider.getTransaction(txHash);
-      const receipt = await provider.getTransactionReceipt(txHash);
-      //console.log(receipt);
+      const receipt = await provider.waitForTransaction(txHash);
+      console.log(receipt);
 
       if (receipt.status == 1) {
         res.status(200).json({
-          message: 'Successfully created TBA',
+          message: "Successfully created TBA",
         });
       } else {
         res.status(400).json({
-          message: 'Failed to create TBA',
+          message: "Failed to create TBA",
         });
       }
     } catch (error) {
       console.log(error);
       res.status(500).json({
-        error: 'Internal Server Error',
+        error: "Internal Server Error",
       });
     }
   },
