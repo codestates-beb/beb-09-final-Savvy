@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import "../assets/Admin.css";
 import {
   Box,
@@ -12,39 +13,13 @@ import {
   MenuItem,
 } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import { CONTRACTS } from "../assets/DUMMY_DATA";
 
 const columns = [
   { field: "id", headerName: "ID", width: 90 },
   { field: "name", headerName: "Name", width: 150 },
   { field: "type", headerName: "Type", width: 150 },
   { field: "address", headerName: "Address", width: 300 },
-];
-
-const rows = [
-  {
-    id: 1,
-    name: "SWT",
-    type: "ERC721",
-    address: "0x0xAdeb833eee668e50761B4BC8b3Ef476Dc2C869461234",
-  },
-  {
-    id: 2,
-    name: "WETH",
-    type: "ERC20",
-    address: "0x236eed76F276A473E96239CEfd42A353A437a0e9",
-  },
-  {
-    id: 3,
-    name: "USDS",
-    type: "ERC20",
-    address: "0x7E42E87B7376dbCA5e9d5E60F3b8125810E8345b",
-  },
-  {
-    id: 4,
-    name: "SAT",
-    type: "ERC1155",
-    address: "0x9d2a6078fA5085F8E9B4C11026cE62C1180a477B",
-  },
 ];
 
 export default function ContractPageContent() {
@@ -93,23 +68,21 @@ export default function ContractPageContent() {
       <div style={{ display: "flex", justifyContent: "space-between" }}>
         <div>
           <div style={{ color: "lightslategray", marginTop: "-0.8rem" }}>
-            Manage your contracts
+            Manage your CONTRACTS
           </div>
           {rowSelectionModel.length > 0 ? (
             <div>
               <Button
                 onClick={handleDelete}
                 size="small"
-                color="secondary"
-                variant="contained"
+                sx={{ color: "#5270ff" }}
               >
                 Delete
               </Button>
               <Button
                 onClick={handleOpenUpdate}
                 size="small"
-                color="secondary"
-                variant="contained"
+                sx={{ color: "#5270ff" }}
               >
                 Update
               </Button>
@@ -120,8 +93,12 @@ export default function ContractPageContent() {
             <DialogTitle>Update Contract</DialogTitle>
             <DialogContent>
               <DialogContentText>
-                To airdrop items to community members, please enroll your
-                contract here. Then, you can send items at airdrop page.
+                To airdrop items to community members, please{" "}
+                <b>enroll your contract</b> here. Then, you can send items at{" "}
+                <Link to="/airdrop" style={{ textDecoration: "none" }}>
+                  <b>airdrop page</b>
+                </Link>
+                .
               </DialogContentText>
               <TextField
                 autoFocus
@@ -160,12 +137,14 @@ export default function ContractPageContent() {
               />
             </DialogContent>
             <DialogActions>
-              <Button color="secondary" onClick={() => setOpenUpdate(false)}>
+              <Button
+                sx={{ color: "#5270ff" }}
+                onClick={() => setOpenUpdate(false)}
+              >
                 Cancel
               </Button>
               <Button
-                color="secondary"
-                variatn="contained"
+                sx={{ bgcolor: "#5270ff", color: "#ffffff" }}
                 onClick={handleUpdate}
               >
                 Enroll
@@ -173,7 +152,7 @@ export default function ContractPageContent() {
             </DialogActions>
           </Dialog>
         </div>
-        <Button onClick={handleOpenEnroll} color="secondary">
+        <Button onClick={handleOpenEnroll} sx={{ color: "#5270ff" }}>
           Enroll new contract
         </Button>
       </div>
@@ -181,8 +160,12 @@ export default function ContractPageContent() {
         <DialogTitle>Enroll new Contract</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            To airdrop items to community members, please enroll your contract
-            here. Then, you can send items at airdrop page.
+            To airdrop items to community members, please{" "}
+            <b>enroll your contract</b> here. Then, you can send items at{" "}
+            <Link to="/airdrop" style={{ textDecoration: "none" }}>
+              <b>airdrop page</b>
+            </Link>
+            .
           </DialogContentText>
           <TextField
             autoFocus
@@ -221,19 +204,28 @@ export default function ContractPageContent() {
           />
         </DialogContent>
         <DialogActions>
-          <Button color="secondary" onClick={handleCloseEnroll}>
+          <Button sx={{ color: "#5270ff" }} onClick={handleCloseEnroll}>
             Cancel
           </Button>
-          <Button color="secondary" variatn="contained" onClick={handleEnroll}>
+          <Button
+            sx={{ bgcolor: "#5270ff", color: "#ffffff" }}
+            onClick={handleEnroll}
+          >
             Enroll
           </Button>
         </DialogActions>
       </Dialog>
       <div>
-        <Box sx={{ height: "78vh", width: "100%" }}>
+        <Box
+          sx={{
+            height: "78vh",
+            width: "100%",
+            boxShadow: "0 2px 4px rgba(0, 0, 0, 0.2)",
+          }}
+        >
           <DataGrid
             columns={columns}
-            rows={rows}
+            rows={CONTRACTS}
             checkboxSelection
             disableRowSelectionOnClick
             slots={{ toolbar: GridToolbar }}
@@ -252,21 +244,21 @@ export default function ContractPageContent() {
                 color: "grey",
               },
               "& .MuiDataGrid-columnHeaders": {
-                backgroundColor: "#F1DBF1",
+                backgroundColor: "#5270ff",
                 borderBottom: "none",
               },
               "& .MuiDataGrid-virtualScroller": {
-                backgroundColor: "#f8f8f8",
+                backgroundColor: "#748af436",
               },
               "& .MuiDataGrid-footerContainer": {
                 borderTop: "none",
-                backgroundColor: "#F1DBF1",
+                backgroundColor: "#5270ff",
               },
               "& .MuiCheckbox-root": {
-                color: `grey !important`,
+                // color: `grey !important`,
               },
               "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
-                color: `grey !important`,
+                color: `#5270ff !important`,
               },
             }}
           />

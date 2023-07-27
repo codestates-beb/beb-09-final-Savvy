@@ -10,12 +10,12 @@ export default function SidebarFooter({ collapsed }) {
     <div>
       {collapsed ? (
         <div style={{ margin: "0.5rem 0" }}>
-          <Avatar style={{ margin: "0 auto" }}>SA</Avatar>
+          <Avatar sx={{ m: "0 auto", bgcolor: "#5270ff" }}>SA</Avatar>
         </div>
       ) : (
         <Link to="/manager" style={{ textDecoration: "none", color: "black" }}>
           <div id="sidebar-footer">
-            <Avatar>SA</Avatar>
+            <Avatar sx={{ bgcolor: "#5270ff" }}>SA</Avatar>
             <div style={{ textAlign: "center", padding: "0 0.3rem" }}>
               <div>Admin</div>
               <div style={{ fontSize: "0.8rem", color: "grey" }}>

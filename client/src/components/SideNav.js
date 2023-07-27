@@ -19,7 +19,7 @@ export default function SideNav() {
   const location = useLocation();
 
   const preventImageActions = (event) => {
-    if (event.target.tagName === 'IMG') {
+    if (event.target.tagName === "IMG") {
       event.preventDefault();
     }
   };
@@ -43,10 +43,10 @@ export default function SideNav() {
     background: "linear-gradient(to right, #e0e3f7, #fff)",
     fontWeight: "800",
     marginTop: "20px",
-    transform: "scale(1.03)", 
-    boxShadow: "0 2px 5px rgba(0, 0, 0, 0.15)", 
+    transform: "scale(1.03)",
+    boxShadow: "0 2px 5px rgba(0, 0, 0, 0.15)",
     transition: "transform 0.3s ease, box-shadow 0.3s ease",
-    letterSpacing: '0.5px',
+    letterSpacing: "0.5px",
   };
 
   const inactiveStyle = {
@@ -72,11 +72,16 @@ export default function SideNav() {
   };
 
   return (
-    <Sidebar collapsed={collapsed} id="sideNav" onContextMenu={preventImageActions} onDragStart={preventImageActions}>
+    <Sidebar
+      collapsed={collapsed}
+      id="sideNav"
+      onContextMenu={preventImageActions}
+      onDragStart={preventImageActions}
+    >
       <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
-        {collapsed ? ( 
+        {collapsed ? (
           <div style={{ textAlign: "center" }}>
-            <Link to="/">
+            <Link to="/main">
               <img
                 src="/logopurple.png"
                 alt="Logopurple"
@@ -85,9 +90,9 @@ export default function SideNav() {
               />
             </Link>
           </div>
-        ) : ( 
+        ) : (
           <div icon={<MenuIcon />} style={{ textAlign: "center" }}>
-            <Link to="/">
+            <Link to="/main">
               <img
                 src="/logoblack.png"
                 alt="Logoblack"
@@ -98,7 +103,7 @@ export default function SideNav() {
           </div>
         )}
         <div style={lineStyle} />
-        <div style={{ flex: "1", userSelect: 'none' }}>
+        <div style={{ flex: "1", userSelect: "none" }}>
           <Menu>
             <MenuItem
               onClick={() => {
@@ -106,7 +111,9 @@ export default function SideNav() {
               }}
               icon={<SpaceDashboardIcon style={iconStyles} />}
               component={<Link to="/main" />}
-              style={location.pathname === "/main" ? activeStyle : inactiveStyle}
+              style={
+                location.pathname === "/main" ? activeStyle : inactiveStyle
+              }
             >
               Dashboard
             </MenuItem>
@@ -116,7 +123,9 @@ export default function SideNav() {
               }}
               icon={<SwitchAccountIcon style={iconStyles} />}
               component={<Link to="/tbalist" />}
-              style={location.pathname === "/tbalist" ? activeStyle : inactiveStyle}
+              style={
+                location.pathname === "/tbalist" ? activeStyle : inactiveStyle
+              }
             >
               TBAs
             </MenuItem>
@@ -126,7 +135,9 @@ export default function SideNav() {
               }}
               icon={<LibraryBooksIcon style={iconStyles} />}
               component={<Link to="/contract" />}
-              style={location.pathname === "/contract" ? activeStyle : inactiveStyle}
+              style={
+                location.pathname === "/contract" ? activeStyle : inactiveStyle
+              }
             >
               Contracts
             </MenuItem>
@@ -136,7 +147,9 @@ export default function SideNav() {
               }}
               icon={<CardGiftcardIcon style={iconStyles} />}
               component={<Link to="/airdrop" />}
-              style={location.pathname === "/airdrop" ? activeStyle : inactiveStyle}
+              style={
+                location.pathname === "/airdrop" ? activeStyle : inactiveStyle
+              }
             >
               Airdrop
             </MenuItem>
@@ -146,7 +159,9 @@ export default function SideNav() {
               }}
               icon={<ManageAccountsIcon style={iconStyles} />}
               component={<Link to="/manager" />}
-              style={location.pathname === "/manager" ? activeStyle : inactiveStyle}
+              style={
+                location.pathname === "/manager" ? activeStyle : inactiveStyle
+              }
             >
               Manager
             </MenuItem>

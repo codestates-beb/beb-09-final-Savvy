@@ -1,0 +1,12 @@
+.content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.subtitle {
+  font-weight: 600;
+  position: sticky;
+  background-color: #f8f8f8;
+  z-index: 1;
+  top: 0;
+}
