@@ -12,6 +12,7 @@ var CommunitySchema = new Schema(
       // ref: 'Admin'
       type: String,
     },
+    createdAt: { type: Date, default: Date.now },
   },
   { versionKey: '_somethingElse' }
 );

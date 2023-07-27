@@ -1,5 +1,8 @@
 const ethers = require('ethers');
-const erc6551RegistryAbi = require('../abi/ERC6551Registry.json');
+
+const Community = require('../models/community.model');
+const Tba = require('../models/tba.model');
+const Item = require('../models/item.model');
 
 require('dotenv').config();
 
@@ -7,31 +10,33 @@ const provider = new ethers.providers.JsonRpcProvider(process.env.INFURA_URL);
 
 module.exports = {
   dashboard: async (req, res) => {
+    const communityAddress = req.params.communityAddress;
+
     try {
-      const ERC6551RegistryAddress = process.env.ERC6551REGISTRY;
+      const community = await Community.findOne({ address: communityAddress });
 
-      const contract = new ethers.Contract(
-        ERC6551RegistryAddress,
-        erc6551RegistryAbi,
-        provider
-      );
+      if (!community) {
+        return res.status(400).json({ error: 'No community found for this community' });
+      }
 
-      const TBAs = [];
-      const filter = contract.filters.AccountCreated();
+      const TBAs = await Tba.find({ community_id: community._id });
+      //console.log(TBAs);
 
-      //const latestBlockNumber = await provider.getBlockNumber();
-      const fromBlock = 3950718;
-      const toBlock = 'latest';
+      if (TBAs.length === 0) {
+        return res.status(404).json({ error: 'No TBAs found for this community' });
+      }
 
-      const events = await contract.queryFilter(filter, fromBlock, toBlock);
+      const items = await Item.find({ community_id: TBAs._id });
 
-      events.forEach((event) => {
-        TBAs.push(event.args.account);
-      });
+      if (items.length === 0) {
+        return res.status(422).json({ error: 'No items found for this community' });
+      }
 
       res.status(200).json({
         message: 'Successfully fetched TBAs',
+        community: community,
         TBAs: TBAs,
+        items: items,
       });
     } catch (error) {
       console.log(error);
