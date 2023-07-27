@@ -6,5 +6,6 @@ router.get('/:communityAddress', controller.getTbaByAddress);
 router.get('/detail/:tbaId', controller.getTbaDetail);
 router.post('/createGroup', controller.createGroup);
 router.get('/group/:groupName', controller.getGroupTBA);
+router.delete('/group/:groupName', controller.deleteGroup);
 
 module.exports = router;

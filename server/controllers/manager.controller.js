@@ -230,4 +230,48 @@ module.exports = {
       });
     }
   },
+  deleteCommunity: async (req, res) => {
+    const communityAddress = req.params.communityAddress;
+
+    try {
+      const community = await Community.findOne({ address: communityAddress });
+
+      if (community) {
+        const tba = await Tba.find({ community_id: community._id });
+
+        // Delete all items associated with the Tba
+        for (let i = 0; i < tba.length; i++) {
+          const items = await Item.find({ Tba_id: tba[i]._id });
+          for (let j = 0; j < items.length; j++) {
+            await Item.findByIdAndDelete(items[j]._id);
+          }
+        }
+
+        // Delete all TabGroup associated with the Tba
+        await TabGroup.deleteMany({ Tba_id: { $in: tba.map((t) => t._id) } });
+
+        // Delete all Tba associated with the Community
+        await Tba.deleteMany({ community_id: community._id });
+
+        // Delete all contract associated with the Community
+        await Contract.deleteMany({ community_id: community._id });
+
+        // Delete the Community
+        await Community.findOneAndDelete({ address: communityAddress });
+
+        res.status(200).json({
+          message: 'Successfully deleted Community and tba, tba_group, and Items',
+        });
+      } else {
+        res.status(404).json({
+          error: 'Community not found',
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({
+        error: 'Internal Server Error',
+      });
+    }
+  },
 };

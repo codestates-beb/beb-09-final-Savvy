@@ -15,9 +15,7 @@ module.exports = {
       return res.status(400).json({ error: 'Contract already exists' });
     }
     try {
-      const community = await Community.findOne({
-        address: contractData.contractAddress,
-      });
+      const community = await Community.findOne();
 
       if (!community) {
         console.log('Community does not exist');
@@ -121,6 +119,27 @@ module.exports = {
         res.status(200).json({
           message: 'get contract by address',
           ContractData: contract,
+        });
+      } else {
+        res.status(404).json({
+          message: 'No contracts found',
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({
+        error: 'Internal Server Error',
+      });
+    }
+  },
+  deleteContract: async (req, res) => {
+    const contractAddress = req.params.contractAddress;
+    try {
+      const contract = await Contract.findOne({ address: contractAddress });
+      if (contract) {
+        await Contract.deleteOne({ address: contractAddress });
+        res.status(200).json({
+          message: 'deleted contract',
         });
       } else {
         res.status(404).json({

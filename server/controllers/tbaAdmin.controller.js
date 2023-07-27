@@ -115,4 +115,24 @@ module.exports = {
       });
     }
   },
+  deleteGroup: async (req, res) => {
+    const groupName = req.params.groupName;
+
+    try {
+      const deletedGroup = await tba_group.deleteMany({ name: groupName });
+
+      if (deletedGroup.deletedCount === 0) {
+        return res.status(404).json({ error: 'No group found' });
+      }
+
+      res.status(200).json({
+        message: 'Successfully deleted group',
+      });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({
+        error: 'Internal Server Error',
+      });
+    }
+  },
 };
