@@ -1,4 +1,8 @@
-const { ethers } = require('ethers');
+const ethers = require('ethers');
+const axios = require('axios');
+
+const erc6551RegistryAbi = require('../abi/ERC6551Registry.json');
+const accountAbi = require('../abi/Account.json');
 
 require('dotenv').config();
 
@@ -11,7 +15,8 @@ module.exports = {
 
       //const tx = await provider.getTransaction(txHash);
       const receipt = await provider.getTransactionReceipt(txHash);
-      console.log(receipt);
+      //console.log(receipt);
+
       if (receipt.status == 1) {
         res.status(200).json({
           message: 'Successfully created TBA',
