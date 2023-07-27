@@ -17,7 +17,7 @@ module.exports = {
       const receipt = await provider.getTransactionReceipt(txHash);
       //console.log(receipt);
 
-      if (receipt.status == 1) {
+      if (receipt && receipt.status == 1) {
         res.status(200).json({
           message: 'Successfully created TBA',
         });
