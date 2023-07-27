@@ -4,6 +4,7 @@ const Admin = require('../models/admin.model');
 module.exports = {
   login: async (req, res) => {
     const adminData = req.body;
+    console.log(req.headers.authorization);
 
     try {
       // passed from the frontend in the Authorization header
@@ -22,47 +23,29 @@ module.exports = {
         // Check if the user exists in the database
         const user = await Admin.findOne({ email: adminData.email });
 
-        console.log(user);
         if (user) {
           console.log('user exists');
-          res.status(200).json({ message: 'Verification successful and user exists' });
+          return res
+            .status(200)
+            .json({ message: 'Verification successful and user exists' });
         } else {
           console.log('user does not exist');
-          res
+          const newUser = await Admin.create({
+            address: adminData.address,
+            ethBalance: adminData.balance.hex,
+            chainId: adminData.chainId,
+            email: adminData.email,
+            name: adminData.name,
+            profileImage: adminData.profileImage,
+            appPubKey: adminData.appPubKey,
+          });
+          return res
             .status(201)
             .json({ message: 'Verification successful. Welcome, new user!' });
         }
-      } else {
-        res.status(400).json({ error: 'Verification Failed' });
       }
-    } catch (error) {
-      console.log(error);
-      res.status(500).json({
-        error: 'Internal Server Error',
-      });
-    }
-  },
-  signup: async (req, res) => {
-    const adminData = req.body;
-    try {
-      const idToken = req.headers.authorization?.split(' ')[1];
-      const jwks = jose.createRemoteJWKSet(new URL('https://api.openlogin.com/jwks'));
-      const jwtDecoded = await jose.jwtVerify(idToken, jwks, { algorithms: ['ES256'] });
-      if (jwtDecoded.payload.wallets[0].public_key === adminData.appPubKey) {
-        // Check if the user exists in the database
-        const newUser = await Admin.create({
-          address: adminData.address,
-          ethBalance: adminData.balance.hex,
-          chainId: adminData.chainId,
-          email: adminData.email,
-          name: adminData.name,
-          profileImage: adminData.profileImage,
-          appPubKey: adminData.appPubKey,
-        });
-        res.status(200).json({ message: 'Verification successful. Welcome, new user!' });
-      } else {
-        res.status(400).json({ error: 'Verification Failed' });
-      }
+
+      res.status(400).json({ error: 'Verification Failed' });
     } catch (error) {
       console.log(error);
       res.status(500).json({

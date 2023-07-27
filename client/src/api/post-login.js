@@ -12,7 +12,7 @@ export const postLogin = async (
   try {
     const response = await axios({
       method: 'post',
-      url: 'http://localhost:8080/user/signup',
+      url: 'http://localhost:8080/admin/login',
       data: {
         address,
         balance,
