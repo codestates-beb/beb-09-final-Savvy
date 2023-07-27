@@ -10,7 +10,15 @@ import {
   DialogContentText,
   DialogTitle,
   Checkbox,
+  TextField,
+  Chip,
 } from "@mui/material";
+import {
+  ADMIN_INFO,
+  ADMIN_TOKEN_LIST,
+  COMMUNITY_LIST,
+  ADMIN_NFT_LIST,
+} from "../assets/DUMMY_DATA";
 
 import "../assets/ManagerPageContent.css";
 
@@ -18,7 +26,7 @@ const boxStyle1 = {
   backgroundColor: "#f8f8f8",
   borderRadius: "1rem",
   padding: "1rem",
-  minWidth: "29rem",
+  minWidth: "20rem",
   height: "13rem",
   boxShadow: "0 0 3px rgba(0, 0, 0, 0.2)",
 };
@@ -27,87 +35,10 @@ const boxStyle2 = {
   backgroundColor: "#f8f8f8",
   borderRadius: "1rem",
   padding: "1rem",
-  minWidth: "29rem",
+  minWidth: "20rem",
   height: "17rem",
   boxShadow: "0 0 3px rgba(0, 0, 0, 0.2)",
 };
-
-const dummyData1 = {
-  address: "0x2B839411985B474B725fd5E562E7969172F58f55",
-  ethBalance: "0x00",
-  chainId: 11155111,
-  email: "chancold123@gmail.com",
-  name: "박찬우",
-  profileImage:
-    "https://lh3.googleusercontent.com/a/AAcHTte83IMxEWM9hrGZHygQDWwhkB8TacLUQDEtXOeHvfvqAA=s96-c",
-  appPubKey:
-    "02c20627b0e7993f77e0edc44c150e2ad57c385eb061dd1b953e2920ef9386a975",
-  createdAt: "2023-07-25T02:05:47.530+00:00",
-};
-
-const dummyData2 = [
-  {
-    token: "ETH",
-    amount: "10.34",
-  },
-  {
-    token: "WETH",
-    amount: "0.56",
-  },
-  {
-    token: "USDT",
-    amount: "100.00",
-  },
-];
-
-const dummyData3 = [
-  {
-    communityName: "테스트 커뮤니티1",
-    communityAddress: "0x2B839411985B474B725fd5E562E7969172F58f55",
-    createdAt: "2023-07-25T02:05:47.530+00:00",
-  },
-  {
-    communityName: "테스트 커뮤니티2",
-    communityAddress: "0x2B839411985B474B725fd5E562E7969172F58f55",
-    createdAt: "2023-07-25T02:05:47.530+00:00",
-  },
-  {
-    communityName: "테스트 커뮤니티3",
-    communityAddress: "0x2B839411985B474B725fd5E562E7969172F58f55",
-    createdAt: "2023-07-25T02:05:47.530+00:00",
-  },
-];
-
-const dummyData4 = [
-  {
-    image:
-      "https://lh3.googleusercontent.com/a/AAcHTte83IMxEWM9hrGZHygQDWwhkB8TacLUQDEtXOeHvfvqAA=s96-c",
-    name: "test1",
-    type: "ERC-721",
-    address: "0x2B839411985B474B725fd5E562E7969172F58f55",
-  },
-  {
-    image:
-      "https://lh3.googleusercontent.com/a/AAcHTte83IMxEWM9hrGZHygQDWwhkB8TacLUQDEtXOeHvfvqAA=s96-c",
-    name: "test2",
-    type: "ERC-1155",
-    address: "0x2B839411985B474B725fd5E562E7969172F58f55",
-  },
-  {
-    image:
-      "https://lh3.googleusercontent.com/a/AAcHTte83IMxEWM9hrGZHygQDWwhkB8TacLUQDEtXOeHvfvqAA=s96-c",
-    name: "test3",
-    type: "ERC-721",
-    address: "0x2B839411985B474B725fd5E562E7969172F58f55",
-  },
-  {
-    image:
-      "https://lh3.googleusercontent.com/a/AAcHTte83IMxEWM9hrGZHygQDWwhkB8TacLUQDEtXOeHvfvqAA=s96-c",
-    name: "test4",
-    type: "ERC-721",
-    address: "0x2B839411985B474B725fd5E562E7969172F58f55",
-  },
-];
 
 export default function ManagerPageContent({ web3Auth }) {
   const [openLogout, setOpenLogout] = useState(false);
@@ -161,52 +92,53 @@ export default function ManagerPageContent({ web3Auth }) {
           <div style={{ display: "flex", margin: "1rem" }}>
             <img
               style={{
-                padding: "1rem",
+                width: "8rem",
+                height: "10rem",
                 border: "1px solid #f5f5f5",
                 borderRadius: "0.5rem",
               }}
-              src={dummyData1.profileImage}
+              src={ADMIN_INFO.profileImage}
             ></img>
             <div style={{ padding: "1rem" }}>
-              <div>
-                <div>Name</div>
+              <div className="admin-info-content">
+                <Chip
+                  label="Name"
+                  sx={{ bgcolor: "#5270ff", color: "white" }}
+                />
                 <div
                   style={{
                     padding: "0.3rem",
-                    border: "1px solid #f5f5f5",
-                    borderRadius: "0.5rem",
-                    backgroundColor: "#f5f5f5",
                   }}
                 >
-                  {dummyData1.name}
+                  {ADMIN_INFO.name}
                 </div>
               </div>
-              <div>
-                <div>Email</div>
+              <div className="admin-info-content">
+                <Chip
+                  label="Email"
+                  sx={{ bgcolor: "#5270ff", color: "white" }}
+                />
                 <div
                   style={{
                     padding: "0.3rem",
-                    border: "1px solid #f5f5f5",
-                    borderRadius: "0.5rem",
-                    backgroundColor: "#f5f5f5",
                   }}
                 >
-                  {dummyData1.email}
+                  {ADMIN_INFO.email}
                 </div>
               </div>
-              <div>
-                <div>Address</div>
+              <div className="admin-info-content">
+                <Chip
+                  sx={{ bgcolor: "#5270ff", color: "white" }}
+                  label="Address"
+                />
                 <div
                   style={{
                     padding: "0.3rem",
-                    border: "1px solid #f5f5f5",
-                    borderRadius: "0.5rem",
-                    backgroundColor: "#f5f5f5",
                   }}
-                >{`${dummyData1.address.substring(
+                >{`${ADMIN_INFO.address.substring(
                   0,
                   6
-                )}...${dummyData1.address.substring(36)}`}</div>
+                )}...${ADMIN_INFO.address.substring(36)}`}</div>
               </div>
             </div>
           </div>
@@ -224,7 +156,7 @@ export default function ManagerPageContent({ web3Auth }) {
             <div>
               <div className="balance-category">Token</div>
               <ul className="balance-ul">
-                {dummyData2.map((data) => {
+                {ADMIN_TOKEN_LIST.map((data) => {
                   return <li key={data.token}>{data.token}</li>;
                 })}
               </ul>
@@ -232,7 +164,7 @@ export default function ManagerPageContent({ web3Auth }) {
             <div>
               <div className="balance-category">Amount</div>
               <ul className="balance-ul">
-                {dummyData2.map((data) => {
+                {ADMIN_TOKEN_LIST.map((data) => {
                   return <li key={data.token}>{data.amount}</li>;
                 })}
               </ul>
@@ -244,8 +176,8 @@ export default function ManagerPageContent({ web3Auth }) {
             <div style={{ fontWeight: "600" }}>Community list</div>
             <button
               style={{
-                backgroundColor: "#d742f5",
-                color: "white",
+                backgroundColor: "#5270ff",
+                color: "#ffffff",
                 borderRadius: "0.3rem",
                 border: "none",
                 cursor: "pointer",
@@ -258,29 +190,39 @@ export default function ManagerPageContent({ web3Auth }) {
               <DialogTitle>Add Community</DialogTitle>
               <DialogContent>
                 <DialogContentText>
-                  <div>
-                    <div>Community Name</div>
-                    <input
-                      value={communityName}
-                      onChange={(e) => setCommunityName(e.target.value)}
-                    ></input>
-                  </div>
-                  <div>
-                    <div>Community Address</div>
-                    <input
-                      value={communityAddress}
-                      onChange={(e) => setCommunityAddress(e.target.value)}
-                    ></input>
-                  </div>
+                  <TextField
+                    autoFocus
+                    margin="dense"
+                    id="name"
+                    label="Name"
+                    type="text"
+                    fullWidth
+                    variant="standard"
+                    placeholder="e.g. My Community"
+                    value={communityName}
+                    onChange={(e) => setCommunityName(e.target.value)}
+                  />
+                  <TextField
+                    autoFocus
+                    margin="dense"
+                    id="address"
+                    label="Address"
+                    type="text"
+                    fullWidth
+                    variant="standard"
+                    placeholder="e.g. 0x2B839411985B474B725fd5E562E7969172F58f55"
+                    value={communityAddress}
+                    onChange={(e) => setCommunityAddress(e.target.value)}
+                  />
                 </DialogContentText>
               </DialogContent>
               <DialogActions>
-                <Button color="secondary" onClick={handleCloseAdd}>
+                <Button sx={{ color: "#5270ff" }} onClick={handleCloseAdd}>
                   Cancel
                 </Button>
                 <Button
                   variant="contained"
-                  color="secondary"
+                  sx={{ bgcolor: "#5270ff", color: "#ffffff" }}
                   onClick={handleAddCommunity}
                 >
                   Add
@@ -300,7 +242,7 @@ export default function ManagerPageContent({ web3Auth }) {
             <div>
               <div className="community-category">Name</div>
               <ul className="community-ul">
-                {dummyData3.map((data) => {
+                {COMMUNITY_LIST.map((data) => {
                   return <li key={data.communityName}>{data.communityName}</li>;
                 })}
               </ul>
@@ -308,7 +250,7 @@ export default function ManagerPageContent({ web3Auth }) {
             <div>
               <div className="community-category">Address</div>
               <ul className="community-ul">
-                {dummyData3.map((data) => {
+                {COMMUNITY_LIST.map((data) => {
                   return (
                     <li key={data.communityName}>
                       {`${data.communityAddress.substring(
@@ -323,7 +265,7 @@ export default function ManagerPageContent({ web3Auth }) {
             <div>
               <div className="community-category">Date</div>
               <ul className="community-ul">
-                {dummyData3.map((data) => {
+                {COMMUNITY_LIST.map((data) => {
                   return (
                     <li key={data.communityName}>
                       {data.createdAt.substring(0, 10)}
@@ -335,7 +277,7 @@ export default function ManagerPageContent({ web3Auth }) {
             <div>
               <div className="community-category">Status</div>
               <ul className="community-ul">
-                {dummyData3.map((data) => {
+                {COMMUNITY_LIST.map((data) => {
                   return (
                     <li key={data.communityName}>
                       <input type="checkbox" />
@@ -363,7 +305,7 @@ export default function ManagerPageContent({ web3Auth }) {
               <div className="nft-category">Address</div>
             </div>
             <div style={{ overflow: "auto", height: "14rem" }}>
-              {dummyData4.map((data) => {
+              {ADMIN_NFT_LIST.map((data) => {
                 return (
                   <div className="nft-list" key={data.name}>
                     <div>
@@ -398,7 +340,7 @@ export default function ManagerPageContent({ web3Auth }) {
       >
         <Button
           variant="contained"
-          color="secondary"
+          sx={{ bgcolor: "#5270ff", color: "#ffffff" }}
           onClick={handleOpenLogout}
         >
           Logout
@@ -420,12 +362,12 @@ export default function ManagerPageContent({ web3Auth }) {
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button color="secondary" onClick={handleCloseLogout}>
+            <Button sx={{ color: "#5270ff" }} onClick={handleCloseLogout}>
               Close
             </Button>
             <Button
               variant="contained"
-              color="secondary"
+              sx={{ bgcolor: "#5270ff", color: "#ffffff" }}
               onClick={handleLogout}
               autoFocus
             >
