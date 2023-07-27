@@ -1,10 +1,24 @@
 import React from "react";
-import "../assets/Admin.css";
 
-export default function ContractPageContent() {
+export default function TbaListPageContent() {
+  const styles = {
+    pageContent: {
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      height: "10vh",
+      color: "#576ff6",
+      fontSize: "36px",
+      fontWeight: "800",
+      marginLeft: "40px",
+      marginTop: "-15px",
+      userSelect: "none",
+    },
+  };
+
   return (
-    <div className="page-content">
-      <h1>TBA</h1>
+    <div style={styles.pageContent}>
+      <span style={styles.textMoveRight}>TBA</span>
     </div>
   );
 }
