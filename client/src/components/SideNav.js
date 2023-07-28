@@ -56,14 +56,14 @@ export default function SideNav() {
   const inactiveStyle = {
     color: "#757575",
     fontWeight: "bold",
-    marginTop: "25px",
-    fontWeight: "800",
+    marginTop: "15px", 
+    fontWeight: "600",
     fontFamily: "'tektur', sans-serif",
     transition: "transform 0.3s ease, box-shadow 0.3s ease",
   };
 
   const iconStyles = {
-    width: "22px",
+    width: "20px",
     marginTop: "-1px",
   };
 
@@ -79,11 +79,15 @@ export default function SideNav() {
   };
 
   return (
+   <div style={{ background: "#f5f5f5" }}> 
     <Sidebar
       collapsed={collapsed}
       id="sideNav"
       onContextMenu={preventImageActions}
       onDragStart={preventImageActions}
+      style={{
+        boxShadow: "0 2px 5px rgba(0, 0, 0, 0.15)", 
+      }}
     >
       <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
         {collapsed ? (
@@ -187,5 +191,6 @@ export default function SideNav() {
         <SidebarFooter collapsed={collapsed} />
       </div>
     </Sidebar>
+   </div> 
   );
 }
