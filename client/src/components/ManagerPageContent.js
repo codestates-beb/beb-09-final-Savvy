@@ -76,6 +76,7 @@ export default function ManagerPageContent({ web3Auth }) {
       }
     };
     init();
+    console.log(managerData);
   }, []);
 
   const handleLogout = async () => {
@@ -140,7 +141,7 @@ export default function ManagerPageContent({ web3Auth }) {
                 border: "1px solid #f5f5f5",
                 borderRadius: "0.5rem",
               }}
-              src={ADMIN_INFO.profileImage}
+              src={managerData ? managerData.admin.profileImage : null}
             ></img>
             <div style={{ padding: "1rem" }}>
               <div className="admin-info-content">
@@ -153,7 +154,7 @@ export default function ManagerPageContent({ web3Auth }) {
                     padding: "0.3rem",
                   }}
                 >
-                  {ADMIN_INFO.name}
+                  {managerData ? managerData.admin.name : null}
                 </div>
               </div>
               <div className="admin-info-content">
@@ -166,7 +167,7 @@ export default function ManagerPageContent({ web3Auth }) {
                     padding: "0.3rem",
                   }}
                 >
-                  {ADMIN_INFO.email}
+                  {managerData ? managerData.admin.email : null}
                 </div>
               </div>
               <div className="admin-info-content">
@@ -178,10 +179,11 @@ export default function ManagerPageContent({ web3Auth }) {
                   style={{
                     padding: "0.3rem",
                   }}
-                >{`${ADMIN_INFO.address.substring(
-                  0,
-                  6
-                )}...${ADMIN_INFO.address.substring(36)}`}</div>
+                >{`${
+                  managerData ? managerData.admin.address.substring(0, 6) : null
+                }...${
+                  managerData ? managerData.admin.address.substring(36) : null
+                }`}</div>
               </div>
             </div>
           </div>

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import { Sidebar, Menu, MenuItem } from "react-pro-sidebar";
 import SidebarFooter from "./SidebarFooter";
 
@@ -17,6 +17,8 @@ import "../assets/SideNav.css";
 export default function SideNav() {
   const [collapsed, setCollapsed] = useState(false);
   const location = useLocation();
+
+  const { address } = useParams();
 
   const preventImageActions = (event) => {
     if (event.target.tagName === "IMG") {
@@ -43,8 +45,8 @@ export default function SideNav() {
     background: "linear-gradient(to right, #e0e3f7, #fff)",
     fontWeight: "800",
     marginTop: "20px",
-    transform: "scale(1.03)", 
-    boxShadow: "0 2px 5px rgba(0, 0, 0, 0.15)", 
+    transform: "scale(1.03)",
+    boxShadow: "0 2px 5px rgba(0, 0, 0, 0.15)",
     fontWeight: "800",
     fontFamily: "'tektur', sans-serif",
     transition: "transform 0.3s ease, box-shadow 0.3s ease",
@@ -84,9 +86,9 @@ export default function SideNav() {
       onDragStart={preventImageActions}
     >
       <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
-        {collapsed ? ( 
+        {collapsed ? (
           <div style={{ textAlign: "center" }}>
-            <Link to="/main">
+            <Link to={`/main/${address}`}>
               <img
                 src="/logopurple.png"
                 alt="Logopurple"
@@ -95,9 +97,9 @@ export default function SideNav() {
               />
             </Link>
           </div>
-        ) : ( 
+        ) : (
           <div icon={<MenuIcon />} style={{ textAlign: "center" }}>
-            <Link to="/main">
+            <Link to={`/main/${address}`}>
               <img
                 src="/logoblack.png"
                 alt="Logoblack"
@@ -115,9 +117,11 @@ export default function SideNav() {
                 setCollapsed((prev) => !prev);
               }}
               icon={<SpaceDashboardIcon style={iconStyles} />}
-              component={<Link to="/main" />}
+              component={<Link to={`/main/${address}`} />}
               style={
-                location.pathname === "/main" ? activeStyle : inactiveStyle
+                location.pathname === `/main/${address}`
+                  ? activeStyle
+                  : inactiveStyle
               }
             >
               Dashboard
@@ -127,9 +131,11 @@ export default function SideNav() {
                 setCollapsed((prev) => !prev);
               }}
               icon={<SwitchAccountIcon style={iconStyles} />}
-              component={<Link to="/tbalist" />}
+              component={<Link to={`/tbalist/${address}`} />}
               style={
-                location.pathname === "/tbalist" ? activeStyle : inactiveStyle
+                location.pathname === `/tbalist/${address}`
+                  ? activeStyle
+                  : inactiveStyle
               }
             >
               TBAs
@@ -139,9 +145,11 @@ export default function SideNav() {
                 setCollapsed((prev) => !prev);
               }}
               icon={<LibraryBooksIcon style={iconStyles} />}
-              component={<Link to="/contract" />}
+              component={<Link to={`/contract/${address}`} />}
               style={
-                location.pathname === "/contract" ? activeStyle : inactiveStyle
+                location.pathname === `/contract/${address}`
+                  ? activeStyle
+                  : inactiveStyle
               }
             >
               Contracts
@@ -151,9 +159,11 @@ export default function SideNav() {
                 setCollapsed((prev) => !prev);
               }}
               icon={<CardGiftcardIcon style={iconStyles} />}
-              component={<Link to="/airdrop" />}
+              component={<Link to={`/airdrop/${address}`} />}
               style={
-                location.pathname === "/airdrop" ? activeStyle : inactiveStyle
+                location.pathname === `/airdrop/${address}`
+                  ? activeStyle
+                  : inactiveStyle
               }
             >
               Airdrop
@@ -163,9 +173,11 @@ export default function SideNav() {
                 setCollapsed((prev) => !prev);
               }}
               icon={<ManageAccountsIcon style={iconStyles} />}
-              component={<Link to="/manager" />}
+              component={<Link to={`/manager/${address}`} />}
               style={
-                location.pathname === "/manager" ? activeStyle : inactiveStyle
+                location.pathname === `/manager/${address}`
+                  ? activeStyle
+                  : inactiveStyle
               }
             >
               Manager
