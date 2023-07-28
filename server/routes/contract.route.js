@@ -6,5 +6,6 @@ router.post('/create', controller.createContract);
 router.get('/', controller.getContract);
 router.get('/:contractAddress', controller.getContractByAddress);
 router.put('/update', controller.updateContract);
+router.delete('/:contractAddress', controller.deleteContract);
 
 module.exports = router;

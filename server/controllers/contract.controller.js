@@ -16,7 +16,7 @@ module.exports = {
     }
     try {
       const community = await Community.findOne({
-        address: contractData.contractAddress,
+        address: contractData.communityAddress,
       });
 
       if (!community) {
@@ -38,6 +38,7 @@ module.exports = {
           ercType: newContract.type,
           contractAddress: newContract.address,
           contractName: newContract.alias,
+          community_id: newContract.community_id,
         },
       });
     } catch (error) {
@@ -50,20 +51,13 @@ module.exports = {
   updateContract: async (req, res) => {
     const contractData = req.body;
 
-    // _id가 ObjectId 형식인지 확인
-    const contractId = mongoose.Types.ObjectId.isValid(contractData.id)
-      ? contractData.id
-      : null;
-
-    updatedContract = await Contract.findOne({ _id: contractId });
+    updatedContract = await Contract.findOne({ _id: contractData.id });
     try {
       if (updatedContract) {
-        console.log('Contract already exists');
         await Contract.updateOne(
-          { _id: contractId },
+          { _id: contractData.id },
           {
             $set: {
-              address: contractData.contractAddress,
               type: contractData.ercType,
               alias: contractData.contractName,
             },
@@ -85,7 +79,7 @@ module.exports = {
         });
       } else {
         console.log('Contract does not exist');
-        res.status(404).json({ message: 'Contract does not exist' });
+        res.status(404).json({ error: 'Contract does not exist' });
       }
     } catch (error) {
       console.log(error);
@@ -125,6 +119,27 @@ module.exports = {
       } else {
         res.status(404).json({
           message: 'No contracts found',
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({
+        error: 'Internal Server Error',
+      });
+    }
+  },
+  deleteContract: async (req, res) => {
+    const contractAddress = req.params.contractAddress;
+    try {
+      const contract = await Contract.findOne({ address: contractAddress });
+      if (contract) {
+        await Contract.deleteOne({ address: contractAddress });
+        res.status(200).json({
+          message: 'deleted contract',
+        });
+      } else {
+        res.status(404).json({
+          error: 'No contracts found',
         });
       }
     } catch (error) {
