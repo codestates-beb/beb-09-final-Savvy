@@ -1,8 +1,4 @@
 const ethers = require("ethers");
-const axios = require("axios");
-
-const erc6551RegistryAbi = require("../abi/ERC6551Registry.json");
-const accountAbi = require("../abi/Account.json");
 
 require("dotenv").config();
 
