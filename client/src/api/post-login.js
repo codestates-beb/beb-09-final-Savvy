@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from 'axios';
 
 export const postLogin = async (
   address,
@@ -11,8 +11,8 @@ export const postLogin = async (
 ) => {
   try {
     const response = await axios({
-      method: "post",
-      url: "http://localhost:8080/admin/signup",
+      method: 'post',
+      url: 'http://localhost:8080/admin/login',
       data: {
         address,
         balance,
@@ -23,33 +23,12 @@ export const postLogin = async (
         appPubKey,
       },
       headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
       },
     });
     return response.data;
   } catch (error) {
     console.log(error);
-    try {
-      const response = await axios({
-        method: "post",
-        url: "http://localhost:8080/admin/login",
-        data: {
-          address,
-          balance,
-          chainId,
-          email,
-          name,
-          profileImage,
-          appPubKey,
-        },
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
-      return response.data;
-    } catch (error) {
-      console.log(error);
-      return;
-    }
+    return;
   }
 };

@@ -11,7 +11,7 @@ module.exports = {
       const community = await Community.findOne({ address: communityAddress });
 
       if (!community) {
-        return res.status(400).json({ error: 'No community found for this community' });
+        return res.status(400).json({ error: 'No community found' });
       }
 
       const TBAs = await Tba.find({ community_id: community._id });
@@ -68,34 +68,60 @@ module.exports = {
         return res.status(400).json({ error: 'Group name already exists' });
       }
 
-      tbaIds.forEach(async (tbaId) => {
-        const tba = await Tba.findById(tbaId);
-        if (tba) {
-          const newGroup = await tba_group.create({
-            name: groupName,
-            Tba_id: tba._id,
-          });
-        }
+      const newGroup = await tba_group.create({
+        name: groupName,
+        Tba_id: tbaIds,
       });
 
       res.status(200).json({
         message: 'Successfully created TBA groups',
+        id: newGroup._id,
+        name: newGroup.name,
+        tbaIds: newGroup.Tba_id,
       });
     } catch (error) {
-      res.status(500).json({ error: error.message });
+      console.log(error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  },
+  updateGroup: async (req, res) => {
+    const { id, groupName, tbaIds } = req.body;
+
+    try {
+      const existingGroup = await tba_group.findOne({ _id: id });
+      if (!existingGroup) {
+        return res.status(400).json({ error: 'Group does not exist' });
+      }
+
+      const updatedGroup = await tba_group.findOneAndUpdate(
+        { _id: id },
+        { name: groupName, Tba_id: tbaIds },
+        { new: true }
+      );
+
+      res.status(200).json({
+        message: 'Successfully updated TBA groups',
+        id: updatedGroup._id,
+        name: updatedGroup.name,
+        tbaIds: updatedGroup.Tba_id,
+      });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ error: 'Internal Server Error' });
     }
   },
   getGroupTBA: async (req, res) => {
-    const groupName = req.params.groupName;
+    const groupId = req.params.groupId;
 
     try {
-      const createdGroup = await tba_group.find({ name: groupName });
+      const selectedGroup = await tba_group.findOne({ _id: groupId });
+      console.log(selectedGroup);
 
-      if (createdGroup.length === 0) {
+      if (!selectedGroup) {
         return res.status(404).json({ error: 'No group found' });
       }
 
-      const tbaIds = createdGroup.map((group) => group.Tba_id);
+      const tbaIds = selectedGroup.Tba_id;
 
       const TBAs = await Tba.find({ _id: { $in: tbaIds } });
       //console.log(TBAs);
@@ -116,10 +142,10 @@ module.exports = {
     }
   },
   deleteGroup: async (req, res) => {
-    const groupName = req.params.groupName;
+    const groupId = req.params.groupId;
 
     try {
-      const deletedGroup = await tba_group.deleteMany({ name: groupName });
+      const deletedGroup = await tba_group.deleteMany({ _id: groupId });
 
       if (deletedGroup.deletedCount === 0) {
         return res.status(404).json({ error: 'No group found' });

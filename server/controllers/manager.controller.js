@@ -5,6 +5,8 @@ const Community = require('../models/community.model');
 const Admin = require('../models/admin.model');
 const Tba = require('../models/tba.model');
 const Item = require('../models/item.model');
+const Contract = require('../models/contract.model');
+const Tba_group = require('../models/tba_group.model');
 
 const erc6551RegistryAbi = require('../abi/ERC6551Registry.json');
 const accountAbi = require('../abi/Account.json');
@@ -49,7 +51,7 @@ module.exports = {
         const newCommunity = await Community.create({
           address: communityData.address,
           type: communityData.type,
-          alias: communityData.alias,
+          alias: communityData.communityName,
           admin_id: admin._id,
         });
 
@@ -89,11 +91,10 @@ module.exports = {
 
             let tokenURI = null;
             try {
-              const tokenURI = await nftContract.tokenURI(token.tokenId);
+              tokenURI = await nftContract.tokenURI(token.tokenId);
             } catch (error) {
               console.log('Error occurred while getting tokenURI');
             }
-            //console.log(tokenURI);
 
             const newTba = await Tba.create({
               address: event.args.account,
@@ -104,14 +105,12 @@ module.exports = {
               community_id: newCommunity._id,
             });
 
-            const tba = await Tba.findOne({ tokenURI: tokenURI });
-
             const newItem = await Item.create({
-              type: 'ERC721',
+              type: '',
               address: newCommunity.address,
               tokenId: token.tokenId,
               tokenAmount: '',
-              Tba_id: tba._id,
+              Tba_id: newTba._id,
             });
           }
         });
@@ -138,23 +137,21 @@ module.exports = {
     const communityData = req.body;
 
     try {
-      const community = await Community.findOne({ _id: communityData.id });
+      //const community = await Community.findOne({ _id: communityData.id });
+      const community = await Community.findById(communityData.id);
       if (community) {
         await Community.findOneAndUpdate(
           { _id: communityData.id },
           {
             $set: {
-              address: communityData.address,
               type: communityData.type,
-              alias: communityData.alias,
+              alias: communityData.communityName,
             },
           },
           { new: true }
         );
 
-        const updatedCommunity = await Community.findOne({
-          _id: communityData.id,
-        });
+        const updatedCommunity = await Community.findById(communityData.id);
 
         res.status(200).json({
           message: 'updated community data',
@@ -186,17 +183,32 @@ module.exports = {
     const adminEmail = jwtDecoded.payload.email;
 
     try {
-      const admins = await Admin.find({ email: adminEmail });
-      const communities = await Community.find({ admin_id: admins[0]._id });
+      // admin ETH balance update
+      const admins = await Admin.findOne({ email: adminEmail });
+
+      const ethBalanceWei = await provider.getBalance(admins.address);
+      const ethBalance = ethers.utils.formatEther(ethBalanceWei);
+
+      const updatedAdmin = await Admin.findOneAndUpdate(
+        { email: adminEmail },
+        {
+          $set: {
+            ethBalance: ethBalance,
+          },
+        },
+        { new: true }
+      );
+
+      const communities = await Community.find({ admin_id: updatedAdmin._id });
 
       let tba = [];
-      if (communities.length) {
+      if (communities) {
         tba = await Tba.find({ community_id: communities[0]._id });
       }
 
       res.status(200).json({
         message: 'get manager data',
-        admin: admins,
+        admin: updatedAdmin,
         communities: communities,
         tba: tba,
       });
@@ -248,7 +260,7 @@ module.exports = {
         }
 
         // Delete all TabGroup associated with the Tba
-        await TabGroup.deleteMany({ Tba_id: { $in: tba.map((t) => t._id) } });
+        await Tba_group.deleteMany({ Tba_id: { $in: tba.map((t) => t._id) } });
 
         // Delete all Tba associated with the Community
         await Tba.deleteMany({ community_id: community._id });

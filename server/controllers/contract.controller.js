@@ -15,7 +15,9 @@ module.exports = {
       return res.status(400).json({ error: 'Contract already exists' });
     }
     try {
-      const community = await Community.findOne();
+      const community = await Community.findOne({
+        address: contractData.communityAddress,
+      });
 
       if (!community) {
         console.log('Community does not exist');
@@ -36,6 +38,7 @@ module.exports = {
           ercType: newContract.type,
           contractAddress: newContract.address,
           contractName: newContract.alias,
+          community_id: newContract.community_id,
         },
       });
     } catch (error) {
@@ -48,20 +51,13 @@ module.exports = {
   updateContract: async (req, res) => {
     const contractData = req.body;
 
-    // _id가 ObjectId 형식인지 확인
-    const contractId = mongoose.Types.ObjectId.isValid(contractData.id)
-      ? contractData.id
-      : null;
-
-    updatedContract = await Contract.findOne({ _id: contractId });
+    updatedContract = await Contract.findOne({ _id: contractData.id });
     try {
       if (updatedContract) {
-        console.log('Contract already exists');
         await Contract.updateOne(
-          { _id: contractId },
+          { _id: contractData.id },
           {
             $set: {
-              address: contractData.contractAddress,
               type: contractData.ercType,
               alias: contractData.contractName,
             },
@@ -83,7 +79,7 @@ module.exports = {
         });
       } else {
         console.log('Contract does not exist');
-        res.status(404).json({ message: 'Contract does not exist' });
+        res.status(404).json({ error: 'Contract does not exist' });
       }
     } catch (error) {
       console.log(error);
@@ -143,7 +139,7 @@ module.exports = {
         });
       } else {
         res.status(404).json({
-          message: 'No contracts found',
+          error: 'No contracts found',
         });
       }
     } catch (error) {
