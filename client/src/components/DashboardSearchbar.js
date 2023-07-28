@@ -75,7 +75,7 @@ const DashboardSearchbar = ({ onSearch }) => {
         }
       `}</style>
 
-<Box position="fixed" top={110} left={498} width="calc(100% - 320px)">
+     <Box position="fixed" top={110} left={498} width="calc(100% - 320px)">
         <Box display="flex" alignItems="center" justifyContent="center" width="100%" marginBottom={122} marginLeft={-26}>
           <Box flex="1">
             <TextField
@@ -145,12 +145,12 @@ const DashboardSearchbar = ({ onSearch }) => {
               position: 'absolute',
               top: '50%',
               left: '50%',
-              transform: 'translate(-50%, -50%)', // Center the dialog
+              transform: 'translate(-50%, -50%)',
             }
           }}
         >
-          <DialogTitle sx={{ fontSize: "16px", fontWeight: "600", marginTop: "-10px", color: "#555454" }}>
-            {language === 'EN' ? 'English' : 'Korean'}
+          <DialogTitle sx={{ fontSize: "16px", fontWeight: "800", marginTop: "-10px", color: "#555454" }}>
+            {language === 'EN' ? 'English' : '한글'}
             <IconButton 
               style={{ position: 'absolute', top: '8px', right: '8px' }} 
               onClick={toggleInputTool}
