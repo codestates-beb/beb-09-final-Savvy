@@ -17,8 +17,8 @@ import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import TbaFilterButton from "./TbaFilterButton";
 import TbaAirdropButton from "./TbaAirdropButton";
 import TbaGroupButton from "./TbaGroupButton";
+import TbaModal from './TbaModal';
 
-// Styles
 const StyledListItemText = styled(ListItemText)({
   whiteSpace: "pre-wrap",
   userSelect: "none",
@@ -47,6 +47,7 @@ const StyledPaper = styled(Paper)({
   padding: "10px",
   height: "50px",
   borderRadius: "10px",
+  cursor: "pointer", 
 });
 
 const BoldTypography = styled(Typography)({
@@ -200,6 +201,16 @@ function TbaList({ data = [] }) {
     };
   }, []);
 
+  const [openModal, setOpenModal] = useState(false);
+
+  const handleOpenModal = () => {
+    setOpenModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setOpenModal(false);
+  };
+
   const handleFilter = (option) => {
     setFilterOption(option);
   };
@@ -261,6 +272,7 @@ function TbaList({ data = [] }) {
 
   return (
     <StyledBox onCopy={preventCopy} overflow="auto">
+     <TbaModal open={openModal} handleClose={handleCloseModal} />
       <TbaFilterButton onFilter={handleFilter} />
       <SortContainer>
         <SortItemContainer>
@@ -305,7 +317,7 @@ function TbaList({ data = [] }) {
       </SortContainer>
 
       {sortedData.map((user) => (
-        <StyledPaper elevation={2} key={user.id}>
+        <StyledPaper elevation={2} key={user.id} onClick={handleOpenModal}>
           <List>
             <StyledListItem>
               <ListItemAvatar>
