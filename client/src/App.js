@@ -16,7 +16,7 @@ function App() {
   const [web3Auth, setWeb3Auth] = useState(null);
 
   useEffect(() => {
-    const init = async () => {
+    const initWeb3Auth = async () => {
       try {
         const web3auth = new Web3Auth({
           clientId: `${process.env.REACT_APP_WEB3_CLIENT_ID}`,
@@ -35,27 +35,40 @@ function App() {
         return;
       }
     };
-    init();
+    initWeb3Auth();
   }, []);
 
   return (
     <div id="App">
       <Router>
         <Routes>
+          {/* public service */}
           <Route path="/" element={<HomePage />} />
           <Route path="/community" element={<CreateTbaPage />} />
+
+          {/* admin service */}
           <Route
             path="/authentication"
             element={<AuthPage web3Auth={web3Auth} setWeb3Auth={setWeb3Auth} />}
           />
-          <Route path="/main" element={<DashboardPage />} />
-          <Route path="/tbalist" element={<TbaListPage />} />
-          <Route path="/contract" element={<ContractPage />} />
-          <Route path="/airdrop" element={<AirdropPage />} />
-          <Route
-            path="/manager"
-            element={<ManagerPage web3Auth={web3Auth} />}
-          />
+          <Route path="/main" element={<DashboardPage />}>
+            <Route path="/main/:address" element={<DashboardPage />} />
+          </Route>
+          <Route path="/tbalist" element={<TbaListPage />}>
+            <Route path="/tbalist/:address" element={<TbaListPage />} />
+          </Route>
+          <Route path="/contract" element={<ContractPage />}>
+            <Route path="/contract/:address" element={<ContractPage />} />
+          </Route>
+          <Route path="/airdrop" element={<AirdropPage />}>
+            <Route path="/airdrop/:address" element={<AirdropPage />} />
+          </Route>
+          <Route path="/manager" element={<ManagerPage web3Auth={web3Auth} />}>
+            <Route
+              path="/manager/:address"
+              element={<ManagerPage web3Auth={web3Auth} />}
+            />
+          </Route>
           <Route path="*" element={<h1>Not Found</h1>} />
         </Routes>
       </Router>

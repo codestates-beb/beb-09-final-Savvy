@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Web3Auth } from "@web3auth/modal";
+import { useSelector, useDispatch } from "react-redux";
+import { setManagerData } from "../reducers/managerReducer";
 import {
   Box,
   Button,
@@ -12,6 +13,8 @@ import {
   Checkbox,
   TextField,
   Chip,
+  Snackbar,
+  MuiAlert,
 } from "@mui/material";
 import {
   ADMIN_INFO,
@@ -21,6 +24,10 @@ import {
 } from "../assets/DUMMY_DATA";
 
 import "../assets/ManagerPageContent.css";
+
+// api
+import { getManagerData } from "../api/get-manager-data.js";
+import { createCommunity } from "../api/post-manager-community";
 
 const boxStyle1 = {
   backgroundColor: "#f8f8f8",
@@ -41,12 +48,35 @@ const boxStyle2 = {
 };
 
 export default function ManagerPageContent({ web3Auth }) {
+  const managerData = useSelector((state) => state.manager.managerData);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const [openLogout, setOpenLogout] = useState(false);
   const [openAdd, setOpenAdd] = useState(false);
   const [communityName, setCommunityName] = useState("");
   const [communityAddress, setCommunityAddress] = useState("");
 
-  const navigate = useNavigate();
+  useEffect(() => {
+    const init = async () => {
+      try {
+        const data = await getManagerData();
+        const { admin, communities, tba } = data;
+        dispatch(
+          setManagerData({
+            admin: admin,
+            communities: communities,
+            tba: tba,
+          })
+        );
+      } catch (error) {
+        console.log(error);
+        alert("Error during getManagerData()");
+        return;
+      }
+    };
+    init();
+  }, []);
 
   const handleLogout = async () => {
     try {
@@ -78,8 +108,21 @@ export default function ManagerPageContent({ web3Auth }) {
     setOpenAdd(true);
   };
 
-  const handleAddCommunity = () => {
+  const handleAddCommunity = async () => {
     // TODO: Add community to database
+    const CommunityData = await createCommunity(
+      communityAddress,
+      "main",
+      communityName
+    );
+    const newCommunity = [...managerData.communities, CommunityData];
+    dispatch(
+      setManagerData({
+        admin: managerData.admin,
+        communities: newCommunity,
+        tba: managerData.tba,
+      })
+    );
     setOpenAdd(false);
   };
 
@@ -242,48 +285,54 @@ export default function ManagerPageContent({ web3Auth }) {
             <div>
               <div className="community-category">Name</div>
               <ul className="community-ul">
-                {COMMUNITY_LIST.map((data) => {
-                  return <li key={data.communityName}>{data.communityName}</li>;
-                })}
+                {managerData
+                  ? managerData.communities.map((data) => {
+                      return <li key={data.id}>{data.alias}</li>;
+                    })
+                  : null}
               </ul>
             </div>
             <div>
               <div className="community-category">Address</div>
               <ul className="community-ul">
-                {COMMUNITY_LIST.map((data) => {
-                  return (
-                    <li key={data.communityName}>
-                      {`${data.communityAddress.substring(
-                        0,
-                        4
-                      )}...${data.communityAddress.substring(38)}`}
-                    </li>
-                  );
-                })}
+                {managerData
+                  ? managerData.communities.map((data) => {
+                      return (
+                        <li key={data.id}>
+                          {`${data.address.substring(
+                            0,
+                            4
+                          )}...${data.address.substring(38)}`}
+                        </li>
+                      );
+                    })
+                  : null}
               </ul>
             </div>
             <div>
               <div className="community-category">Date</div>
               <ul className="community-ul">
-                {COMMUNITY_LIST.map((data) => {
-                  return (
-                    <li key={data.communityName}>
-                      {data.createdAt.substring(0, 10)}
-                    </li>
-                  );
-                })}
+                {managerData
+                  ? managerData.communities.map((data) => {
+                      return (
+                        <li key={data.id}>{data.createdAt.substring(0, 10)}</li>
+                      );
+                    })
+                  : null}
               </ul>
             </div>
             <div>
               <div className="community-category">Status</div>
               <ul className="community-ul">
-                {COMMUNITY_LIST.map((data) => {
-                  return (
-                    <li key={data.communityName}>
-                      <input type="checkbox" />
-                    </li>
-                  );
-                })}
+                {managerData
+                  ? managerData.communities.map((data) => {
+                      return (
+                        <li key={data.id}>
+                          <input type="checkbox" />
+                        </li>
+                      );
+                    })
+                  : null}
               </ul>
             </div>
           </div>
