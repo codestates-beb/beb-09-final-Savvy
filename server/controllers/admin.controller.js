@@ -1,5 +1,6 @@
 const jose = require('jose');
 const Admin = require('../models/admin.model');
+const Community = require('../models/community.model');
 
 module.exports = {
   login: async (req, res) => {
@@ -48,6 +49,37 @@ module.exports = {
       }
 
       res.status(400).json({ error: 'Verification Failed' });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({
+        error: 'Internal Server Error',
+      });
+    }
+  },
+  getCommunity: async (req, res) => {
+    try {
+      const idToken = req.headers.authorization?.split(' ')[1];
+      const jwks = jose.createRemoteJWKSet(new URL('https://api.openlogin.com/jwks'));
+      const jwtDecoded = await jose.jwtVerify(idToken, jwks, {
+        algorithms: ['ES256'],
+      });
+
+      const adminEmail = jwtDecoded.payload.email;
+
+      const admin = await Admin.findOne({ email: adminEmail });
+
+      const community = await Community.find({ admin_id: admin._id });
+
+      if (!community || community.length === 0) {
+        return res.status(404).json({
+          error: 'Community does not exist',
+        });
+      }
+
+      res.status(200).json({
+        message: 'get community data',
+        community: community,
+      });
     } catch (error) {
       console.log(error);
       res.status(500).json({
