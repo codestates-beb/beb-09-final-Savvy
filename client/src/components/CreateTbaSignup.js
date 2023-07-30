@@ -15,7 +15,7 @@ import {
 } from "@mui/material";
 
 // api
-import { createTba, postTxHash } from "../api/post-createTba.js";
+import { createTba, postTxHash } from "../api/post-create-tba.js";
 
 const ETHERSCAN_SEPOLIA_NETWORK = "https://sepolia.etherscan.io/tx/";
 
@@ -191,7 +191,7 @@ export default function Login() {
       </Box>
       <Typography
         sx={{
-          ...caprasimoFont, 
+          ...caprasimoFont,
           color: "#9a9ab5",
           fontWeight: "bold",
           fontSize: "15px",

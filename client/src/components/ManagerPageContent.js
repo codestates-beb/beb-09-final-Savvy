@@ -71,7 +71,10 @@ export default function ManagerPageContent({ web3Auth }) {
         );
       } catch (error) {
         console.log(error);
-        alert("Error during getManagerData()");
+        alert("JWT expired. Please login again.");
+        localStorage.removeItem("token");
+        localStorage.removeItem("app_pub_key");
+        navigate("/authentication");
         return;
       }
     };

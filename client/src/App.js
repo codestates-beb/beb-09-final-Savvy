@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { setCommunityData } from "./reducers/communityReducer";
 import { Web3Auth } from "@web3auth/modal";
 import "./App.css";
 
@@ -12,7 +14,12 @@ import ContractPage from "./pages/ContractPage";
 import AirdropPage from "./pages/AirdropPage";
 import ManagerPage from "./pages/ManagerPage";
 
+// api
+import { getAdminCommunity } from "./api/get-admin-community";
+
 function App() {
+  const dispatch = useDispatch();
+  const communityData = useSelector((state) => state.community.communityData);
   const [web3Auth, setWeb3Auth] = useState(null);
 
   useEffect(() => {
@@ -35,7 +42,18 @@ function App() {
         return;
       }
     };
+
+    const initCommunity = async () => {
+      const community = await getAdminCommunity();
+      if (community) {
+        dispatch(setCommunityData(community));
+      } else {
+        dispatch(setCommunityData(null));
+      }
+    };
+
     initWeb3Auth();
+    initCommunity();
   }, []);
 
   return (

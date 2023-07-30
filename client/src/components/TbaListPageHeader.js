@@ -1,7 +1,7 @@
 import React from "react";
 import "../assets/Admin.css";
 
-export default function TbaListPageContent() {
+export default function TbaListPageHeader() {
   const styles = {
     pageContent: {
       display: "flex",

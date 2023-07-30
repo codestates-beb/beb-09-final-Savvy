@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 import { Sidebar, Menu, MenuItem } from "react-pro-sidebar";
 import SidebarFooter from "./SidebarFooter";
 
@@ -15,10 +16,18 @@ import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import "../assets/SideNav.css";
 
 export default function SideNav() {
+  const communityData = useSelector((state) => state.community.communityData);
   const [collapsed, setCollapsed] = useState(false);
   const location = useLocation();
 
-  const { address } = useParams();
+  // 나중에 수정할 코드, 현재는 임시로 사용
+  // 시작
+  let { addressParams } = useParams();
+  let addressCommunityData = communityData ? communityData[0].address : null;
+  let address = addressParams ? addressParams : addressCommunityData;
+  console.log("addressParams:", addressParams);
+  console.log("addressCommunityData:", addressCommunityData);
+  // 끝
 
   const preventImageActions = (event) => {
     if (event.target.tagName === "IMG") {
@@ -56,7 +65,7 @@ export default function SideNav() {
   const inactiveStyle = {
     color: "#757575",
     fontWeight: "bold",
-    marginTop: "15px", 
+    marginTop: "15px",
     fontWeight: "600",
     fontFamily: "'tektur', sans-serif",
     transition: "transform 0.3s ease, box-shadow 0.3s ease",
@@ -79,118 +88,120 @@ export default function SideNav() {
   };
 
   return (
-   <div style={{ background: "#f5f5f5" }}> 
-    <Sidebar
-      collapsed={collapsed}
-      id="sideNav"
-      onContextMenu={preventImageActions}
-      onDragStart={preventImageActions}
-      style={{
-        boxShadow: "0 2px 5px rgba(0, 0, 0, 0.15)", 
-      }}
-    >
-      <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
-        {collapsed ? (
-          <div style={{ textAlign: "center" }}>
-            <Link to={`/main/${address}`}>
-              <img
-                src="/logopurple.png"
-                alt="Logopurple"
-                style={logopurpleStyle}
-                onContextMenu={preventImageCopy}
-              />
-            </Link>
+    <div style={{ background: "#f5f5f5" }}>
+      <Sidebar
+        collapsed={collapsed}
+        id="sideNav"
+        onContextMenu={preventImageActions}
+        onDragStart={preventImageActions}
+        style={{
+          boxShadow: "0 2px 5px rgba(0, 0, 0, 0.15)",
+        }}
+      >
+        <div
+          style={{ display: "flex", flexDirection: "column", height: "100%" }}
+        >
+          {collapsed ? (
+            <div style={{ textAlign: "center" }}>
+              <Link to={`/main/${address}`}>
+                <img
+                  src="/logopurple.png"
+                  alt="Logopurple"
+                  style={logopurpleStyle}
+                  onContextMenu={preventImageCopy}
+                />
+              </Link>
+            </div>
+          ) : (
+            <div icon={<MenuIcon />} style={{ textAlign: "center" }}>
+              <Link to={`/main/${address}`}>
+                <img
+                  src="/logoblack.png"
+                  alt="Logoblack"
+                  style={logoblackStyle}
+                  onContextMenu={preventImageCopy}
+                />
+              </Link>
+            </div>
+          )}
+          <div style={lineStyle} />
+          <div style={{ flex: "1", userSelect: "none" }}>
+            <Menu>
+              <MenuItem
+                onClick={() => {
+                  setCollapsed((prev) => !prev);
+                }}
+                icon={<SpaceDashboardIcon style={iconStyles} />}
+                component={<Link to={`/main/${address}`} />}
+                style={
+                  location.pathname === `/main/${address}`
+                    ? activeStyle
+                    : inactiveStyle
+                }
+              >
+                Dashboard
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  setCollapsed((prev) => !prev);
+                }}
+                icon={<SwitchAccountIcon style={iconStyles} />}
+                component={<Link to={`/tbalist/${address}`} />}
+                style={
+                  location.pathname === `/tbalist/${address}`
+                    ? activeStyle
+                    : inactiveStyle
+                }
+              >
+                TBAs
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  setCollapsed((prev) => !prev);
+                }}
+                icon={<LibraryBooksIcon style={iconStyles} />}
+                component={<Link to={`/contract/${address}`} />}
+                style={
+                  location.pathname === `/contract/${address}`
+                    ? activeStyle
+                    : inactiveStyle
+                }
+              >
+                Contracts
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  setCollapsed((prev) => !prev);
+                }}
+                icon={<CardGiftcardIcon style={iconStyles} />}
+                component={<Link to={`/airdrop/${address}`} />}
+                style={
+                  location.pathname === `/airdrop/${address}`
+                    ? activeStyle
+                    : inactiveStyle
+                }
+              >
+                Airdrop
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  setCollapsed((prev) => !prev);
+                }}
+                icon={<ManageAccountsIcon style={iconStyles} />}
+                component={<Link to={`/manager/${address}`} />}
+                style={
+                  location.pathname === `/manager/${address}`
+                    ? activeStyle
+                    : inactiveStyle
+                }
+              >
+                Manager
+              </MenuItem>
+            </Menu>
           </div>
-        ) : (
-          <div icon={<MenuIcon />} style={{ textAlign: "center" }}>
-            <Link to={`/main/${address}`}>
-              <img
-                src="/logoblack.png"
-                alt="Logoblack"
-                style={logoblackStyle}
-                onContextMenu={preventImageCopy}
-              />
-            </Link>
-          </div>
-        )}
-        <div style={lineStyle} />
-        <div style={{ flex: "1", userSelect: "none" }}>
-          <Menu>
-            <MenuItem
-              onClick={() => {
-                setCollapsed((prev) => !prev);
-              }}
-              icon={<SpaceDashboardIcon style={iconStyles} />}
-              component={<Link to={`/main/${address}`} />}
-              style={
-                location.pathname === `/main/${address}`
-                  ? activeStyle
-                  : inactiveStyle
-              }
-            >
-              Dashboard
-            </MenuItem>
-            <MenuItem
-              onClick={() => {
-                setCollapsed((prev) => !prev);
-              }}
-              icon={<SwitchAccountIcon style={iconStyles} />}
-              component={<Link to={`/tbalist/${address}`} />}
-              style={
-                location.pathname === `/tbalist/${address}`
-                  ? activeStyle
-                  : inactiveStyle
-              }
-            >
-              TBAs
-            </MenuItem>
-            <MenuItem
-              onClick={() => {
-                setCollapsed((prev) => !prev);
-              }}
-              icon={<LibraryBooksIcon style={iconStyles} />}
-              component={<Link to={`/contract/${address}`} />}
-              style={
-                location.pathname === `/contract/${address}`
-                  ? activeStyle
-                  : inactiveStyle
-              }
-            >
-              Contracts
-            </MenuItem>
-            <MenuItem
-              onClick={() => {
-                setCollapsed((prev) => !prev);
-              }}
-              icon={<CardGiftcardIcon style={iconStyles} />}
-              component={<Link to={`/airdrop/${address}`} />}
-              style={
-                location.pathname === `/airdrop/${address}`
-                  ? activeStyle
-                  : inactiveStyle
-              }
-            >
-              Airdrop
-            </MenuItem>
-            <MenuItem
-              onClick={() => {
-                setCollapsed((prev) => !prev);
-              }}
-              icon={<ManageAccountsIcon style={iconStyles} />}
-              component={<Link to={`/manager/${address}`} />}
-              style={
-                location.pathname === `/manager/${address}`
-                  ? activeStyle
-                  : inactiveStyle
-              }
-            >
-              Manager
-            </MenuItem>
-          </Menu>
+          <SidebarFooter collapsed={collapsed} />
         </div>
-        <SidebarFooter collapsed={collapsed} />
-      </div>
-    </Sidebar>
-   </div> 
+      </Sidebar>
+    </div>
   );
 }
