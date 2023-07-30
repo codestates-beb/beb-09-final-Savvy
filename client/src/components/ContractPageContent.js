@@ -1,5 +1,7 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect, useRef } from "react";
+import { Link, useParams } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { setContractData } from "../reducers/contractReducer";
 import "../assets/Admin.css";
 import {
   Box,
@@ -15,6 +17,12 @@ import {
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { CONTRACTS } from "../assets/DUMMY_DATA";
 
+// api
+import { createContract } from "../api/post-create-contract";
+import { getContract } from "../api/get-contract";
+import { deleteContract } from "../api/delete-contract";
+import { updateContract } from "../api/put-contract";
+
 const columns = [
   { field: "id", headerName: "ID", width: 90 },
   { field: "name", headerName: "Name", width: 150 },
@@ -23,21 +31,83 @@ const columns = [
 ];
 
 export default function ContractPageContent() {
+  const dispatch = useDispatch();
+  const contractData = useSelector((state) => state.contract.contractData);
   const [openEnroll, setOpenEnroll] = useState(false);
   const [openUpdate, setOpenUpdate] = useState(false);
   const [rowSelectionModel, setRowSelectionModel] = useState([]);
+  const [contractInput, setContractInput] = useState({
+    name: "",
+    type: "",
+    address: "",
+  });
+  const [isLoading, setIsLoading] = useState(false);
+  const [updateInput, setUpdateInput] = useState({
+    name: "",
+    type: "",
+    address: "",
+  });
+  const [disableAddress, setDisableAddress] = useState(false);
+  const id = contractData ? new Array(contractData.length) : [];
 
-  const handleCloseEnroll = () => {
+  if (contractData) {
+    for (let i = 0; i < contractData.length; i++) {
+      id[i] = i + 1;
+    }
+  }
+
+  let rows = contractData
+    ? contractData.map((contract) => {
+        return {
+          id: id[contractData.indexOf(contract)],
+          name: contract.alias,
+          type: contract.type,
+          address: contract.address,
+        };
+      })
+    : [];
+
+  const { address } = useParams();
+
+  useEffect(() => {
+    const initContract = async () => {
+      const response = await getContract();
+      console.log(response);
+      dispatch(setContractData(response.ContractData));
+    };
+    initContract();
+  }, [isLoading]);
+
+  const handleEnroll = async () => {
+    setIsLoading(true);
+    // TODO: enroll contract at DB
+    if (contractInput.type === "") {
+      alert("Please select contract type.");
+      return;
+    } else if (contractInput.address === "") {
+      alert("Please enter contract address.");
+      return;
+    } else if (contractInput.name === "") {
+      alert("Please enter contract name.");
+      return;
+    }
+
+    const response = await createContract(
+      address,
+      contractInput.type,
+      contractInput.address,
+      contractInput.name
+    );
+    // console.log(response);
+    if (response) {
+      setIsLoading(false);
+    }
     setOpenEnroll(false);
-  };
-
-  const handleOpenEnroll = () => {
-    setOpenEnroll(true);
-  };
-
-  const handleEnroll = () => {
-    // TODO: enroll contract
-    setOpenEnroll(false);
+    setContractInput({
+      name: "",
+      type: "",
+      address: "",
+    });
   };
 
   const handleRowSelectionModelChange = (newRowSelectionModel) => {
@@ -46,20 +116,51 @@ export default function ContractPageContent() {
   };
 
   const handleOpenUpdate = () => {
+    const selectedContract = contractData[rowSelectionModel[0] - 1];
     if (rowSelectionModel.length > 1) {
       alert("Please select only one contract to update.");
       return;
     }
+    setUpdateInput({
+      address: selectedContract.address,
+      name: selectedContract.alias,
+      type: selectedContract.type,
+    });
+    setDisableAddress(true);
     setOpenUpdate(true);
   };
 
-  const handleUpdate = () => {
-    // TODO: update contract
+  const handleUpdate = async () => {
+    setIsLoading(true);
+    // TODO: update contract at DB
+    const response = await updateContract(
+      contractData[rowSelectionModel[0] - 1]._id,
+      updateInput.type,
+      updateInput.name
+    );
+    console.log(response);
+    if (response) {
+      setIsLoading(false);
+    }
     setOpenUpdate(false);
+    setUpdateInput({
+      name: "",
+      type: "",
+      address: "",
+    });
+    setDisableAddress(false);
   };
 
-  const handleDelete = () => {
-    console.log("delete", rowSelectionModel);
+  const handleDelete = async () => {
+    setIsLoading(true);
+    // TODO: delete contract at DB
+    rowSelectionModel.forEach(async (id) => {
+      const response = await deleteContract(contractData[id - 1].address);
+      // console.log(response);
+      if (response) {
+        setIsLoading(false);
+      }
+    });
   };
 
   return (
@@ -109,6 +210,10 @@ export default function ContractPageContent() {
                 fullWidth
                 variant="standard"
                 placeholder="e.g. My NFT"
+                value={updateInput.name}
+                onChange={(e) =>
+                  setUpdateInput({ ...updateInput, name: e.target.value })
+                }
               />
               <TextField
                 margin="dense"
@@ -117,7 +222,10 @@ export default function ContractPageContent() {
                 select
                 fullWidth
                 variant="standard"
-                defaultValue={"ERC721"}
+                value={updateInput.type}
+                onChange={(e) =>
+                  setUpdateInput({ ...updateInput, type: e.target.value })
+                }
               >
                 {["ERC20", "ERC721", "ERC1155"].map((option) => (
                   <MenuItem key={option} value={option}>
@@ -134,6 +242,8 @@ export default function ContractPageContent() {
                 fullWidth
                 variant="standard"
                 placeholder="e.g. 0x0xAdeb833eee668e50761B4BC8b3Ef476Dc2C869461234"
+                value={updateInput.address}
+                disabled={disableAddress}
               />
             </DialogContent>
             <DialogActions>
@@ -147,16 +257,16 @@ export default function ContractPageContent() {
                 sx={{ bgcolor: "#5270ff", color: "#ffffff" }}
                 onClick={handleUpdate}
               >
-                Enroll
+                Update
               </Button>
             </DialogActions>
           </Dialog>
         </div>
-        <Button onClick={handleOpenEnroll} sx={{ color: "#5270ff" }}>
+        <Button onClick={() => setOpenEnroll(true)} sx={{ color: "#5270ff" }}>
           Enroll new contract
         </Button>
       </div>
-      <Dialog open={openEnroll} onClose={handleCloseEnroll}>
+      <Dialog open={openEnroll} onClose={() => setOpenEnroll(false)}>
         <DialogTitle>Enroll new Contract</DialogTitle>
         <DialogContent>
           <DialogContentText>
@@ -176,6 +286,10 @@ export default function ContractPageContent() {
             fullWidth
             variant="standard"
             placeholder="e.g. My NFT"
+            value={contractInput.name}
+            onChange={(e) =>
+              setContractInput({ ...contractInput, name: e.target.value })
+            }
           />
           <TextField
             margin="dense"
@@ -185,6 +299,10 @@ export default function ContractPageContent() {
             fullWidth
             variant="standard"
             defaultValue={"ERC721"}
+            value={contractInput.type}
+            onChange={(e) =>
+              setContractInput({ ...contractInput, type: e.target.value })
+            }
           >
             {["ERC20", "ERC721", "ERC1155"].map((option) => (
               <MenuItem key={option} value={option}>
@@ -200,11 +318,18 @@ export default function ContractPageContent() {
             type="text"
             fullWidth
             variant="standard"
-            placeholder="e.g. 0x0xAdeb833eee668e50761B4BC8b3Ef476Dc2C869461234"
+            placeholder="e.g. 0xAdeb833eee668e50761B4BC8b3Ef476Dc2C81234"
+            value={contractInput.address}
+            onChange={(e) =>
+              setContractInput({ ...contractInput, address: e.target.value })
+            }
           />
         </DialogContent>
         <DialogActions>
-          <Button sx={{ color: "#5270ff" }} onClick={handleCloseEnroll}>
+          <Button
+            sx={{ color: "#5270ff" }}
+            onClick={() => setOpenEnroll(false)}
+          >
             Cancel
           </Button>
           <Button
@@ -225,7 +350,7 @@ export default function ContractPageContent() {
         >
           <DataGrid
             columns={columns}
-            rows={CONTRACTS}
+            rows={rows}
             checkboxSelection
             disableRowSelectionOnClick
             slots={{ toolbar: GridToolbar }}

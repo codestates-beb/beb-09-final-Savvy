@@ -1,16 +1,18 @@
 import React from "react";
 import SideNav from "../components/SideNav";
-import TbaListPageContent from "../components/TbaListPageContent";
+import TbaListPageHeader from "../components/TbaListPageHeader";
 import CurrentTimeBox from "../components/CurrentTimeBox";
-import TbaListParent from "../components/TbaListParent";
+import TbaList from "../components/TbaList";
+
+import { USERS } from "../assets/DUMMY_DATA";
 
 export default function TbaListPage() {
   return (
     <div className="dashboard" style={{ height: "100vh" }}>
       <SideNav />
-      <TbaListPageContent />
+      <TbaListPageHeader />
       <CurrentTimeBox />
-      <TbaListParent />
+      <TbaList data={USERS} />
     </div>
   );
 }

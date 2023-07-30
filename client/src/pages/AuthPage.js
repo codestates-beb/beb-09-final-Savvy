@@ -7,6 +7,7 @@ import { getPublicCompressed } from "@toruslabs/eccrypto";
 
 // api
 import { postLogin } from "../api/post-login.js";
+import { getAdminCommunity } from "../api/get-admin-community.js";
 
 export default function AuthPage({ web3Auth, setWeb3Auth }) {
   const [isLogin, setIsLogin] = useState(false);
@@ -16,7 +17,7 @@ export default function AuthPage({ web3Auth, setWeb3Auth }) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const login = async () => {
+    const initLogin = async () => {
       console.log("isLogin:", isLogin);
       if (isLogin) {
         const rpc = new ethersRPC(provider);
@@ -45,11 +46,16 @@ export default function AuthPage({ web3Auth, setWeb3Auth }) {
         );
 
         if (result) {
-          navigate("/main");
+          const community = await getAdminCommunity();
+          if (community) {
+            navigate(`/main/${community[0].address}`);
+          } else {
+            navigate("/main");
+          }
         }
       }
     };
-    login();
+    initLogin();
   }, [isLogin]);
 
   const handleLogin = async () => {

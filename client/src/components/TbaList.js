@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { setTbaData } from "../reducers/tbaReducer";
 import {
   List,
   ListItem,
@@ -17,7 +19,10 @@ import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import TbaFilterButton from "./TbaFilterButton";
 import TbaAirdropButton from "./TbaAirdropButton";
 import TbaGroupButton from "./TbaGroupButton";
-import TbaModal from './TbaModal';
+import TbaModal from "./TbaModal";
+
+// api
+import { getAllTba } from "../api/get-all-tba";
 
 const StyledListItemText = styled(ListItemText)({
   whiteSpace: "pre-wrap",
@@ -47,7 +52,7 @@ const StyledPaper = styled(Paper)({
   padding: "10px",
   height: "50px",
   borderRadius: "10px",
-  cursor: "pointer", 
+  cursor: "pointer",
 });
 
 const BoldTypography = styled(Typography)({
@@ -188,11 +193,14 @@ const SortHeaderSpan = styled("span")({
 }); */
 
 function TbaList({ data = [] }) {
+  const dispatch = useDispatch();
+  const tbaData = useSelector((state) => state.tba.tbaData);
   const [filterOption, setFilterOption] = useState(null);
   const [sortBy, setSortBy] = useState("name");
   const [sortDirection, setSortDirection] = useState("asc");
   const [isAllSelected, setIsAllSelected] = useState(false);
   const [selectedItems, setSelectedItems] = useState([]);
+  const [openTbaModal, setOpenTbaModal] = useState(false);
 
   useEffect(() => {
     document.addEventListener("copy", preventCopy);
@@ -201,14 +209,25 @@ function TbaList({ data = [] }) {
     };
   }, []);
 
-  const [openModal, setOpenModal] = useState(false);
+  useEffect(() => {
+    const initTbaData = async () => {
+      const tba = await getAllTba();
+      if (tba) {
+        dispatch(setTbaData(tba));
+      } else {
+        dispatch(setTbaData(null));
+      }
+    };
+    initTbaData();
+  }, []);
 
-  const handleOpenModal = () => {
-    setOpenModal(true);
+  const handleOpenTbaModal = (e) => {
+    if (e.target.tagName === "INPUT") return;
+    setOpenTbaModal(true);
   };
 
-  const handleCloseModal = () => {
-    setOpenModal(false);
+  const handleCloseTbaModal = () => {
+    setOpenTbaModal(false);
   };
 
   const handleFilter = (option) => {
@@ -272,7 +291,7 @@ function TbaList({ data = [] }) {
 
   return (
     <StyledBox onCopy={preventCopy} overflow="auto">
-     <TbaModal open={openModal} handleClose={handleCloseModal} />
+      <TbaModal open={openTbaModal} handleClose={handleCloseTbaModal} />
       <TbaFilterButton onFilter={handleFilter} />
       <SortContainer>
         <SortItemContainer>
@@ -312,14 +331,14 @@ function TbaList({ data = [] }) {
         >
           Airdrop
         </AirdropText>
-        <TbaGroupButton />
+        <TbaGroupButton selectedItems={selectedItems} />
         <TbaAirdropButton />
       </SortContainer>
 
       {sortedData.map((user) => (
-        <StyledPaper elevation={2} key={user.id} onClick={handleOpenModal}>
+        <StyledPaper elevation={2} key={user.id}>
           <List>
-            <StyledListItem>
+            <StyledListItem onClick={(e) => handleOpenTbaModal(e)}>
               <ListItemAvatar>
                 <Avatar src={user.profileImage} />
               </ListItemAvatar>

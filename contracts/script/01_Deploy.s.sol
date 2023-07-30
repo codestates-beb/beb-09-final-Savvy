@@ -3,6 +3,7 @@ pragma solidity ^0.8.13;
 
 import "forge-std/Script.sol";
 import {NFTLootBox} from "../src/NFTLootBox.sol";
+import {BulkAirdrop} from "../src/BulkAirdrop.sol";
 
 contract DeployScript is Script {
     function setUp() public {}
@@ -15,8 +16,9 @@ contract DeployScript is Script {
         // NFTLootBox.sol 배포
         NFTLootBox nftLootBox = new NFTLootBox();
 
-        vm.stopBroadcast();
+        // BulkAirdrop.sol 배포
+        BulkAirdrop bulkAirdrop = new BulkAirdrop();
 
-        return nftLootBox;
+        vm.stopBroadcast();
     }
 }
