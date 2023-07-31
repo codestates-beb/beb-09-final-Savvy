@@ -98,56 +98,66 @@ export const airdrop = async (
       signer
     );
 
-    // approve
-    if (type === "erc20") {
-      const approve = await erc20Contract.approve(
-        bulkAirdropAddress,
-        ethers.utils.parseEther(amountArr.reduce((a, b) => a + b, 0))
-      );
-      await approve.wait();
-      console.log(approve);
-    } else if (type === "erc721") {
-      const approve = await erc721Contract.setApprovalForAll(
-        bulkAirdropAddress,
-        true
-      );
-      await approve.wait();
-      console.log(approve);
-    } else if (type === "erc1155") {
-      const approve = await erc1155Contract.setApprovalForAll(
-        bulkAirdropAddress,
-        true
-      );
-      await approve.wait();
-      console.log(approve);
+    try {
+      // approve
+      if (type === "erc20") {
+        const approve = await erc20Contract.approve(
+          bulkAirdropAddress,
+          ethers.utils.parseEther(amountArr.reduce((a, b) => a + b, 0))
+        );
+        await approve.wait();
+        console.log(approve);
+      } else if (type === "erc721") {
+        const approve = await erc721Contract.setApprovalForAll(
+          bulkAirdropAddress,
+          true
+        );
+        await approve.wait();
+        console.log(approve);
+      } else if (type === "erc1155") {
+        const approve = await erc1155Contract.setApprovalForAll(
+          bulkAirdropAddress,
+          true
+        );
+        await approve.wait();
+        console.log(approve);
+      }
+    } catch (e) {
+      console.log(e);
+      return;
     }
 
-    // airdrop
-    if (type === "erc20") {
-      const airdrop = await bulkAirdropContract.bulkAirdropERC20(
-        contractAddress,
-        tbaAddresses,
-        amountArr
-      );
-      await airdrop.wait();
-      console.log(airdrop);
-    } else if (type === "erc721") {
-      const airdrop = await bulkAirdropContract.bulkAirdropERC721(
-        contractAddress,
-        tbaAddresses,
-        tokenIdArr
-      );
-      await airdrop.wait();
-      console.log(airdrop);
-    } else if (type === "erc1155") {
-      const airdrop = await bulkAirdropContract.bulkAirdropERC1155(
-        contractAddress,
-        tbaAddresses,
-        tokenIdArr,
-        amountArr
-      );
-      await airdrop.wait();
-      console.log(airdrop);
+    try {
+      // airdrop
+      if (type === "erc20") {
+        const airdrop = await bulkAirdropContract.bulkAirdropERC20(
+          contractAddress,
+          tbaAddresses,
+          amountArr
+        );
+        await airdrop.wait();
+        console.log(airdrop);
+      } else if (type === "erc721") {
+        const airdrop = await bulkAirdropContract.bulkAirdropERC721(
+          contractAddress,
+          tbaAddresses,
+          tokenIdArr
+        );
+        await airdrop.wait();
+        console.log(airdrop);
+      } else if (type === "erc1155") {
+        const airdrop = await bulkAirdropContract.bulkAirdropERC1155(
+          contractAddress,
+          tbaAddresses,
+          tokenIdArr,
+          amountArr
+        );
+        await airdrop.wait();
+        console.log(airdrop);
+      }
+    } catch (e) {
+      console.log(e);
+      return;
     }
 
     return true;

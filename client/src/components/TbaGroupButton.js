@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useParams } from "react-router-dom";
 import {
   Button,
   Dialog,
@@ -42,11 +43,13 @@ export default function TbaGroupButton({ selectedItems }) {
   const [groupName, setGroupName] = useState("");
   const [openSnackbar, setOpenSnackbar] = useState(false);
 
+  const { address } = useParams();
+
   const handleClose = () => setOpen(false);
 
   const handleCreateGroup = async () => {
     // const tbaIds = selectedItems.map((item) => item.id);
-    const response = await createTbaGroup(groupName, selectedItems);
+    const response = await createTbaGroup(address, groupName, selectedItems);
     setOpen(false);
     setOpenSnackbar(true);
     setGroupName("");
