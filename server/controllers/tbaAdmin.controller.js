@@ -1,10 +1,10 @@
-const jose = require('jose');
+const jose = require("jose");
 
-const Tba = require('../models/tba.model');
-const Community = require('../models/community.model');
-const Admin = require('../models/admin.model');
-const Item = require('../models/item.model');
-const tba_group = require('../models/tba_group.model');
+const Tba = require("../models/tba.model");
+const Community = require("../models/community.model");
+const Admin = require("../models/admin.model");
+const Item = require("../models/item.model");
+const tba_group = require("../models/tba_group.model");
 
 module.exports = {
   getTbaByAddress: async (req, res) => {
@@ -14,23 +14,25 @@ module.exports = {
       const community = await Community.findOne({ address: communityAddress });
 
       if (!community) {
-        return res.status(400).json({ error: 'No community found' });
+        return res.status(400).json({ error: "No community found" });
       }
 
       const TBAs = await Tba.find({ community_id: community._id });
 
       if (TBAs.length === 0) {
-        return res.status(404).json({ error: 'No TBAs found for this community' });
+        return res
+          .status(404)
+          .json({ error: "No TBAs found for this community" });
       }
 
       res.status(200).json({
-        message: 'Successfully TBAs of communityAddress',
+        message: "Successfully TBAs of communityAddress",
         TBAs: TBAs,
       });
     } catch (error) {
       console.log(error);
       res.status(500).json({
-        error: 'Internal Server Error',
+        error: "Internal Server Error",
       });
     }
   },
@@ -46,19 +48,19 @@ module.exports = {
 
       if (tba) {
         res.status(200).json({
-          message: 'Successfully fetched TBA details',
+          message: "Successfully fetched TBA details",
           TBA: tba,
           items: items,
         });
       } else {
         res.status(404).json({
-          message: 'No TBA',
+          message: "No TBA",
         });
       }
     } catch (error) {
       console.log(error);
       res.status(500).json({
-        error: 'Internal Server Error',
+        error: "Internal Server Error",
       });
     }
   },
@@ -68,12 +70,12 @@ module.exports = {
     try {
       const community = await Community.findOne({ address: communityAddress });
       if (!community) {
-        return res.status(400).json({ error: 'No community found' });
+        return res.status(400).json({ error: "No community found" });
       }
 
       const existingGroup = await tba_group.findOne({ name: groupName });
       if (existingGroup) {
-        return res.status(400).json({ error: 'Group name already exists' });
+        return res.status(400).json({ error: "Group name already exists" });
       }
 
       const newGroup = await tba_group.create({
@@ -83,14 +85,14 @@ module.exports = {
       });
 
       res.status(200).json({
-        message: 'Successfully created TBA groups',
+        message: "Successfully created TBA groups",
         id: newGroup._id,
         name: newGroup.name,
         tbaIds: newGroup.Tba_id,
       });
     } catch (error) {
       console.log(error);
-      res.status(500).json({ error: 'Internal Server Error' });
+      res.status(500).json({ error: "Internal Server Error" });
     }
   },
   updateGroup: async (req, res) => {
@@ -99,7 +101,7 @@ module.exports = {
     try {
       const existingGroup = await tba_group.findOne({ _id: id });
       if (!existingGroup) {
-        return res.status(400).json({ error: 'Group does not exist' });
+        return res.status(400).json({ error: "Group does not exist" });
       }
 
       const updatedGroup = await tba_group.findOneAndUpdate(
@@ -109,14 +111,14 @@ module.exports = {
       );
 
       res.status(200).json({
-        message: 'Successfully updated TBA groups',
+        message: "Successfully updated TBA groups",
         id: updatedGroup._id,
         name: updatedGroup.name,
         tbaIds: updatedGroup.Tba_id,
       });
     } catch (error) {
       console.log(error);
-      res.status(500).json({ error: 'Internal Server Error' });
+      res.status(500).json({ error: "Internal Server Error" });
     }
   },
   getGroupTBA: async (req, res) => {
@@ -127,7 +129,7 @@ module.exports = {
       console.log(selectedGroup);
 
       if (!selectedGroup) {
-        return res.status(404).json({ error: 'No group found' });
+        return res.status(404).json({ error: "No group found" });
       }
 
       const tbaIds = selectedGroup.Tba_id;
@@ -136,17 +138,17 @@ module.exports = {
       //console.log(TBAs);
 
       if (TBAs.length === 0) {
-        return res.status(404).json({ error: 'No TBAs found for this group' });
+        return res.status(404).json({ error: "No TBAs found for this group" });
       }
 
       res.status(200).json({
-        message: 'Successfully fetched TBAs of group',
+        message: "Successfully fetched TBAs of group",
         TBAs: TBAs,
       });
     } catch (error) {
       console.log(error);
       res.status(500).json({
-        error: 'Internal Server Error',
+        error: "Internal Server Error",
       });
     }
   },
@@ -156,13 +158,13 @@ module.exports = {
     try {
       const community = await Community.findOne({ address: communityAddress });
       if (!community) {
-        return res.status(400).json({ error: 'No community found' });
+        return res.status(400).json({ error: "No community found" });
       }
 
       const groups = await tba_group.find({ community_id: community._id });
       //console.log(groups);
       if (groups.length === 0) {
-        return res.status(404).json({ error: 'No groups found' });
+        return res.status(404).json({ error: "No groups found" });
       }
 
       const groupsWithTbas = await Promise.all(
@@ -179,13 +181,13 @@ module.exports = {
       );
 
       res.status(200).json({
-        message: 'Successfully fetched all groups',
+        message: "Successfully fetched all groups",
         groups: groupsWithTbas,
       });
     } catch (error) {
       console.log(error);
       res.status(500).json({
-        error: 'Internal Server Error',
+        error: "Internal Server Error",
       });
     }
   },
@@ -196,16 +198,16 @@ module.exports = {
       const deletedGroup = await tba_group.deleteMany({ _id: groupId });
 
       if (deletedGroup.deletedCount === 0) {
-        return res.status(404).json({ error: 'No group found' });
+        return res.status(404).json({ error: "No group found" });
       }
 
       res.status(200).json({
-        message: 'Successfully deleted group',
+        message: "Successfully deleted group",
       });
     } catch (error) {
       console.log(error);
       res.status(500).json({
-        error: 'Internal Server Error',
+        error: "Internal Server Error",
       });
     }
   },

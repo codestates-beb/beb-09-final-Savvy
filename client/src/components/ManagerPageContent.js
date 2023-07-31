@@ -52,6 +52,7 @@ export default function ManagerPageContent({ web3Auth }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const [isLoading, setIsLoading] = useState(false);
   const [openLogout, setOpenLogout] = useState(false);
   const [openAdd, setOpenAdd] = useState(false);
   const [communityName, setCommunityName] = useState("");
@@ -59,6 +60,7 @@ export default function ManagerPageContent({ web3Auth }) {
 
   useEffect(() => {
     const init = async () => {
+      setIsLoading(true);
       try {
         const data = await getManagerData();
         const { admin, communities, tba } = data;
@@ -79,8 +81,11 @@ export default function ManagerPageContent({ web3Auth }) {
       }
     };
     init();
+    if (managerData) {
+      setIsLoading(false);
+    }
     console.log(managerData);
-  }, []);
+  }, [isLoading]);
 
   const handleLogout = async () => {
     try {
@@ -292,7 +297,7 @@ export default function ManagerPageContent({ web3Auth }) {
               <ul className="community-ul">
                 {managerData
                   ? managerData.communities.map((data) => {
-                      return <li key={data.id}>{data.alias}</li>;
+                      return <li key={data._id}>{data.alias}</li>;
                     })
                   : null}
               </ul>
@@ -303,7 +308,7 @@ export default function ManagerPageContent({ web3Auth }) {
                 {managerData
                   ? managerData.communities.map((data) => {
                       return (
-                        <li key={data.id}>
+                        <li key={data._id}>
                           {`${data.address.substring(
                             0,
                             4
@@ -320,7 +325,9 @@ export default function ManagerPageContent({ web3Auth }) {
                 {managerData
                   ? managerData.communities.map((data) => {
                       return (
-                        <li key={data.id}>{data.createdAt.substring(0, 10)}</li>
+                        <li key={data._id}>
+                          {data.createdAt.substring(0, 10)}
+                        </li>
                       );
                     })
                   : null}
@@ -332,7 +339,7 @@ export default function ManagerPageContent({ web3Auth }) {
                 {managerData
                   ? managerData.communities.map((data) => {
                       return (
-                        <li key={data.id}>
+                        <li key={data._id}>
                           <input type="checkbox" />
                         </li>
                       );

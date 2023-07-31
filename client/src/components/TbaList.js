@@ -196,8 +196,11 @@ const SortHeaderSpan = styled("span")({
 function TbaList({ data = [] }) {
   const dispatch = useDispatch();
   const tbaData = useSelector((state) => state.tba.tbaData);
+  let tbaDataDup = tbaData ? [...tbaData] : [];
+
+  console.log(tbaData);
   const [filterOption, setFilterOption] = useState(null);
-  const [sortBy, setSortBy] = useState("name");
+  const [sortBy, setSortBy] = useState("owner");
   const [sortDirection, setSortDirection] = useState("asc");
   const [isAllSelected, setIsAllSelected] = useState(false);
   const [selectedItems, setSelectedItems] = useState([]);
@@ -256,14 +259,16 @@ function TbaList({ data = [] }) {
     if (isAllSelected) {
       setSelectedItems([]);
     } else {
-      setSelectedItems(data.map((item) => item.id));
+      setSelectedItems(tbaDataDup.map((item) => item._id));
     }
     setIsAllSelected(!isAllSelected);
   };
 
   const filteredData = filterOption
-    ? data.filter((user) => user[sortBy] === filterOption)
-    : data;
+    ? tbaDataDup.filter((user) => user[sortBy] === filterOption)
+    : tbaDataDup;
+
+  console.log(filteredData);
 
   const sortedData = filteredData.sort((a, b) => {
     const aValue = String(a[sortBy]);
@@ -296,9 +301,9 @@ function TbaList({ data = [] }) {
       <TbaFilterButton onFilter={handleFilter} />
       <SortContainer>
         <SortItemContainer>
-          <SortHeader onClick={() => handleSort("name")}>
-            <SortHeaderSpan>Name</SortHeaderSpan>
-            {getSortIcon("name")}
+          <SortHeader onClick={() => handleSort("owner")}>
+            <SortHeaderSpan>owner</SortHeaderSpan>
+            {getSortIcon("owner")}
           </SortHeader>
         </SortItemContainer>
 
@@ -337,11 +342,11 @@ function TbaList({ data = [] }) {
       </SortContainer>
 
       {sortedData.map((user) => (
-        <StyledPaper elevation={2} key={user.id}>
+        <StyledPaper elevation={2} key={user._id}>
           <List>
             <StyledListItem onClick={(e) => handleOpenTbaModal(e)}>
               <ListItemAvatar>
-                <Avatar src={user.profileImage} />
+                <Avatar src={user.tokenURI} />
               </ListItemAvatar>
               <div
                 style={{
@@ -352,7 +357,7 @@ function TbaList({ data = [] }) {
               >
                 <ItemContainer>
                   <StyledListItemText
-                    primary={<BoldTypography>{user.name}</BoldTypography>}
+                    primary={<BoldTypography>{user.owner}</BoldTypography>}
                   />
                 </ItemContainer>
                 <ItemContainer>
@@ -367,8 +372,8 @@ function TbaList({ data = [] }) {
                 </ItemContainer>
                 <CheckboxContainer>
                   <CheckboxStyled
-                    checked={selectedItems.includes(user.id)}
-                    onChange={() => handleUserCheck(user.id)}
+                    checked={selectedItems.includes(user._id)}
+                    onChange={() => handleUserCheck(user._id)}
                     disabled={false}
                   />
                 </CheckboxContainer>

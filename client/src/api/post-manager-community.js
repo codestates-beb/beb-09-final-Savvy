@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const createCommunity = async (address, type, alias) => {
+export const createCommunity = async (address, type, communityName) => {
   try {
     const response = await axios({
       method: "post",
@@ -11,7 +11,7 @@ export const createCommunity = async (address, type, alias) => {
       data: {
         address,
         type,
-        alias,
+        communityName,
       },
     });
     console.log(response.data.CommunityData);

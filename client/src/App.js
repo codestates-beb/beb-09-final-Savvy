@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { setCommunityData } from "./reducers/communityReducer";
+import { setDashboardData } from "./reducers/dashboardReducer";
 import { Web3Auth } from "@web3auth/modal";
 import "./App.css";
 
@@ -17,10 +18,12 @@ import ErrorPage from './components/ErrorPage';
 
 // api
 import { getAdminCommunity } from "./api/get-admin-community";
+import { getDashboard } from "./api/get-dashboard";
 
 function App() {
   const dispatch = useDispatch();
   const communityData = useSelector((state) => state.community.communityData);
+  const dashboardData = useSelector((state) => state.dashboard.dashboardData);
   const [web3Auth, setWeb3Auth] = useState(null);
 
   useEffect(() => {
@@ -53,9 +56,22 @@ function App() {
       }
     };
 
+    const initDashboard = async () => {
+      const dashboard = await getDashboard();
+      if (dashboard) {
+        const { community, TBAs, items } = dashboard;
+        dispatch(setDashboardData({ community, TBAs, items }));
+      } else {
+        dispatch(setDashboardData(null));
+      }
+    };
+
     initWeb3Auth();
     initCommunity();
+    initDashboard();
   }, []);
+
+  console.log("dashboardData:", dashboardData);
 
   return (
     <div id="App">
@@ -79,8 +95,11 @@ function App() {
           <Route path="/contract" element={<ContractPage />}>
             <Route path="/contract/:address" element={<ContractPage />} />
           </Route>
-          <Route path="/airdrop" element={<AirdropPage />}>
-            <Route path="/airdrop/:address" element={<AirdropPage />} />
+          <Route path="/airdrop" element={<AirdropPage web3Auth={web3Auth} />}>
+            <Route
+              path="/airdrop/:address"
+              element={<AirdropPage web3Auth={web3Auth} />}
+            />
           </Route>
           <Route path="/manager" element={<ManagerPage web3Auth={web3Auth} />}>
             <Route

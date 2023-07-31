@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import {
   Button,
   Dialog,
@@ -51,7 +52,7 @@ const BlueButton = styled(Button)(({ theme, cancelButton }) => ({
   backgroundColor: cancelButton ? "#f88181" : "#576ff6",
   color: "#fff",
   "&:hover": {
-    backgroundColor: cancelButton ? "#eb6363" : "#3351e2", 
+    backgroundColor: cancelButton ? "#eb6363" : "#3351e2",
   },
 }));
 
@@ -86,25 +87,29 @@ const CenteredDialogActions = styled(DialogActions)({
   justifyContent: "center",
 });
 
-const SnackbarWrapper = styled('div')({
-  position: 'fixed',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  bottom: '30px',
-  left: '50%',
-  transform: 'translateX(-50%)',
-  zIndex: 9999
+const SnackbarWrapper = styled("div")({
+  position: "fixed",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  bottom: "30px",
+  left: "50%",
+  transform: "translateX(-50%)",
+  zIndex: 9999,
 });
 
 const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} timeout={TRANSITION_DURATION} {...props} />;
+  return (
+    <Slide direction="up" ref={ref} timeout={TRANSITION_DURATION} {...props} />
+  );
 });
 
 export default function TbaGroupButton({ selectedItems }) {
   const [open, setOpen] = useState(false);
   const [groupName, setGroupName] = useState("");
   const [openSnackbar, setOpenSnackbar] = useState(false);
+
+  const { address } = useParams();
 
   useEffect(() => {
     const preventCopy = (e) => {
@@ -129,7 +134,8 @@ export default function TbaGroupButton({ selectedItems }) {
   const handleClose = () => setOpen(false);
 
   const handleCreateGroup = async () => {
-    const response = await createTbaGroup(groupName, selectedItems);
+    // const tbaIds = selectedItems.map((item) => item.id);
+    const response = await createTbaGroup(address, groupName, selectedItems);
     setOpen(false);
     setOpenSnackbar(true);
     setGroupName("");
@@ -139,7 +145,10 @@ export default function TbaGroupButton({ selectedItems }) {
   const selectedItemsLength = selectedItems.length;
 
   return (
-    <div className="page-content" style={{ userSelect: "none", overflow: "visible" }}>
+    <div
+      className="page-content"
+      style={{ userSelect: "none", overflow: "visible" }}
+    >
       <StyledButton
         variant="contained"
         color="primary"
@@ -154,11 +163,13 @@ export default function TbaGroupButton({ selectedItems }) {
         TransitionComponent={Transition}
         transitionDuration={TRANSITION_DURATION}
       >
-        <DialogTitle style={{ fontSize: "14px", fontWeight: "bold", color: "#272727" }}>
+        <DialogTitle
+          style={{ fontSize: "14px", fontWeight: "bold", color: "#272727" }}
+        >
           Create New Group
         </DialogTitle>
         <div
-          style={{ 
+          style={{
             width: "90%",
             border: "1px solid transparent",
             borderImage: "linear-gradient(100deg, #f8f8f8, #576ff6, #f8f8f8)",
@@ -167,21 +178,23 @@ export default function TbaGroupButton({ selectedItems }) {
             marginTop: "-3px",
           }}
         />
-        <DialogContent style={{ marginTop: "5px", overflow: "hidden", position: "relative" }}> 
-          <DialogContentText 
+        <DialogContent
+          style={{ marginTop: "5px", overflow: "hidden", position: "relative" }}
+        >
+          <DialogContentText
             style={{
               width: "38%",
               height: "25px",
-              fontSize: "13px", 
-              fontWeight: "bold", 
-              color: "#fff", 
+              fontSize: "13px",
+              fontWeight: "bold",
+              color: "#fff",
               marginLeft: "31.5%",
               overflow: "hidden",
               marginBottom: "0px",
-              backgroundColor: "#576ff6", 
+              backgroundColor: "#576ff6",
               borderRadius: "5px",
               position: "relative",
-              top: "-10px", 
+              top: "-10px",
               textAlign: "center",
               display: "flex",
               alignItems: "center",
@@ -192,30 +205,30 @@ export default function TbaGroupButton({ selectedItems }) {
             {`Selected: ${selectedItemsLength}`}
           </DialogContentText>
 
-          <TextField 
-            sx={{ 
-              width: "100%", 
+          <TextField
+            sx={{
+              width: "100%",
               height: "50px",
               whiteSpace: "nowrap",
               backgroundColor: "#fff",
               boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
               borderRadius: "10px",
               marginTop: "5px",
-              '& .MuiOutlinedInput-root': {
-                '& fieldset': {
-                  borderColor: 'transparent',
+              "& .MuiOutlinedInput-root": {
+                "& fieldset": {
+                  borderColor: "transparent",
                 },
-                '&:hover fieldset': {
-                  borderColor: 'transparent',
+                "&:hover fieldset": {
+                  borderColor: "transparent",
                 },
-                '&.Mui-focused fieldset': {
-                  borderColor: 'transparent',
-                }
+                "&.Mui-focused fieldset": {
+                  borderColor: "transparent",
+                },
               },
-              '& .MuiInputLabel-root': {  
-                color: '#a6a4a4', 
-                fontSize: '12px', 
-                fontWeight: 'bold', 
+              "& .MuiInputLabel-root": {
+                color: "#a6a4a4",
+                fontSize: "12px",
+                fontWeight: "bold",
               },
             }}
             autoFocus
@@ -230,7 +243,9 @@ export default function TbaGroupButton({ selectedItems }) {
           />
         </DialogContent>
         <CenteredDialogActions>
-          <BlueButton cancelButton onClick={handleClose}>Cancel</BlueButton>
+          <BlueButton cancelButton onClick={handleClose}>
+            Cancel
+          </BlueButton>
           <BlueButton onClick={handleCreateGroup}>Create</BlueButton>
         </CenteredDialogActions>
       </StyledDialog>
@@ -242,7 +257,10 @@ export default function TbaGroupButton({ selectedItems }) {
           onClose={() => setOpenSnackbar(false)}
           message="Group created successfully"
         >
-          <Alert severity="success" sx={{ width: "100%", whiteSpace: "nowrap" }}>
+          <Alert
+            severity="success"
+            sx={{ width: "100%", whiteSpace: "nowrap" }}
+          >
             Group created successfully!
           </Alert>
         </Snackbar>

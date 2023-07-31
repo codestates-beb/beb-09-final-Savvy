@@ -1,17 +1,12 @@
 import axios from "axios";
 
-export const createTbaGroup = async (communityAddress, groupName, tbaIds) => {
+export const getTbaById = async (tbaId) => {
   try {
     const response = await axios({
-      method: "post",
-      url: "http://localhost:8080/tbaAdmin/createGroup",
+      method: "get",
+      url: `http://localhost:8080/tbaAdmin/detail/${tbaId}`,
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-      data: {
-        communityAddress,
-        groupName,
-        tbaIds,
       },
     });
     return response.data;
