@@ -8,6 +8,7 @@ export const managerSlice = createSlice({
   reducers: {
     setManagerData: (state, action) => {
       state.managerData = action.payload;
+      console.log("managerData:", state.managerData);
     },
   },
 });
