@@ -147,7 +147,7 @@ const MainHeader = () => {
             style={{
               width: "110px",
               height: "auto",
-              marginTop: "18px",
+              marginTop: "25px",
               marginLeft: "10px",
               cursor: "pointer",
             }}

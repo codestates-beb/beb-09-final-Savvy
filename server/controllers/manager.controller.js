@@ -95,23 +95,23 @@ module.exports = {
             } catch (error) {
               console.log('Error occurred while getting tokenURI');
             }
-
-            const newTba = await Tba.create({
-              address: event.args.account,
-              owner: owner,
-              level: '0',
-              ethBalance: ethBalance,
-              tokenURI: tokenURI,
-              community_id: newCommunity._id,
-            });
-
-            const newItem = await Item.create({
-              type: '',
-              address: newCommunity.address,
-              tokenId: token.tokenId,
-              tokenAmount: '',
-              Tba_id: newTba._id,
-            });
+            if (owner !== null && tokenURI !== null) {
+              const newTba = await Tba.create({
+                address: event.args.account,
+                owner: owner,
+                level: '0',
+                ethBalance: ethBalance,
+                tokenURI: tokenURI,
+                community_id: newCommunity._id,
+              });
+              const newItem = await Item.create({
+                type: '',
+                address: newCommunity.address,
+                tokenId: token.tokenId,
+                tokenAmount: '',
+                Tba_id: newTba._id,
+              });
+            }
           }
         });
 

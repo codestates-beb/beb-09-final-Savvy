@@ -42,7 +42,7 @@ function TbaModal({ open, handleClose, userId }) {
   };
 
   const truncateAddress = (address) => {
-    const maxLength = 30;
+    const maxLength = 42;
     if (address.length > maxLength) {
       return address.slice(0, maxLength) + "...";
     }
@@ -61,10 +61,19 @@ function TbaModal({ open, handleClose, userId }) {
 
   const slideUp = keyframes`
     from {
-      transform: translateX(-50%) translateY(5%)
+      transform: translateX(-50%) translateY(5%);
     }
     to {
-      transform: translateX(-50%) translateY(-50%)
+      transform: translateX(-50%) translateY(-50%);
+    }
+  `;
+
+  const slideDown = keyframes`
+    from {
+      transform: translateX(-50%) translateY(-50%);
+    }
+    to {
+      transform: translateX(-50%) translateY(5%);
     }
   `;
 
@@ -94,10 +103,10 @@ function TbaModal({ open, handleClose, userId }) {
           boxShadow: `
           0px 3px 10px rgba(0, 0, 0, 0.3),
           0px 0px 40px rgba(0, 0, 0, 0.3),
-          inset 0 0 20px rgba(0,0,0,0.6) 
+          inset 0 0 20px rgba(0,0,0,0.3) 
         `,
           background: "linear-gradient(90deg, #fff, #fff)",
-          animation: `${slideUp} 0.3s ease-out`,
+          animation: open ? `${slideUp} 0.3s ease-out` : `${slideDown} 0.3s ease-in`,
         }}
         onContextMenu={preventRightClick}
       >
@@ -107,9 +116,8 @@ function TbaModal({ open, handleClose, userId }) {
           component="h2"
           sx={{
             mt: -1,
-            fontSize: "22px",
-            fontWeight: "600",
-            fontFamily: "'tektur', sans-serif",
+            fontSize: "20px",
+            fontWeight: "bold",
             color: "#2e2e2e",
             marginTop: "-15px",
             position: "relative",
@@ -210,7 +218,7 @@ function TbaModal({ open, handleClose, userId }) {
               }} />
 
               <span style={{
-                color: "#000",
+                color: "#666",
                 fontSize: "12px",
                 fontWeight: "bold",
                 transform: "translateY(-3px)",
@@ -244,14 +252,14 @@ function TbaModal({ open, handleClose, userId }) {
             marginTop: "15px",
             marginBottom: "-25px",
             borderRadius: "10px",
-            backgroundColor: "#5270ff",
+            backgroundColor: "#fff",
             boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.3)",
             opacity: "0.8",
           }}
         >
           <div style={{ height: '36px', display: 'flex', alignItems: 'center', justifyContent: 'flex-start', width: '100%' }}>
             <AccountCircleOutlinedIcon
-              sx={{ color: "#fff", transform: "translateX(10px)" }}
+              sx={{ color: "#333", transform: "translateX(10px)" }}
             />
             <Typography
               variant="body1"
@@ -259,11 +267,11 @@ function TbaModal({ open, handleClose, userId }) {
                 fontSize: "13px",
                 fontWeight: "500",
                 fontFamily: "'tektur', sans-serif",
-                color: "#fff",
+                color: "#333",
                 marginLeft: "20px",
               }}
             >
-              Name: {userData.name}
+              {userData.name}
             </Typography>
           </div>
         </div>
@@ -281,16 +289,17 @@ function TbaModal({ open, handleClose, userId }) {
             transform: "translateY(30px)",
             marginBottom: "-25px",
             borderRadius: "10px",
-            backgroundColor: "#5270ff",
+            backgroundColor: "#fff",
             boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.3)",
             opacity: "0.8",
+            position: 'relative'
           }}
         >
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'center' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start', width: '100%' }}>
           <AccountBalanceWalletOutlinedIcon
-            sx={{ color: "#fff", marginRight: "5px", transform: "translateX(-33px)", marginBottom: "-45px" }}
+            sx={{ color: "#666", marginRight: "5px", transform: "translateX(15px)", marginBottom: "-45px" }}
           />
           <Typography
             variant="body1"
@@ -298,13 +307,13 @@ function TbaModal({ open, handleClose, userId }) {
               fontSize: "13px",
               fontWeight: "500",
               fontFamily: "'tektur', sans-serif",
-              color: "#fff",
-              marginLeft: "-28px",
+              color: "#666",
+              marginLeft: "19.5px",
               marginBottom: "5px",
               transform: "translateY(25px)",
             }}
           >
-            Address: {truncateAddress(userData.address)}
+            {truncateAddress(userData.address)}
           </Typography>
         </div>
 
@@ -338,6 +347,7 @@ function TbaModal({ open, handleClose, userId }) {
             alignSelf: "center",
             marginTop: "auto",
             boxShadow: '0px 3px 10px rgba(0, 0, 0, 0.3)',
+            borderRadius: "20px",
             backgroundColor: "#576ff6",
             "&:hover": {
               backgroundColor: "#3351e2",

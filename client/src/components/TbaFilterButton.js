@@ -103,7 +103,7 @@ function TbaFilterButton({ onFilter }) {
       <Box
         sx={{
           width: "auto",
-          boxShadow: 3,
+          boxShadow: "2px 2px 5px rgba(0, 0, 0, 0.15)",
           borderRadius: "10px",
           display: "inline-block",
         }}
@@ -113,19 +113,19 @@ function TbaFilterButton({ onFilter }) {
           variant="contained"
           color="primary"
           sx={{
-            color: "white",
-            backgroundColor: "#576ff6",
+            color: "#666",
+            backgroundColor: "#fff",
             height: "40px",
             "&:hover": {
-              backgroundColor: "#3351e2",
+              backgroundColor: "#f1f1f1",
             },
             transition: "background-color 0.5s ease",
           }}
-          startIcon={<TuneIcon sx={{ color: "white" }} />}
+          startIcon={<TuneIcon sx={{ color: "#666" }} />}
         >
           <Typography
             variant="body1"
-            sx={{ fontWeight: "bold", letterSpacing: "1px", fontSize: "13px" }}
+            sx={{ fontWeight: "bold", letterSpacing: "1px", fontSize: "12px" }}
           >
             Filter
           </Typography>

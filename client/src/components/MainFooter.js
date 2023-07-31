@@ -9,13 +9,13 @@ const MainFooter = () => {
     textAlign: 'center',
     fontFamily: 'Dongle',
     color: '#fff',
-    marginTop: '-6px',
+    marginTop: '-18px',
   };
 
   const logoStyle = {
     width: '100px',
     marginBottom: '8px',
-    marginLeft: '-10px',
+    marginLeft: '-15px',
   };
 
   const titleStyle = {
