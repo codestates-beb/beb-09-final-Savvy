@@ -1,6 +1,8 @@
 const jose = require('jose');
 const ethers = require('ethers');
 
+const { Alchemy, Network } = require('alchemy-sdk');
+
 const Community = require('../models/community.model');
 const Admin = require('../models/admin.model');
 const Tba = require('../models/tba.model');
@@ -15,6 +17,13 @@ const nftContractAbi = require('../abi/NftContract.json');
 require('dotenv').config();
 
 const provider = new ethers.providers.JsonRpcProvider(process.env.INFURA_URL);
+
+// Item 가져오기 위한 alchemy 설정
+const config = {
+  apiKey: process.env.ALCHEMY_API_KEY,
+  network: Network.ETH_SEPOLIA,
+};
+const alchemy = new Alchemy(config);
 
 // ERC6551Registry TBA 가져오기
 const ERC6551RegistryAddress = process.env.ERC6551REGISTRY;
@@ -104,13 +113,23 @@ module.exports = {
                 tokenURI: tokenURI,
                 community_id: newCommunity._id,
               });
-              const newItem = await Item.create({
-                type: '',
-                address: newCommunity.address,
-                tokenId: token.tokenId,
-                tokenAmount: '',
-                Tba_id: newTba._id,
-              });
+
+              const nfts = await alchemy.nft.getNftsForOwner(event.args.account);
+
+              if (nfts.ownedNfts.length > 0) {
+                for (const nft of nfts.ownedNfts) {
+                  const newItem = await Item.create({
+                    type: nft.type,
+                    address: nft.contract.address,
+                    tokenId: nft.tokenId,
+                    tokenAmount: nft.tokenAmount,
+                    Tba_id: newTba._id,
+                  });
+                  //console.log(newItem);
+                }
+              } else {
+                console.log('No NFTs found for owner');
+              }
             }
           }
         });
