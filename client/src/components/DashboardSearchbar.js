@@ -12,7 +12,6 @@ import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import CloseIcon from '@mui/icons-material/Close';
 import Draggable from 'react-draggable';
-import DragHandleIcon from '@mui/icons-material/DragHandle';
 
 const DashboardSearchbar = ({ onSearch }) => {
   const [query, setQuery] = useState('');
@@ -75,7 +74,7 @@ const DashboardSearchbar = ({ onSearch }) => {
         }
       `}</style>
 
-     <Box position="fixed" top={110} left={498} width="calc(100% - 320px)">
+     <Box position="fixed" top={110} left={498} width="calc(100% - 324px)">
         <Box display="flex" alignItems="center" justifyContent="center" width="100%" marginBottom={122} marginLeft={-26}>
           <Box flex="1">
             <TextField
@@ -110,7 +109,7 @@ const DashboardSearchbar = ({ onSearch }) => {
                 ),
               }}
               sx={{
-                boxShadow: '0 2px 4px rgba(0, 0, 0, 0.3)',
+                boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
                 borderRadius: '15px',
                 backgroundColor: '#fff',
                 '&:hover': {
@@ -138,7 +137,7 @@ const DashboardSearchbar = ({ onSearch }) => {
               cursor: "move", 
               padding: '10px', 
               borderRadius: '8px', 
-              boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)', 
+              boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
               backgroundColor: '#fff', 
               width: 'auto', 
               height: 'auto',

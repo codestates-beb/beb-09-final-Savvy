@@ -48,7 +48,7 @@ export default function Login() {
   return (
     <div style={containerStyle}>
       <Link to="/"> 
-        <img src="/logoblack.png" alt="Logoblack" style={logoStyle} />
+        <img src="/logocolor.png" alt="Logocolor" style={logoStyle} />
       </Link>
       <video src="/login.mp4" autoPlay loop muted style={videoStyle} />
     </div>
