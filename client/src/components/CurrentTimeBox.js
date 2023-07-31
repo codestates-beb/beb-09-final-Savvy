@@ -44,7 +44,7 @@ function CurrentTimeBox() {
       borderColor="white"
       style={{
         marginTop: '20px',
-        marginRight: '30px',
+        marginRight: '35px',
         userSelect: 'none',
         position: 'absolute',
         right: 0,
@@ -54,7 +54,7 @@ function CurrentTimeBox() {
     >
       <Typography
         style={{
-          color: '#6a6a6a',
+          color: '#666',
           fontSize: '12.5px',
           fontFamily: "'tektur', sans-serif",
           fontWeight: '800',

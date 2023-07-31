@@ -11,15 +11,22 @@ export default function TbaListPageHeader() {
       fontSize: "38px",
       fontWeight: "bold",
       marginLeft: "40px",
-      marginTop: "20px",
+      marginTop: "25px",
       userSelect: "none",
       fontFamily: "'tektur', sans-serif",
     },
+    textWithBackground: {
+      display: 'inline-block', 
+      background: `url(${process.env.PUBLIC_URL}/AdminHeader.gif) center/cover no-repeat`,
+      color: 'transparent',
+      WebkitBackgroundClip: 'text', 
+      backgroundClip: 'text',
+    }
   };
 
   return (
     <div style={styles.pageContent}>
-      <span style={styles.textMoveRight}>TBA</span>
+      <span style={styles.textWithBackground}>TBA</span>
     </div>
   );
 }

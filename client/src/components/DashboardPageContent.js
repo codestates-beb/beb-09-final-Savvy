@@ -7,20 +7,25 @@ export default function TbaListPageContent() {
       display: "flex",
       justifyContent: "center",
       height: "10vh",
-      color: "#576ff6",
-      fontWeight: "800",
       marginLeft: "40px",
-      marginTop: "20px",
+      marginTop: "25px",
       userSelect: 'none',
       fontSize: "38px",
       fontWeight: "bold",
       fontFamily: "'tektur', sans-serif",
     },
+    textWithBackground: {
+      display: 'inline-block', 
+      background: `url(${process.env.PUBLIC_URL}/AdminHeader.gif) center/cover no-repeat`,
+      color: 'transparent',
+      WebkitBackgroundClip: 'text', 
+      backgroundClip: 'text',
+    }
   };
 
   return (
     <div style={styles.pageContent}>
-      <span style={styles.textMoveRight}>Dashboard</span>
+      <span style={styles.textWithBackground}>Dashboard</span>
     </div>
   );
 }

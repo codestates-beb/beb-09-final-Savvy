@@ -40,7 +40,7 @@ const StyledBox = styled(Box)({
   width: "2500px",
   marginTop: "130px",
   marginLeft: "-75px",
-  marginRight: "32px",
+  marginRight: "36px",
 });
 
 const StyledListItem = styled(ListItem)({
@@ -53,6 +53,7 @@ const StyledPaper = styled(Paper)({
   height: "50px",
   borderRadius: "10px",
   cursor: "pointer",
+  boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.15)",
 });
 
 const BoldTypography = styled(Typography)({
@@ -70,7 +71,7 @@ const LevelCircle = styled("div")({
   borderRadius: "50%",
   backgroundColor: "rgba(87, 111, 246, 0.7)",
   color: "white",
-  boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.3)",
+  boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.2)",
   right: "260px",
   display: "flex",
   alignItems: "center",
@@ -78,7 +79,7 @@ const LevelCircle = styled("div")({
 
 const LevelContainer = styled("div")({
   position: "absolute",
-  top: "12px",
+  top: "4.5px",
   right: "288px",
   display: "flex",
   alignItems: "center",
@@ -183,7 +184,7 @@ const preventCopy = (event) => {
 const SortHeaderSpan = styled("span")({
   fontSize: "13px",
   fontWeight: "bold",
-  color: "#757575",
+  color: "#666",
   marginTop: "36px",
 });
 
@@ -277,7 +278,7 @@ function TbaList({ data = [] }) {
   const isSortedBy = (column) => column === sortBy;
   const getSortIcon = (column) => {
     const iconStyle = {
-      color: "#757575",
+      color: "#666",
       position: "relative",
       top: "18px",
     };

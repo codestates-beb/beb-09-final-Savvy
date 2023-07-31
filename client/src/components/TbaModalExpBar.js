@@ -31,6 +31,7 @@ const ExperienceBar = () => {
           position: "absolute",
           top: "-22px",
           left: "50%",
+          color: "#576ff6",
           fontSize: "12px",
           fontWeight: "500",
           fontFamily: "'tektur', sans-serif",

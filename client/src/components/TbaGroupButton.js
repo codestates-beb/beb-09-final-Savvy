@@ -17,10 +17,11 @@ import { createTbaGroup } from "../api/post-tba-group";
 
 const StyledButton = styled(Button)({
   width: "auto",
-  height: "45px",
-  marginTop: "-140px",
+  height: "40px",
+  marginTop: "-123px",
   marginRight: "110px",
-  fontSize: "12px",
+  color: "#fff",
+  fontSize: "11px",
   fontWeight: "600",
   userSelect: "none",
   position: "absolute",
