@@ -54,7 +54,7 @@ function CurrentTimeBox() {
     >
       <Typography
         style={{
-          color: '#666',
+          color: '#9c9c9c',
           fontSize: '12.5px',
           fontFamily: "'tektur', sans-serif",
           fontWeight: '800',

@@ -8,12 +8,12 @@
 }
 
 #sidebar-footer {
-  margin: 0.5rem auto;
+  margin: 1rem auto;
   display: flex;
   justify-content: space-around;
   align-items: center;
-  border: 1px solid black;
   border-radius: 0.5rem;
+  box-Shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
   box-sizing: border-box;
   width: 85%;
   padding: 0.5rem;

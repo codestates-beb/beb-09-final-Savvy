@@ -6,11 +6,13 @@ import SidebarFooter from "./SidebarFooter";
 
 // icon
 import MenuIcon from "@mui/icons-material/Menu";
+/*
 import SpaceDashboardIcon from "@mui/icons-material/SpaceDashboard";
 import SwitchAccountIcon from "@mui/icons-material/SwitchAccount";
 import LibraryBooksIcon from "@mui/icons-material/LibraryBooks";
 import CardGiftcardIcon from "@mui/icons-material/CardGiftcard";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
+*/
 
 // css
 import "../assets/SideNav.css";
@@ -36,53 +38,68 @@ export default function SideNav() {
   };
 
   const logopurpleStyle = {
-    width: "25px",
+    width: "23px",
     height: "auto",
-    marginTop: "27px",
-    marginBottom: "25px",
+    marginTop: "26px",
+    marginBottom: "18px",
   };
 
   const logoblackStyle = {
-    width: "85px",
+    width: "70px",
     height: "auto",
-    marginTop: "25px",
-    marginBottom: "25px",
-    marginLeft: "-5px",
+    marginTop: "26px",
+    marginBottom: "18px",
+    marginLeft: "-123px",
   };
 
   const activeStyle = {
     color: "#576ff6",
-    background: "linear-gradient(to right, #e0e3f7, #fff)",
-    fontWeight: "800",
-    marginTop: "20px",
-    transform: "scale(1.03)",
-    boxShadow: "0 2px 5px rgba(0, 0, 0, 0.15)",
-    fontWeight: "800",
+    background: "#f0f2fd",
+    fontSize: "14px",
+    fontWeight: "600",
+    marginTop: "18px",
     fontFamily: "'tektur', sans-serif",
     transition: "transform 0.3s ease, box-shadow 0.3s ease",
-    letterSpacing: "0.8px",
+    position: "relative",
   };
 
   const inactiveStyle = {
-    color: "#666",
-    fontWeight: "bold",
-    marginTop: "15px",
-    fontWeight: "600",
+    color: "#a6a4a4",
+    fontSize: "14px",
+    fontWeight: "500",
+    marginTop: "18px",
     fontFamily: "'tektur', sans-serif",
     transition: "transform 0.3s ease, box-shadow 0.3s ease",
   };
 
-  const iconStyles = {
-    width: "20px",
-    marginTop: "-1px",
+  const rectangleStyle = {
+    position: "absolute",
+    right: "0px",
+    top: "50%",
+    transform: "translateY(-50%)",
+    width: "3px",
+    height: "50px",
+    backgroundColor: "#576ff6",
+    borderRadius: "10px",
   };
 
-  const lineStyle = {
-    marginBottom: "10px",
-    marginLeft: "8px",
-    marginRight: "20px",
-    background: "linear-gradient(100deg, #f8f8f8, #576ff6, #f8f8f8)",
-    height: "2px",
+  const iconStyles = {
+    width: "40px",
+    marginTop: "2px",
+  };
+
+  const dashboardIconStyles = {
+    width: "25px",
+    marginLeft: "4px",
+  };
+
+  const airdropIconStyles = {
+    width: "36px",
+  };
+
+  const contractsiconStyles = {
+    width: "40px",
+    marginLeft: "3px",
   };
 
   const preventImageCopy = (event) => {
@@ -90,14 +107,16 @@ export default function SideNav() {
   };
 
   return (
-    <div style={{ background: "linear-gradient(180deg, #fff, #fff, #d4d9fb)" }}>
+    <div style={{}}>
       <Sidebar
         collapsed={collapsed}
         id="sideNav"
         onContextMenu={preventImageActions}
         onDragStart={preventImageActions}
         style={{
-          boxShadow: "0 2px 5px rgba(0, 0, 0, 0.15)",
+          boxShadow: "0 2px 5px rgba(0, 0, 0, 0)",
+          backgroundColor: "rgba(87, 111, 246, 0.01)",
+          borderRight: "1px solid #e1e3e5",
         }}
       >
         <div
@@ -113,6 +132,15 @@ export default function SideNav() {
                   onContextMenu={preventImageCopy}
                 />
               </Link>
+              <hr
+                style={{
+                  width: "100%",
+                  height: "4px",
+                  backgroundColor: "#fff",
+                  marginTop: "4px",
+                  marginBottom: "14px",
+                }}
+              />
             </div>
           ) : (
             <div icon={<MenuIcon />} style={{ textAlign: "center" }}>
@@ -124,16 +152,28 @@ export default function SideNav() {
                   onContextMenu={preventImageCopy}
                 />
               </Link>
+              <hr
+                style={{
+                  width: "100%",
+                  height: "4px",
+                  backgroundColor: "#fff",
+                  marginTop: "4px",
+                  marginBottom: "14px",
+                }}
+              />
             </div>
           )}
-          <div style={lineStyle} />
           <div style={{ flex: "1", userSelect: "none" }}>
             <Menu>
               <MenuItem
-                onClick={() => {
-                  setCollapsed((prev) => !prev);
-                }}
-                icon={<SpaceDashboardIcon style={iconStyles} />}
+                onClick={() => setCollapsed((prev) => !prev)}
+                icon={
+                  <img
+                    src={process.env.PUBLIC_URL + "/dashboardIcon.png"}
+                    alt="Custom Icon"
+                    style={dashboardIconStyles}
+                  />
+                }
                 component={<Link to={`/main/${address}`} />}
                 style={
                   location.pathname === `/main/${address}`
@@ -142,12 +182,19 @@ export default function SideNav() {
                 }
               >
                 Dashboard
+                {location.pathname === `/main/${address}` && (
+                  <div style={rectangleStyle}></div>
+                )}
               </MenuItem>
               <MenuItem
-                onClick={() => {
-                  setCollapsed((prev) => !prev);
-                }}
-                icon={<SwitchAccountIcon style={iconStyles} />}
+                onClick={() => setCollapsed((prev) => !prev)}
+                icon={
+                  <img
+                    src={process.env.PUBLIC_URL + "/TbaIcon.png"}
+                    alt="Custom Icon"
+                    style={iconStyles}
+                  />
+                }
                 component={<Link to={`/tbalist/${address}`} />}
                 style={
                   location.pathname === `/tbalist/${address}`
@@ -156,12 +203,19 @@ export default function SideNav() {
                 }
               >
                 TBAs
+                {location.pathname === `/tbalist/${address}` && (
+                  <div style={rectangleStyle}></div>
+                )}
               </MenuItem>
               <MenuItem
-                onClick={() => {
-                  setCollapsed((prev) => !prev);
-                }}
-                icon={<LibraryBooksIcon style={iconStyles} />}
+                onClick={() => setCollapsed((prev) => !prev)}
+                icon={
+                  <img
+                    src={process.env.PUBLIC_URL + "/ContractsIcon.png"}
+                    alt="Custom Icon"
+                    style={contractsiconStyles}
+                  />
+                }
                 component={<Link to={`/contract/${address}`} />}
                 style={
                   location.pathname === `/contract/${address}`
@@ -170,12 +224,19 @@ export default function SideNav() {
                 }
               >
                 Contracts
+                {location.pathname === `/contract/${address}` && (
+                  <div style={rectangleStyle}></div>
+                )}
               </MenuItem>
               <MenuItem
-                onClick={() => {
-                  setCollapsed((prev) => !prev);
-                }}
-                icon={<CardGiftcardIcon style={iconStyles} />}
+                onClick={() => setCollapsed((prev) => !prev)}
+                icon={
+                  <img
+                    src={process.env.PUBLIC_URL + "/airdropIcon.png"}
+                    alt="Custom Icon"
+                    style={airdropIconStyles}
+                  />
+                }
                 component={<Link to={`/airdrop/${address}`} />}
                 style={
                   location.pathname === `/airdrop/${address}`
@@ -184,12 +245,19 @@ export default function SideNav() {
                 }
               >
                 Airdrop
+                {location.pathname === `/airdrop/${address}` && (
+                  <div style={rectangleStyle}></div>
+                )}
               </MenuItem>
               <MenuItem
-                onClick={() => {
-                  setCollapsed((prev) => !prev);
-                }}
-                icon={<ManageAccountsIcon style={iconStyles} />}
+                onClick={() => setCollapsed((prev) => !prev)}
+                icon={
+                  <img
+                    src={process.env.PUBLIC_URL + "/ManagerIcon.png"}
+                    alt="Custom Icon"
+                    style={iconStyles}
+                  />
+                }
                 component={<Link to={`/manager/${address}`} />}
                 style={
                   location.pathname === `/manager/${address}`
@@ -198,6 +266,9 @@ export default function SideNav() {
                 }
               >
                 Manager
+                {location.pathname === `/manager/${address}` && (
+                  <div style={rectangleStyle}></div>
+                )}
               </MenuItem>
             </Menu>
           </div>

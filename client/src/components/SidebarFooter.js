@@ -1,37 +1,72 @@
 import React from "react";
 import { Link, useParams } from "react-router-dom";
 import { Avatar } from "@mui/material";
+import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 
-// icon
-import OutputIcon from "@mui/icons-material/Output";
+export default function SidebarFooter({ collapsed, user = {} }) {
+    const { address } = useParams();
 
-export default function SidebarFooter({ collapsed }) {
-  const { address } = useParams();
-
-  return (
-    <div>
-      {collapsed ? (
-        <div style={{ margin: "0.5rem 0" }}>
-          <Avatar sx={{ m: "0 auto", bgcolor: "#5270ff" }}>SA</Avatar>
+    return (
+        <div>
+            {collapsed ? (
+                <div style={{ margin: "1.5rem 0", display: "flex", justifyContent: "center" }}>
+                    <div style={{ 
+                        background: "#fff", 
+                        borderRadius: "50%", 
+                        padding: "3px", 
+                        boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)"
+                    }}>
+                        <Avatar 
+                            src={`https://i.pravatar.cc/300?u=${user?.id}`} 
+                            sx={{ bgcolor: "#576ff6", boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)" }}
+                        >
+                            SA
+                        </Avatar>
+                    </div>
+                </div>
+            ) : (
+                <Link
+                    to={`/manager/${address}`}
+                    style={{ textDecoration: "none", color: "black" }}
+                >
+                    <div id="sidebar-footer">
+                        <div style={{ 
+                            background: "#fff", 
+                            borderRadius: "50%", 
+                            padding: "3px", 
+                            marginLeft: "-0.5rem",
+                            marginRight: "-0.9rem",
+                            boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)" 
+                        }}>
+                            <Avatar 
+                                src={`https://i.pravatar.cc/300?u=${user?.id}`} 
+                                sx={{ bgcolor: "#576ff6" }}
+                            >
+                                SA
+                            </Avatar>
+                        </div>
+                        <div style={{ 
+                            textAlign: "left", 
+                            padding: "0 0.3rem", 
+                            fontSize: "0.85rem",
+                            fontWeight: "700",
+                            color: "#323232" 
+                        }}>
+                            <div>Admin</div>
+                            <div style={{ 
+                                textAlign: "left", 
+                                fontSize: "0.75rem", 
+                                fontWeight: "500",
+                                color: "#a6a4a4",
+                                marginTop: "0.1rem",
+                            }}>
+                                Free Account
+                            </div>
+                        </div>
+                        <LogoutRoundedIcon style={{ fontSize: "20px", color: "#666", marginLeft: "14px" }} />
+                    </div>
+                </Link>
+            )}
         </div>
-      ) : (
-        <Link
-          to={`/manager/${address}`}
-          style={{ textDecoration: "none", color: "black" }}
-        >
-          <div id="sidebar-footer">
-            <Avatar sx={{ bgcolor: "#5270ff" }}>SA</Avatar>
-            <div style={{ textAlign: "center", padding: "0 0.3rem" }}>
-              <div>Admin</div>
-              <div style={{ fontSize: "0.8rem", color: "grey" }}>
-                Free Account
-              </div>
-            </div>
-
-            <OutputIcon />
-          </div>
-        </Link>
-      )}
-    </div>
-  );
+    );
 }
