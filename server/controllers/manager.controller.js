@@ -119,16 +119,34 @@ module.exports = {
               if (nfts.ownedNfts.length > 0) {
                 for (const nft of nfts.ownedNfts) {
                   const newItem = await Item.create({
-                    type: nft.type,
+                    type: nft.tokenType,
                     address: nft.contract.address,
                     tokenId: nft.tokenId,
-                    tokenAmount: nft.tokenAmount,
+                    tokenAmount: '',
                     Tba_id: newTba._id,
                   });
                   //console.log(newItem);
                 }
               } else {
                 console.log('No NFTs found for owner');
+              }
+
+              const erc20Tokens = await alchemy.core.getTokensForOwner(
+                event.args.account
+              );
+
+              if (erc20Tokens.tokens.length > 0) {
+                for (const token of erc20Tokens.tokens) {
+                  const newItem = await Item.create({
+                    type: 'ERC20',
+                    address: token.contractAddress,
+                    tokenId: '',
+                    tokenAmount: token.balance,
+                    Tba_id: newTba._id,
+                  });
+                }
+              } else {
+                console.log('No ERC20 tokens found for owner');
               }
             }
           }

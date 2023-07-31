@@ -144,7 +144,6 @@ module.exports = {
   getAllGroups: async (req, res) => {
     try {
       const groups = await tba_group.find();
-      console.log(groups);
 
       if (groups.length === 0) {
         return res.status(404).json({ error: 'No groups found' });
