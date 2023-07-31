@@ -30,7 +30,7 @@ const boxStyle1 = {
   borderRadius: "1rem",
   padding: "1rem",
   minWidth: "20rem",
-  height: "17rem",
+  height: "15rem",
   boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
   overflow: "auto",
   boxSizing: "border-box",
@@ -57,7 +57,7 @@ const boxStyle2 = {
   backgroundColor: "#fff",
   borderRadius: "1rem",
   padding: "1rem",
-  height: "16rem",
+  height: "15rem",
   boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
   marginLeft: "0.5rem",
 };

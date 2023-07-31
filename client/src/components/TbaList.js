@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setTbaData } from "../reducers/tbaReducer";
+import { CopyToClipboard } from "react-copy-to-clipboard";
 import {
   List,
   ListItem,
@@ -9,6 +10,8 @@ import {
   ListItemText,
   Checkbox,
   Typography,
+  Snackbar,
+  Alert,
 } from "@mui/material";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
@@ -205,6 +208,7 @@ function TbaList({ data = [] }) {
   const [isAllSelected, setIsAllSelected] = useState(false);
   const [selectedItems, setSelectedItems] = useState([]);
   const [openTbaModal, setOpenTbaModal] = useState(false);
+  const [isCopied, setIsCopied] = useState(false);
 
   useEffect(() => {
     document.addEventListener("copy", preventCopy);
@@ -226,7 +230,7 @@ function TbaList({ data = [] }) {
   }, []);
 
   const handleOpenTbaModal = (e) => {
-    if (e.target.tagName === "INPUT") return;
+    if (e.target.tagName === "INPUT" || e.target.tagName === "P") return;
     setOpenTbaModal(true);
   };
 
@@ -262,6 +266,10 @@ function TbaList({ data = [] }) {
       setSelectedItems(tbaDataDup.map((item) => item._id));
     }
     setIsAllSelected(!isAllSelected);
+  };
+
+  const handleCopyAddress = () => {
+    setIsCopied(true);
   };
 
   const filteredData = filterOption
@@ -357,13 +365,45 @@ function TbaList({ data = [] }) {
               >
                 <ItemContainer>
                   <StyledListItemText
-                    primary={<BoldTypography>{user.owner}</BoldTypography>}
+                    primary={
+                      <BoldTypography>{`${user.owner.substring(
+                        0,
+                        4
+                      )}...${user.owner.substring(37)}`}</BoldTypography>
+                    }
                   />
                 </ItemContainer>
                 <ItemContainer>
                   <EllipsisListItemText
-                    secondary={<BoldTypography>{user.address}</BoldTypography>}
+                    secondary={
+                      <CopyToClipboard
+                        text={user.address}
+                        onCopy={handleCopyAddress}
+                      >
+                        <BoldTypography>{`${user.address.substring(
+                          0,
+                          4
+                        )}...${user.address.substring(37)}`}</BoldTypography>
+                      </CopyToClipboard>
+                    }
                   />
+
+                  {/* snack bar */}
+                  <Snackbar
+                    open={isCopied}
+                    autoHideDuration={3000}
+                    onClose={() => setIsCopied(false)}
+                    anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+                  >
+                    <Alert
+                      variant="filled"
+                      onClose={() => setIsCopied(false)}
+                      severity="success"
+                      sx={{ width: "100%" }}
+                    >
+                      Copied to clipboard
+                    </Alert>
+                  </Snackbar>
                 </ItemContainer>
                 <ItemContainer>
                   <LevelCircle>

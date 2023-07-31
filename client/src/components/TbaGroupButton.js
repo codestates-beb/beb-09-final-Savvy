@@ -87,16 +87,16 @@ const CenteredDialogActions = styled(DialogActions)({
   justifyContent: "center",
 });
 
-const SnackbarWrapper = styled("div")({
-  position: "fixed",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  bottom: "30px",
-  left: "50%",
-  transform: "translateX(-50%)",
-  zIndex: 9999,
-});
+// const SnackbarWrapper = styled("div")({
+//   position: "fixed",
+//   display: "flex",
+//   alignItems: "center",
+//   justifyContent: "center",
+//   bottom: "30px",
+//   left: "50%",
+//   transform: "translateX(-50%)",
+//   zIndex: 9999,
+// });
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return (
@@ -250,21 +250,21 @@ export default function TbaGroupButton({ selectedItems }) {
         </CenteredDialogActions>
       </StyledDialog>
 
-      <SnackbarWrapper>
-        <Snackbar
-          open={openSnackbar}
-          autoHideDuration={3000}
-          onClose={() => setOpenSnackbar(false)}
-          message="Group created successfully"
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={3000}
+        onClose={() => setOpenSnackbar(false)}
+        message="Group created successfully"
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+      >
+        <Alert
+          variant="filled"
+          severity="success"
+          sx={{ width: "100%", whiteSpace: "nowrap" }}
         >
-          <Alert
-            severity="success"
-            sx={{ width: "100%", whiteSpace: "nowrap" }}
-          >
-            Group created successfully!
-          </Alert>
-        </Snackbar>
-      </SnackbarWrapper>
+          Group created successfully!
+        </Alert>
+      </Snackbar>
     </div>
   );
 }
