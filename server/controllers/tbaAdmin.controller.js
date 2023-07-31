@@ -141,6 +141,26 @@ module.exports = {
       });
     }
   },
+  getAllGroups: async (req, res) => {
+    try {
+      const groups = await tba_group.find();
+      console.log(groups);
+
+      if (groups.length === 0) {
+        return res.status(404).json({ error: 'No groups found' });
+      }
+
+      res.status(200).json({
+        message: 'Successfully fetched all groups',
+        groups: groups,
+      });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({
+        error: 'Internal Server Error',
+      });
+    }
+  },
   deleteGroup: async (req, res) => {
     const groupId = req.params.groupId;
 
