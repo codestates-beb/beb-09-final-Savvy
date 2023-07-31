@@ -8,6 +8,7 @@
     "start:dev": "nodemon app.js",
     "start:aws": "pm2 start app.js",
     "start:daemon": "pm2 start daemon.js --watch",
+    "start:swagger": "node ./swagger/swagger.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

@@ -9,6 +9,9 @@ var Tba_groupSchema = new Schema({
     // ref: 'Tba'
     type: [String],
   },
+  community_id: {
+    type: String,
+  },
 });
 
 module.exports = mongoose.model('Tba_group', Tba_groupSchema);

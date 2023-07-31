@@ -1,5 +1,8 @@
+const jose = require('jose');
+
 const Tba = require('../models/tba.model');
 const Community = require('../models/community.model');
+const Admin = require('../models/admin.model');
 const Item = require('../models/item.model');
 const tba_group = require('../models/tba_group.model');
 
@@ -60,9 +63,14 @@ module.exports = {
     }
   },
   createGroup: async (req, res) => {
-    const { groupName, tbaIds } = req.body;
+    const { communityAddress, groupName, tbaIds } = req.body;
 
     try {
+      const community = await Community.findOne({ address: communityAddress });
+      if (!community) {
+        return res.status(400).json({ error: 'No community found' });
+      }
+
       const existingGroup = await tba_group.findOne({ name: groupName });
       if (existingGroup) {
         return res.status(400).json({ error: 'Group name already exists' });
@@ -71,6 +79,7 @@ module.exports = {
       const newGroup = await tba_group.create({
         name: groupName,
         Tba_id: tbaIds,
+        community_id: community._id,
       });
 
       res.status(200).json({
@@ -142,16 +151,36 @@ module.exports = {
     }
   },
   getAllGroups: async (req, res) => {
-    try {
-      const groups = await tba_group.find();
+    const communityAddress = req.params.communityAddress;
 
+    try {
+      const community = await Community.findOne({ address: communityAddress });
+      if (!community) {
+        return res.status(400).json({ error: 'No community found' });
+      }
+
+      const groups = await tba_group.find({ community_id: community._id });
+      //console.log(groups);
       if (groups.length === 0) {
         return res.status(404).json({ error: 'No groups found' });
       }
 
+      const groupsWithTbas = await Promise.all(
+        groups.map(async (group) => {
+          const tbaIds = group.Tba_id;
+          const TBAs = await Tba.find({ _id: { $in: tbaIds } });
+
+          return {
+            id: group._id,
+            name: group.name,
+            TBAs: TBAs,
+          };
+        })
+      );
+
       res.status(200).json({
         message: 'Successfully fetched all groups',
-        groups: groups,
+        groups: groupsWithTbas,
       });
     } catch (error) {
       console.log(error);
