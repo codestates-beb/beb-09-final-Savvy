@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import "../assets/AirdropPageContent.css";
 import {
   Box,
@@ -16,8 +17,12 @@ import {
   Select,
   MenuItem,
 } from "@mui/material";
-import { TBA_GROUP, CONTRACTS } from "../assets/DUMMY_DATA";
+import { TBA_GROUP } from "../assets/DUMMY_DATA";
 import AirdropProgressModal from "./AirdropProgressModal";
+
+// api
+import { airdrop } from "../api/post-airdrop";
+import { getAllTbaGroup } from "../api/get-all-tba-group";
 
 const boxStyle1 = {
   backgroundColor: "#fff",
@@ -38,12 +43,12 @@ const textStyle1 = {
   fontWeight: "800",
   color: "#576ff6",
   backgroundColor: "#fff",
-  paddingBottom: '0.5rem',           
+  paddingBottom: "0.5rem",
   borderBottom: "1px solid transparent",
-  borderImage: 'linear-gradient(100deg, #f8f8f8, #576ff6, #f8f8f8)',
+  borderImage: "linear-gradient(100deg, #f8f8f8, #576ff6, #f8f8f8)",
   borderImageSlice: 1,
-  textAlign: 'center', 
-  margin: '0 auto',    
+  textAlign: "center",
+  margin: "0 auto",
 };
 
 const boxStyle2 = {
@@ -64,13 +69,50 @@ const boxStyle3 = {
 
 const listItemTextStyle = {
   color: "#666",
-  '& .MuiListItemText-primary': {
+  "& .MuiListItemText-primary": {
     fontSize: "0.85rem",
     fontWeight: "bold",
-  }
+  },
 };
 
-export default function AirdropPageContent() {
+const styles = {
+  pageContent: {
+    display: "flex",
+    color: "#576ff6",
+    fontSize: "38px",
+    fontWeight: "bold",
+    marginTop: "-7px",
+    marginLeft: "10px",
+    userSelect: "none",
+    fontFamily: "'tektur', sans-serif",
+    userSelect: "none",
+  },
+  textWithBackground: {
+    display: "inline-block",
+    background: `url(${process.env.PUBLIC_URL}/AdminHeader.gif) center/cover no-repeat`,
+    color: "transparent",
+    WebkitBackgroundClip: "text",
+    backgroundClip: "text",
+    marginTop: "2rem",
+  },
+};
+
+export default function AirdropPageContent({ web3Auth }) {
+  const contractData = useSelector((state) => state.contract.contractData);
+
+  const [tbaGroupData, setTbaGroupData] = useState([]);
+  const [openProgress, setOpenProgress] = useState(false);
+  const [selectedGroup, setSelectedGroup] = useState([]);
+  const [contract, setContract] = useState({
+    _id: "",
+    alias: "",
+    type: "",
+    address: "",
+    community_id: "",
+  });
+  const [amounts, setAmounts] = useState("");
+  const [tokenIds, setTokenIds] = useState("");
+
   useEffect(() => {
     function disableTextSelection(event) {
       event.preventDefault();
@@ -92,47 +134,44 @@ export default function AirdropPageContent() {
     };
   }, []);
 
-  const [openProgress, setOpenProgress] = useState(false);
-  const [selectedGroup, setSelectedGroup] = useState([]);
-  const [contract, setContract] = useState({
-    id: 0,
-    name: "",
-    type: "",
-    address: "",
-  });
-
-  const styles = {
-    pageContent: {
-      display: "flex",
-      color: "#576ff6",
-      fontSize: "38px",
-      fontWeight: "bold",
-      marginTop: "-7px",
-      marginLeft: "10px",
-      userSelect: "none",
-      fontFamily: "'tektur', sans-serif",
-      userSelect: "none",
-    },
-    textWithBackground: {
-      display: "inline-block",
-      background: `url(${process.env.PUBLIC_URL}/AdminHeader.gif) center/cover no-repeat`,
-      color: "transparent",
-      WebkitBackgroundClip: "text",
-      backgroundClip: "text",
-      marginTop: "2rem",
-    },
-  };
+  useEffect(() => {
+    const initTbaGroup = async () => {
+      const tbaGroup = await getAllTbaGroup();
+      if (tbaGroup) {
+        console.log(tbaGroup);
+        setTbaGroupData(tbaGroup);
+      } else {
+        setTbaGroupData(null);
+      }
+    };
+    initTbaGroup();
+  }, []);
 
   const handleGroup = (e) => {
     if (e.target.checked) {
       setSelectedGroup((prev) => [...prev, e.target.value]);
     } else {
-      setSelectedGroup((prev) => prev.filter((item) => item !== e.target.value));
+      setSelectedGroup((prev) =>
+        prev.filter((item) => item !== e.target.value)
+      );
     }
   };
 
   const handleOption = (option) => {
     setContract(option);
+  };
+
+  const handleExecute = async () => {
+    setOpenProgress(true);
+    const response = await airdrop(
+      web3Auth,
+      contract.address,
+      contract.type,
+      amounts,
+      tokenIds,
+      selectedGroup
+    );
+    console.log("response:", response);
   };
 
   const selectedTbaGroup = TBA_GROUP.filter((group, idx) => {
@@ -177,7 +216,10 @@ export default function AirdropPageContent() {
                     }
                   >
                     <ListItemButton>
-                      <ListItemText primary={`${group.name}`} sx={{ ...listItemTextStyle }} />
+                      <ListItemText
+                        primary={`${group.name}`}
+                        sx={{ ...listItemTextStyle }}
+                      />
                       <ListItemText
                         style={{ textAlign: "right" }}
                         primary={
@@ -203,7 +245,7 @@ export default function AirdropPageContent() {
             })}
           </List>
         </Box>
-  
+
         {/* Selected TBA */}
         <Box sx={boxStyle1} style={{ paddingTop: "0" }}>
           <div
@@ -227,7 +269,14 @@ export default function AirdropPageContent() {
           </div>
           <List style={{ overflow: "auto" }}>
             {selectedTbaGroup.length === 0 ? (
-              <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100%" }}>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  height: "100%",
+                }}
+              >
                 <img
                   src={`${process.env.PUBLIC_URL}/AirdropPageImage.gif`}
                   alt="Dummy"
@@ -258,7 +307,13 @@ export default function AirdropPageContent() {
                       disablePadding
                     >
                       <ListItemButton>
-                        <ListItemText primary={`${tba.address.substring(0, 5)}...${tba.address.substring(38)}`} sx={{ ...listItemTextStyle }} />
+                        <ListItemText
+                          primary={`${tba.address.substring(
+                            0,
+                            5
+                          )}...${tba.address.substring(38)}`}
+                          sx={{ ...listItemTextStyle }}
+                        />
                         <ListItemText
                           style={{ textAlign: "right" }}
                           primary={
@@ -285,7 +340,7 @@ export default function AirdropPageContent() {
             )}
           </List>
         </Box>
-  
+
         {/* Airdrop Options */}
         <Box sx={boxStyle2}>
           <div className="subtitle" style={textStyle1}>
@@ -326,90 +381,104 @@ export default function AirdropPageContent() {
               }}
               sx={{
                 backgroundColor: "#fff",
-                '&.MuiFilledInput-root': {
+                "&.MuiFilledInput-root": {
                   borderRadius: "1rem",
                   paddingTop: "0.4rem",
-                  '&:after, &:before': {
+                  "&:after, &:before": {
                     display: "none",
-                  }
+                  },
                 },
-                '&.MuiFilledInput-root:hover, &.MuiFilledInput-root.Mui-focused': {
-                  borderRadius: "1rem",
-                  '&:before': {
-                    borderBottom: "none !important"
-                  }
+                "&.MuiFilledInput-root:hover, &.MuiFilledInput-root.Mui-focused":
+                  {
+                    borderRadius: "1rem",
+                    "&:before": {
+                      borderBottom: "none !important",
+                    },
+                  },
+                "&.MuiFilledInput-underline:hover:not(.Mui-disabled):before": {
+                  borderBottom: "none",
                 },
-                '&.MuiFilledInput-underline:hover:not(.Mui-disabled):before': {
-                  borderBottom: "none"
+                "&.MuiFilledInput-underline:after": {
+                  borderBottom: "none",
                 },
-                '&.MuiFilledInput-underline:after': {
-                  borderBottom: "none"
+                "&.MuiFilledInput-underline:before": {
+                  borderBottom: "none",
                 },
-                '&.MuiFilledInput-underline:before': {
-                  borderBottom: "none"
-                }
               }}
             >
               <MenuItem value="">
-                <em style={{
-                  color: "#fff",
-                  fontSize: "0.9rem",
-                  fontWeight: "600",
-                  fontFamily: "'tektur', sans-serif",
-                  fontStyle: "normal",
-                  padding: "0.4rem",
-                  width: "100%",
-                  display: "block",
-                  textAlign: "center",
-                  backgroundColor: "#f88181",
-                  borderRadius: "0.7rem",
-                  boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
-                  cursor: "pointer",
-                }}>None</em>
-              </MenuItem>
-              {CONTRACTS.map((option) => (
-                <MenuItem
-                  onClick={() => handleOption(option)}
-                  key={option.id}
-                  value={option.id}
+                <em
                   style={{
-                    display: "flex",
-                    justifyContent: "space-between",
+                    color: "#fff",
+                    fontSize: "0.9rem",
+                    fontWeight: "600",
+                    fontFamily: "'tektur', sans-serif",
+                    fontStyle: "normal",
+                    padding: "0.4rem",
+                    width: "100%",
+                    display: "block",
+                    textAlign: "center",
+                    backgroundColor: "#f88181",
                     borderRadius: "0.7rem",
                     boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
-                    marginTop: "1rem",
-                    marginBottom: "1rem",
-                    marginLeft: "1rem",
-                    marginRight: "1.1rem",
+                    cursor: "pointer",
                   }}
                 >
-                  <Chip
-                    label={option.type}
-                    size="small"
-                    sx={{
-                      bgcolor: "#5270ff",
-                      color: "#fff",
-                      fontSize: "0.7rem",
-                      fontWeight: "600",
-                      boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
-                    }}
-                  />
-                  <div style={{
-                    fontWeight: '600',
-                    color: '#666',
-                    fontSize: "0.8rem",
-                    margin: "0.3rem",
-                  }}>
-                    {`${option.name}(${option.address.substring(0, 5)}...${option.address.substring(38)})`}
-                  </div>
-                </MenuItem>
-              ))}
+                  None
+                </em>
+              </MenuItem>
+              {contractData
+                ? contractData.map((option) => (
+                    <MenuItem
+                      onClick={() => handleOption(option)}
+                      key={option._id}
+                      value={option._id}
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        borderRadius: "0.7rem",
+                        boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
+                        marginTop: "1rem",
+                        marginBottom: "1rem",
+                        marginLeft: "1rem",
+                        marginRight: "1.1rem",
+                      }}
+                    >
+                      <Chip
+                        label={option.type}
+                        size="small"
+                        sx={{
+                          bgcolor: "#5270ff",
+                          color: "#fff",
+                          fontSize: "0.7rem",
+                          fontWeight: "600",
+                          boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
+                        }}
+                      />
+                      <div
+                        style={{
+                          fontWeight: "600",
+                          color: "#666",
+                          fontSize: "0.8rem",
+                          margin: "0.3rem",
+                        }}
+                      >
+                        {`${option.alias}(${option.address.substring(
+                          0,
+                          5
+                        )}...${option.address.substring(38)})`}
+                      </div>
+                    </MenuItem>
+                  ))
+                : null}
             </Select>
           </FormControl>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
             {contract.type === "ERC721" ? (
               <div>
                 <TextField
+                  value={tokenIds}
+                  onChange={(e) => setTokenIds(e.target.value)}
                   helperText="You need to input token ID same as the number of selected TBA"
                   placeholder="e.g. 1, 2, 3, 4, ..."
                   id="outlined-basic"
@@ -418,7 +487,7 @@ export default function AirdropPageContent() {
                   style={{
                     marginTop: "1.6rem",
                     width: "100%",
-                    minWidth: "10rem"
+                    minWidth: "10rem",
                   }}
                   required
                   InputLabelProps={{
@@ -429,7 +498,6 @@ export default function AirdropPageContent() {
                       marginLeft: "0rem",
                       marginTop: "-0.1rem",
                     },
-  
                   }}
                   InputProps={{
                     disableUnderline: true,
@@ -440,7 +508,7 @@ export default function AirdropPageContent() {
                       backgroundColor: "#fff",
                       borderRadius: "0.5rem",
                       boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
-                    }
+                    },
                   }}
                   FormHelperTextProps={{
                     style: {
@@ -448,17 +516,19 @@ export default function AirdropPageContent() {
                       marginBottom: "0.5rem",
                       marginLeft: "0.2rem",
                       fontSize: "0.7rem",
-                      whiteSpace: 'nowrap',
+                      whiteSpace: "nowrap",
                       fontWeight: "600",
                       color: "#9b9b9b",
                       width: "100%",
-                    }
+                    },
                   }}
                 />
               </div>
             ) : contract.type === "ERC20" ? (
               <div style={{ backgroundColor: "#fff", marginTop: "1.5rem" }}>
                 <TextField
+                  value={amounts}
+                  onChange={(e) => setAmounts(e.target.value)}
                   helperText="You need to input token amount same as the number of selected TBA"
                   placeholder="e.g. 100, 110, 110, 20, ..."
                   id="outlined-basic"
@@ -467,7 +537,7 @@ export default function AirdropPageContent() {
                   style={{
                     marginTop: "1.6rem",
                     width: "100%",
-                    minWidth: "10rem"
+                    minWidth: "10rem",
                   }}
                   required
                   InputLabelProps={{
@@ -488,7 +558,7 @@ export default function AirdropPageContent() {
                       backgroundColor: "#fff",
                       borderRadius: "0.5rem",
                       boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
-                    }
+                    },
                   }}
                   FormHelperTextProps={{
                     style: {
@@ -496,11 +566,11 @@ export default function AirdropPageContent() {
                       marginBottom: "0.5rem",
                       marginLeft: "0.2rem",
                       fontSize: "0.7rem",
-                      whiteSpace: 'nowrap',
+                      whiteSpace: "nowrap",
                       fontWeight: "600",
                       color: "#9b9b9b",
                       width: "100%",
-                    }
+                    },
                   }}
                 />
               </div>
@@ -508,6 +578,8 @@ export default function AirdropPageContent() {
               <>
                 <div style={{ marginRight: "1.2rem" }}>
                   <TextField
+                    value={tokenIds}
+                    onChange={(e) => setTokenIds(e.target.value)}
                     helperText="You need to input token ID same as the number of selected TBA"
                     placeholder="e.g. 1, 2, 3, 4, ..."
                     id="outlined-basic"
@@ -536,7 +608,7 @@ export default function AirdropPageContent() {
                         backgroundColor: "#fff",
                         borderRadius: "0.5rem",
                         boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
-                      }
+                      },
                     }}
                     FormHelperTextProps={{
                       style: {
@@ -547,12 +619,14 @@ export default function AirdropPageContent() {
                         fontWeight: "600",
                         color: "#9b9b9b",
                         width: "100%",
-                      }
+                      },
                     }}
                   />
                 </div>
                 <div style={{ marginLeft: "1.2rem" }}>
                   <TextField
+                    value={amounts}
+                    onChange={(e) => setAmounts(e.target.value)}
                     helperText="You need to input token amount same as the number of selected TBA"
                     placeholder="e.g. 100, 110, 110, 20, ..."
                     id="outlined-basic"
@@ -582,7 +656,7 @@ export default function AirdropPageContent() {
                         backgroundColor: "#fff",
                         borderRadius: "0.5rem",
                         boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
-                      }
+                      },
                     }}
                     FormHelperTextProps={{
                       style: {
@@ -593,7 +667,7 @@ export default function AirdropPageContent() {
                         fontWeight: "600",
                         color: "#9b9b9b",
                         width: "100%",
-                      }
+                      },
                     }}
                   />
                 </div>
@@ -602,7 +676,7 @@ export default function AirdropPageContent() {
           </div>
           <Divider sx={{ visibility: "hidden" }} />
         </Box>
-  
+
         {/* Exeute Button */}
         <div style={boxStyle3}>
           <Button
@@ -621,16 +695,19 @@ export default function AirdropPageContent() {
               },
               transition: "background-color 0.5s ease",
             }}
-            onClick={() => setOpenProgress(true)}
+            onClick={handleExecute}
             variant="contained"
           >
             Execute
           </Button>
         </div>
       </div>
-  
+
       {/* progress dialog */}
-      <AirdropProgressModal open={openProgress} onClose={() => setOpenProgress(false)} />
+      <AirdropProgressModal
+        open={openProgress}
+        onClose={() => setOpenProgress(false)}
+      />
     </div>
   );
-};  
+}

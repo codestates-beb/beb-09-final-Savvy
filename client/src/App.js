@@ -78,8 +78,11 @@ function App() {
           <Route path="/contract" element={<ContractPage />}>
             <Route path="/contract/:address" element={<ContractPage />} />
           </Route>
-          <Route path="/airdrop" element={<AirdropPage />}>
-            <Route path="/airdrop/:address" element={<AirdropPage />} />
+          <Route path="/airdrop" element={<AirdropPage web3Auth={web3Auth} />}>
+            <Route
+              path="/airdrop/:address"
+              element={<AirdropPage web3Auth={web3Auth} />}
+            />
           </Route>
           <Route path="/manager" element={<ManagerPage web3Auth={web3Auth} />}>
             <Route

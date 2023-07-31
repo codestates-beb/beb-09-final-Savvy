@@ -60,6 +60,7 @@ export default function ManagerPageContent({ web3Auth }) {
 
   useEffect(() => {
     const init = async () => {
+      setIsLoading(true);
       try {
         const data = await getManagerData();
         const { admin, communities, tba } = data;
@@ -80,8 +81,11 @@ export default function ManagerPageContent({ web3Auth }) {
       }
     };
     init();
+    if (managerData) {
+      setIsLoading(false);
+    }
     console.log(managerData);
-  }, []);
+  }, [isLoading]);
 
   const handleLogout = async () => {
     try {
