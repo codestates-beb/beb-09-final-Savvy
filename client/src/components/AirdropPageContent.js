@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import "../assets/AirdropPageContent.css";
 import {
@@ -113,6 +114,18 @@ export default function AirdropPageContent({ web3Auth }) {
   const [amounts, setAmounts] = useState("");
   const [tokenIds, setTokenIds] = useState("");
 
+  const { address } = useParams();
+
+  const selectedTbaGroup = tbaGroupData.filter((group, idx) => {
+    return selectedGroup.includes(idx.toString());
+  });
+
+  const selectedTbaAddress = selectedTbaGroup.map((group) => {
+    return group.TBAs.map((tba) => {
+      return tba.address;
+    });
+  });
+
   useEffect(() => {
     function disableTextSelection(event) {
       event.preventDefault();
@@ -136,9 +149,8 @@ export default function AirdropPageContent({ web3Auth }) {
 
   useEffect(() => {
     const initTbaGroup = async () => {
-      const tbaGroup = await getAllTbaGroup();
+      const tbaGroup = await getAllTbaGroup(address);
       if (tbaGroup) {
-        console.log(tbaGroup);
         setTbaGroupData(tbaGroup);
       } else {
         setTbaGroupData(null);
@@ -163,20 +175,17 @@ export default function AirdropPageContent({ web3Auth }) {
 
   const handleExecute = async () => {
     setOpenProgress(true);
+    console.log(contract.address);
     const response = await airdrop(
       web3Auth,
       contract.address,
       contract.type,
       amounts,
       tokenIds,
-      selectedGroup
+      selectedTbaAddress
     );
     console.log("response:", response);
   };
-
-  const selectedTbaGroup = TBA_GROUP.filter((group, idx) => {
-    return selectedGroup.includes(idx.toString());
-  });
 
   return (
     <div className="page-content" onCopy={(e) => e.preventDefault()}>
@@ -191,7 +200,7 @@ export default function AirdropPageContent({ web3Auth }) {
           </div>
           <List>
             {/* Mapping TBA groups */}
-            {TBA_GROUP.map((group, idx) => {
+            {tbaGroupData.map((group, idx) => {
               return (
                 <div key={group.name} id={idx}>
                   <ListItem
@@ -232,7 +241,7 @@ export default function AirdropPageContent({ web3Auth }) {
                                 fontWeight: "700",
                                 boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
                               }}
-                              label={`total: ${group.total}`}
+                              label={`total: ${group.TBAs.length}`}
                             />
                           </div>
                         }
@@ -292,8 +301,8 @@ export default function AirdropPageContent({ web3Auth }) {
               </div>
             ) : (
               selectedTbaGroup.map((group, idx) => {
-                return group.tba.map((tba) => (
-                  <div key={tba.address} id={idx}>
+                return group.TBAs.map((tba) => (
+                  <div key={tba._id} id={idx}>
                     <ListItem
                       sx={{
                         width: "96.5%",
