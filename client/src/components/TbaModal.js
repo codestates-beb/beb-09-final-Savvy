@@ -61,19 +61,19 @@ function TbaModal({ open, handleClose, userId }) {
 
   const slideUp = keyframes`
     from {
-      transform: translateX(-50%) translateY(5%);
+      transform: translate(-50%, 5%);
     }
     to {
-      transform: translateX(-50%) translateY(-50%);
+      transform: translate(-50%, -50%);
     }
   `;
 
   const slideDown = keyframes`
     from {
-      transform: translateX(-50%) translateY(-50%);
+      transform: translate(-50%, -50%);
     }
     to {
-      transform: translateX(-50%) translateY(5%);
+      transform: translate(-50%, 5%);
     }
   `;
 
@@ -100,11 +100,6 @@ function TbaModal({ open, handleClose, userId }) {
           userSelect: "none",
           borderRadius: 5,
           outline: "none",
-          boxShadow: `
-          0px 3px 10px rgba(0, 0, 0, 0.3),
-          0px 0px 40px rgba(0, 0, 0, 0.3),
-          inset 0 0 20px rgba(0,0,0,0.3) 
-        `,
           background: "linear-gradient(90deg, #fff, #fff)",
           animation: open ? `${slideUp} 0.3s ease-out` : `${slideDown} 0.3s ease-in`,
         }}
@@ -116,12 +111,11 @@ function TbaModal({ open, handleClose, userId }) {
           component="h2"
           sx={{
             mt: -1,
-            fontSize: "20px",
-            fontWeight: "bold",
-            color: "#2e2e2e",
-            marginTop: "-15px",
+            fontSize: "19px",
+            fontWeight: "600",
+            color: "#3b3b3b",
+            marginTop: "-16px",
             position: "relative",
-            letterSpacing: "1px",
           }}
         >
           TBA Detail

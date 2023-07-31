@@ -47,7 +47,7 @@ export const DUMMY_DATA_AIRDROP_PROGRESS = [
       profileImage: `https://i.pravatar.cc/300?u=4`,
   },
   {
-      progress: 50,
+      progress: -10,
       userName: "Sophia Turner",
       userId: 5,
       status: "Completed",

@@ -71,14 +71,14 @@ function TbaFilterButton({ onFilter }) {
     bottom: "-50px",
     right: "366px",
     borderRadius: "6px",
-    backgroundColor: "#fd2b70",
+    backgroundColor: "#f88181",
     color: "#fff",
     fontSize: "12px",
     fontWeight: "bold",
     border: "none",
     boxShadow: "2px 2px 5px rgba(0, 0, 0, 0.2)",
     "&:hover": {
-      backgroundColor: "#e91c60",
+      backgroundColor: "#eb6363",
       border: "none",
     },
   };
