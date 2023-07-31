@@ -1,7 +1,7 @@
 import React from "react";
 import "../assets/Admin.css";
 
-export default function TbaListPageContent() {
+export default function DashboardPageContent() {
   const styles = {
     pageContent: {
       display: "flex",
@@ -9,18 +9,18 @@ export default function TbaListPageContent() {
       height: "10vh",
       marginLeft: "40px",
       marginTop: "25px",
-      userSelect: 'none',
+      userSelect: "none",
       fontSize: "38px",
       fontWeight: "bold",
       fontFamily: "'tektur', sans-serif",
     },
     textWithBackground: {
-      display: 'inline-block', 
+      display: "inline-block",
       background: `url(${process.env.PUBLIC_URL}/AdminHeader.gif) center/cover no-repeat`,
-      color: 'transparent',
-      WebkitBackgroundClip: 'text', 
-      backgroundClip: 'text',
-    }
+      color: "transparent",
+      WebkitBackgroundClip: "text",
+      backgroundClip: "text",
+    },
   };
 
   return (

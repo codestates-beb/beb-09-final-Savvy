@@ -14,7 +14,7 @@ import TbaListPage from "./pages/TbaListPage";
 import ContractPage from "./pages/ContractPage";
 import AirdropPage from "./pages/AirdropPage";
 import ManagerPage from "./pages/ManagerPage";
-import ErrorPage from './components/ErrorPage';
+import ErrorPage from "./components/ErrorPage";
 
 // api
 import { getAdminCommunity } from "./api/get-admin-community";
@@ -50,6 +50,9 @@ function App() {
     const initCommunity = async () => {
       const community = await getAdminCommunity();
       if (community) {
+        if (!localStorage.getItem("currentCommunity")) {
+          localStorage.setItem("currentCommunity", community[0].address);
+        }
         dispatch(setCommunityData(community));
       } else {
         dispatch(setCommunityData(null));
