@@ -17,7 +17,7 @@ const StyledButton = styled(Button)({
   top: "190%",   
   transform: "translateY(-50%)",   
   userSelect: "none", 
-  boxShadow: "3px 3px 5px rgba(0, 0, 0, 0.2)",
+  boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
   borderRadius: "10px",
   transition: "background-color 0.5s ease", 
   backgroundColor: "#576ff6",

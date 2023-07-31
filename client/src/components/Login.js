@@ -40,7 +40,7 @@ export default function Login() {
     position: "absolute", 
     top: "0",          
     left: "0",          
-    width: "100px",
+    width: "85px",
     height: "auto",
     margin: "1rem",  
   };

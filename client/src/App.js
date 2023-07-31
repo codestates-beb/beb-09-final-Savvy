@@ -13,6 +13,7 @@ import TbaListPage from "./pages/TbaListPage";
 import ContractPage from "./pages/ContractPage";
 import AirdropPage from "./pages/AirdropPage";
 import ManagerPage from "./pages/ManagerPage";
+import ErrorPage from './components/ErrorPage';
 
 // api
 import { getAdminCommunity } from "./api/get-admin-community";
@@ -87,7 +88,7 @@ function App() {
               element={<ManagerPage web3Auth={web3Auth} />}
             />
           </Route>
-          <Route path="*" element={<h1>Not Found</h1>} />
+          <Route path="*" element={<ErrorPage />} />
         </Routes>
       </Router>
     </div>
