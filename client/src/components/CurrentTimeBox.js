@@ -31,7 +31,7 @@ function CurrentTimeBox() {
     };
   }, null);
 
-  if (window.innerWidth <= 768 || isMobile) {
+  if (window.innerWidth <= 1150 || isMobile) {
     return null; 
   }
 
@@ -44,7 +44,7 @@ function CurrentTimeBox() {
       borderColor="white"
       style={{
         marginTop: '20px',
-        marginRight: '35px',
+        marginRight: '32px',
         userSelect: 'none',
         position: 'absolute',
         right: 0,
