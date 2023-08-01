@@ -236,18 +236,43 @@ module.exports = {
         { new: true }
       );
 
-      const communities = await Community.find({ admin_id: updatedAdmin._id });
+      const nfts = await alchemy.nft.getNftsForOwner(admins.address);
 
-      let tba = [];
-      if (communities) {
-        tba = await Tba.find({ community_id: communities[0]._id });
-      }
+      const tokens = await alchemy.core.getTokensForOwner(admins.address);
+
+      const ownedNft = nfts.ownedNfts.map((nft) => ({
+        type: nft.tokenType,
+        address: nft.contract.address,
+        name: nft.contract.name,
+        symbol: nft.contract.symbol,
+        tokenId: nft.tokenId,
+        tokenURI: nft.tokenUri.raw,
+        contractAddress: nft.contract.address,
+      }));
+
+      const ownedToken = tokens.tokens.map((token) => ({
+        type: 'ERC20',
+        address: token.contractAddress,
+        tokenName: token.name,
+        tokenSymbol: token.symbol,
+        tokenAmount: token.balance,
+      }));
+
+      console.log(ownedNft);
+      console.log(ownedToken);
+
+      const items = [...ownedNft, ownedToken];
+
+      const communities = await Community.find({ admin_id: updatedAdmin._id });
 
       res.status(200).json({
         message: 'get manager data',
         admin: updatedAdmin,
         communities: communities,
-        tba: tba,
+        items: {
+          nfts: ownedNft,
+          tokens: ownedToken,
+        },
       });
     } catch (error) {
       console.log(error);

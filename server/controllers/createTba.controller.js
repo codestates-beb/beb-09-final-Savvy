@@ -1,6 +1,6 @@
-const ethers = require("ethers");
+const ethers = require('ethers');
 
-require("dotenv").config();
+require('dotenv').config();
 
 const provider = new ethers.providers.JsonRpcProvider(process.env.INFURA_URL);
 
@@ -15,17 +15,17 @@ module.exports = {
 
       if (receipt && receipt.status == 1) {
         res.status(200).json({
-          message: "Successfully created TBA",
+          message: 'Successfully created TBA',
         });
       } else {
         res.status(400).json({
-          message: "Failed to create TBA",
+          message: 'Failed to create TBA',
         });
       }
     } catch (error) {
       console.log(error);
       res.status(500).json({
-        error: "Internal Server Error",
+        error: 'Internal Server Error',
       });
     }
   },
