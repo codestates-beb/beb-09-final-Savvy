@@ -117,11 +117,11 @@ export default function AirdropPageContent({ web3Auth }) {
   const [amounts, setAmounts] = useState("");
   const [tokenIds, setTokenIds] = useState("");
 
-  const selectedTbaGroup = tbaGroupData.filter((group, idx) => {
+  const selectedTbaGroup = tbaGroupData?.filter((group, idx) => {
     return selectedGroup.includes(idx.toString());
   });
 
-  const selectedTbaAddress = selectedTbaGroup.map((group) => {
+  const selectedTbaAddress = selectedTbaGroup?.map((group) => {
     return group.TBAs.map((tba) => {
       return tba.address;
     });
@@ -210,7 +210,7 @@ export default function AirdropPageContent({ web3Auth }) {
           </div>
           <List>
             {/* Mapping TBA groups */}
-            {tbaGroupData.map((group, idx) => {
+            {tbaGroupData?.map((group, idx) => {
               return (
                 <div key={group.name} id={idx}>
                   <ListItem
@@ -287,7 +287,7 @@ export default function AirdropPageContent({ web3Auth }) {
             Selected TBA
           </div>
           <List style={{ overflow: "auto" }}>
-            {selectedTbaGroup.length === 0 ? (
+            {selectedTbaGroup?.length === 0 ? (
               <div
                 style={{
                   display: "flex",
@@ -310,7 +310,7 @@ export default function AirdropPageContent({ web3Auth }) {
                 />
               </div>
             ) : (
-              selectedTbaGroup.map((group, idx) => {
+              selectedTbaGroup?.map((group, idx) => {
                 return group.TBAs.map((tba) => (
                   <div key={tba._id} id={idx}>
                     <ListItem

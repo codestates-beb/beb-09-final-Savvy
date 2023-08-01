@@ -85,12 +85,8 @@ export default function SideNav() {
   const [collapsed, setCollapsed] = useState(false);
   const location = useLocation();
 
-  // 나중에 수정할 코드, 현재는 임시로 사용
-  // 시작
-  const { address } = useParams();
   const currentCommunity = localStorage.getItem("currentCommunity");
-  let addressCurrent = address ? address : currentCommunity;
-  // 끝
+  let addressCurrent = currentCommunity ? currentCommunity : "";
 
   const preventImageActions = (event) => {
     if (event.target.tagName === "IMG") {
