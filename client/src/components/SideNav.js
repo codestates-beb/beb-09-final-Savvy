@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
 import { Sidebar, Menu, MenuItem } from "react-pro-sidebar";
 import SidebarFooter from "./SidebarFooter";
 
@@ -17,89 +16,86 @@ import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 // css
 import "../assets/SideNav.css";
 
+const logopurpleStyle = {
+  width: "23px",
+  height: "auto",
+  marginTop: "26px",
+  marginBottom: "18px",
+};
+
+const logoblackStyle = {
+  width: "70px",
+  height: "auto",
+  marginTop: "26px",
+  marginBottom: "18px",
+  marginLeft: "-123px",
+};
+
+const activeStyle = {
+  color: "#576ff6",
+  background: "#f0f2fd",
+  fontSize: "14px",
+  fontWeight: "600",
+  marginTop: "18px",
+  fontFamily: "'tektur', sans-serif",
+  transition: "transform 0.3s ease, box-shadow 0.3s ease",
+  position: "relative",
+};
+
+const inactiveStyle = {
+  color: "#a6a4a4",
+  fontSize: "14px",
+  fontWeight: "500",
+  marginTop: "18px",
+  fontFamily: "'tektur', sans-serif",
+  transition: "transform 0.3s ease, box-shadow 0.3s ease",
+};
+
+const rectangleStyle = {
+  position: "absolute",
+  right: "0px",
+  top: "50%",
+  transform: "translateY(-50%)",
+  width: "3px",
+  height: "50px",
+  backgroundColor: "#576ff6",
+  borderRadius: "10px",
+};
+
+const iconStyles = {
+  width: "40px",
+  marginTop: "2px",
+};
+
+const dashboardIconStyles = {
+  width: "25px",
+  marginLeft: "4px",
+};
+
+const airdropIconStyles = {
+  width: "36px",
+};
+
+const contractsiconStyles = {
+  width: "40px",
+  marginLeft: "3px",
+};
+
 export default function SideNav() {
-  const communityData = useSelector((state) => state.community.communityData);
   const [collapsed, setCollapsed] = useState(false);
   const location = useLocation();
 
   // 나중에 수정할 코드, 현재는 임시로 사용
   // 시작
-  let { addressParams } = useParams();
-  let addressCommunityData = communityData ? communityData[0].address : null;
-  let address = addressParams ? addressParams : addressCommunityData;
-  console.log("addressParams:", addressParams);
-  console.log("addressCommunityData:", addressCommunityData);
+  const { address } = useParams();
+  const currentCommunity = localStorage.getItem("currentCommunity");
+  let addressCurrent = address ? address : currentCommunity;
   // 끝
 
   const preventImageActions = (event) => {
     if (event.target.tagName === "IMG") {
       event.preventDefault();
     }
-  };
-
-  const logopurpleStyle = {
-    width: "23px",
-    height: "auto",
-    marginTop: "26px",
-    marginBottom: "18px",
-  };
-
-  const logoblackStyle = {
-    width: "70px",
-    height: "auto",
-    marginTop: "26px",
-    marginBottom: "18px",
-    marginLeft: "-123px",
-  };
-
-  const activeStyle = {
-    color: "#576ff6",
-    background: "#f0f2fd",
-    fontSize: "14px",
-    fontWeight: "600",
-    marginTop: "18px",
-    fontFamily: "'tektur', sans-serif",
-    transition: "transform 0.3s ease, box-shadow 0.3s ease",
-    position: "relative",
-  };
-
-  const inactiveStyle = {
-    color: "#a6a4a4",
-    fontSize: "14px",
-    fontWeight: "500",
-    marginTop: "18px",
-    fontFamily: "'tektur', sans-serif",
-    transition: "transform 0.3s ease, box-shadow 0.3s ease",
-  };
-
-  const rectangleStyle = {
-    position: "absolute",
-    right: "0px",
-    top: "50%",
-    transform: "translateY(-50%)",
-    width: "3px",
-    height: "50px",
-    backgroundColor: "#576ff6",
-    borderRadius: "10px",
-  };
-
-  const iconStyles = {
-    width: "40px",
-    marginTop: "2px",
-  };
-
-  const dashboardIconStyles = {
-    width: "25px",
-    marginLeft: "4px",
-  };
-
-  const airdropIconStyles = {
-    width: "36px",
-  };
-
-  const contractsiconStyles = {
-    width: "40px",
-    marginLeft: "3px",
   };
 
   const preventImageCopy = (event) => {
@@ -124,7 +120,7 @@ export default function SideNav() {
         >
           {collapsed ? (
             <div style={{ textAlign: "center" }}>
-              <Link to={`/main/${address}`}>
+              <Link to={`/main/${addressCurrent}`}>
                 <img
                   src="/logopurple.png"
                   alt="Logopurple"
@@ -144,7 +140,7 @@ export default function SideNav() {
             </div>
           ) : (
             <div icon={<MenuIcon />} style={{ textAlign: "center" }}>
-              <Link to={`/main/${address}`}>
+              <Link to={`/main/${addressCurrent}`}>
                 <img
                   src="/logocolor2.png"
                   alt="Logoblack"
@@ -174,15 +170,15 @@ export default function SideNav() {
                     style={dashboardIconStyles}
                   />
                 }
-                component={<Link to={`/main/${address}`} />}
+                component={<Link to={`/main/${addressCurrent}`} />}
                 style={
-                  location.pathname === `/main/${address}`
+                  location.pathname === `/main/${addressCurrent}`
                     ? activeStyle
                     : inactiveStyle
                 }
               >
                 Dashboard
-                {location.pathname === `/main/${address}` && (
+                {location.pathname === `/main/${addressCurrent}` && (
                   <div style={rectangleStyle}></div>
                 )}
               </MenuItem>
@@ -195,15 +191,15 @@ export default function SideNav() {
                     style={iconStyles}
                   />
                 }
-                component={<Link to={`/tbalist/${address}`} />}
+                component={<Link to={`/tbalist/${addressCurrent}`} />}
                 style={
-                  location.pathname === `/tbalist/${address}`
+                  location.pathname === `/tbalist/${addressCurrent}`
                     ? activeStyle
                     : inactiveStyle
                 }
               >
                 TBAs
-                {location.pathname === `/tbalist/${address}` && (
+                {location.pathname === `/tbalist/${addressCurrent}` && (
                   <div style={rectangleStyle}></div>
                 )}
               </MenuItem>
@@ -216,15 +212,15 @@ export default function SideNav() {
                     style={contractsiconStyles}
                   />
                 }
-                component={<Link to={`/contract/${address}`} />}
+                component={<Link to={`/contract/${addressCurrent}`} />}
                 style={
-                  location.pathname === `/contract/${address}`
+                  location.pathname === `/contract/${addressCurrent}`
                     ? activeStyle
                     : inactiveStyle
                 }
               >
                 Contracts
-                {location.pathname === `/contract/${address}` && (
+                {location.pathname === `/contract/${addressCurrent}` && (
                   <div style={rectangleStyle}></div>
                 )}
               </MenuItem>
@@ -237,15 +233,15 @@ export default function SideNav() {
                     style={airdropIconStyles}
                   />
                 }
-                component={<Link to={`/airdrop/${address}`} />}
+                component={<Link to={`/airdrop/${addressCurrent}`} />}
                 style={
-                  location.pathname === `/airdrop/${address}`
+                  location.pathname === `/airdrop/${addressCurrent}`
                     ? activeStyle
                     : inactiveStyle
                 }
               >
                 Airdrop
-                {location.pathname === `/airdrop/${address}` && (
+                {location.pathname === `/airdrop/${addressCurrent}` && (
                   <div style={rectangleStyle}></div>
                 )}
               </MenuItem>
@@ -258,15 +254,15 @@ export default function SideNav() {
                     style={iconStyles}
                   />
                 }
-                component={<Link to={`/manager/${address}`} />}
+                component={<Link to={`/manager/${addressCurrent}`} />}
                 style={
-                  location.pathname === `/manager/${address}`
+                  location.pathname === `/manager/${addressCurrent}`
                     ? activeStyle
                     : inactiveStyle
                 }
               >
                 Manager
-                {location.pathname === `/manager/${address}` && (
+                {location.pathname === `/manager/${addressCurrent}` && (
                   <div style={rectangleStyle}></div>
                 )}
               </MenuItem>

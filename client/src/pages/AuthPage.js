@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { setCommunityData } from "../reducers/communityReducer.js";
+import { setDashboardData } from "../reducers/dashboardReducer.js";
 import { Web3Auth } from "@web3auth/modal";
 import Login from "../components/Login.js";
 import ethersRPC from "../ethersRPC.js";
@@ -8,11 +11,16 @@ import { getPublicCompressed } from "@toruslabs/eccrypto";
 // api
 import { postLogin } from "../api/post-login.js";
 import { getAdminCommunity } from "../api/get-admin-community.js";
+import { getDashboard } from "../api/get-dashboard";
 
 export default function AuthPage({ web3Auth, setWeb3Auth }) {
-  const [isLogin, setIsLogin] = useState(false);
+  const dispatch = useDispatch();
+  const communityData = useSelector((state) => state.community.communityData);
+  const dashboardData = useSelector((state) => state.dashboard.dashboardData);
+
   const [provider, setProvider] = useState(null);
   const [screenSize, setScreenSize] = useState("");
+  const [isLogin, setIsLogin] = useState(false);
 
   const navigate = useNavigate();
 
@@ -46,15 +54,46 @@ export default function AuthPage({ web3Auth, setWeb3Auth }) {
         );
 
         if (result) {
-          const community = await getAdminCommunity();
-          if (community) {
-            navigate(`/main/${community[0].address}`);
-          } else {
-            navigate("/main");
-          }
+          // get community data
+          const initCommunity = async () => {
+            const community = await getAdminCommunity();
+            console.log("community:", community);
+            if (community) {
+              if (!localStorage.getItem("currentCommunity")) {
+                localStorage.setItem("currentCommunity", community[0].address);
+              }
+              dispatch(setCommunityData(community));
+            } else {
+              dispatch(setCommunityData(null));
+            }
+          };
+
+          // get dashboard data
+          const initDashboard = async () => {
+            const currentCommunity = localStorage.getItem("currentCommunity");
+            const dashboard = await getDashboard(
+              localStorage.getItem("currentCommunity")
+            );
+
+            if (dashboard) {
+              const { community, TBAs, items } = dashboard;
+              dispatch(setDashboardData({ community, TBAs, items }));
+            } else {
+              dispatch(setDashboardData(null));
+            }
+
+            if (currentCommunity) {
+              navigate(`/main/${currentCommunity}`);
+            } else {
+              navigate("/main");
+            }
+          };
+
+          initCommunity().then(() => initDashboard());
         }
       }
     };
+
     initLogin();
   }, [isLogin]);
 

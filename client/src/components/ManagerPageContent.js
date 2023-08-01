@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { CopyToClipboard } from "react-copy-to-clipboard";
 import { useSelector, useDispatch } from "react-redux";
 import { setManagerData } from "../reducers/managerReducer";
 import {
@@ -10,12 +11,17 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-  Checkbox,
   TextField,
   Chip,
   Snackbar,
-  MuiAlert,
+  Alert,
+  List,
+  ListItem,
+  ListItemText,
+  ListItemIcon,
+  ListItemButton,
 } from "@mui/material";
+import FileCopyOutlinedIcon from "@mui/icons-material/FileCopyOutlined";
 import {
   ADMIN_INFO,
   ADMIN_TOKEN_LIST,
@@ -52,6 +58,7 @@ export default function ManagerPageContent({ web3Auth }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const [isCopied, setIsCopied] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [openLogout, setOpenLogout] = useState(false);
   const [openAdd, setOpenAdd] = useState(false);
@@ -91,6 +98,7 @@ export default function ManagerPageContent({ web3Auth }) {
     try {
       localStorage.removeItem("token");
       localStorage.removeItem("app_pub_key");
+      localStorage.removeItem("currentCommunity");
       await web3Auth.logout();
       navigate("/");
     } catch (error) {
@@ -183,15 +191,48 @@ export default function ManagerPageContent({ web3Auth }) {
                   sx={{ bgcolor: "#5270ff", color: "white" }}
                   label="Address"
                 />
-                <div
-                  style={{
-                    padding: "0.3rem",
-                  }}
-                >{`${
-                  managerData ? managerData.admin.address.substring(0, 6) : null
-                }...${
-                  managerData ? managerData.admin.address.substring(36) : null
-                }`}</div>
+                <CopyToClipboard
+                  text={managerData?.admin.address}
+                  onCopy={() => setIsCopied(true)}
+                >
+                  <div
+                    style={{
+                      padding: "0.3rem",
+                      display: "flex",
+                      alignItems: "center",
+                    }}
+                  >
+                    {`${
+                      managerData
+                        ? managerData.admin.address.substring(0, 4)
+                        : null
+                    }...${
+                      managerData
+                        ? managerData.admin.address.substring(37)
+                        : null
+                    }`}
+                    <FileCopyOutlinedIcon
+                      style={{ color: "grey", fontSize: "medium" }}
+                    />
+                  </div>
+                </CopyToClipboard>
+
+                {/* copy alert */}
+                <Snackbar
+                  open={isCopied}
+                  autoHideDuration={3000}
+                  onClose={() => setIsCopied(false)}
+                  anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+                >
+                  <Alert
+                    variant="filled"
+                    onClose={() => setIsCopied(false)}
+                    severity="success"
+                    sx={{ width: "100%" }}
+                  >
+                    Copied to clipboard!
+                  </Alert>
+                </Snackbar>
               </div>
             </div>
           </div>
@@ -283,70 +324,38 @@ export default function ManagerPageContent({ web3Auth }) {
               </DialogActions>
             </Dialog>
           </div>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              margin: "0.5rem",
-              overflow: "auto",
-              height: "14rem",
-            }}
-          >
-            <div>
-              <div className="community-category">Name</div>
-              <ul className="community-ul">
-                {managerData
-                  ? managerData.communities.map((data) => {
-                      return <li key={data._id}>{data.alias}</li>;
-                    })
-                  : null}
-              </ul>
-            </div>
-            <div>
-              <div className="community-category">Address</div>
-              <ul className="community-ul">
-                {managerData
-                  ? managerData.communities.map((data) => {
-                      return (
-                        <li key={data._id}>
-                          {`${data.address.substring(
-                            0,
-                            4
-                          )}...${data.address.substring(38)}`}
-                        </li>
-                      );
-                    })
-                  : null}
-              </ul>
-            </div>
-            <div>
-              <div className="community-category">Date</div>
-              <ul className="community-ul">
-                {managerData
-                  ? managerData.communities.map((data) => {
-                      return (
-                        <li key={data._id}>
-                          {data.createdAt.substring(0, 10)}
-                        </li>
-                      );
-                    })
-                  : null}
-              </ul>
-            </div>
-            <div>
-              <div className="community-category">Status</div>
-              <ul className="community-ul">
-                {managerData
-                  ? managerData.communities.map((data) => {
-                      return (
-                        <li key={data._id}>
-                          <input type="checkbox" />
-                        </li>
-                      );
-                    })
-                  : null}
-              </ul>
-            </div>
+          <div className="community">
+            <List>
+              {managerData?.communities.map((data) => {
+                return (
+                  <ListItem key={data._id} disablePadding>
+                    <ListItemButton>
+                      <ListItemIcon>
+                        <input type="checkbox" />
+                      </ListItemIcon>
+                      <ListItemText
+                        primary={data.alias}
+                        secondary={`${data.address.substring(
+                          0,
+                          4
+                        )}...${data.address.substring(38)}`}
+                      />
+                      <Chip
+                        sx={{
+                          height: "auto",
+                          "& .MuiChip-label": {
+                            display: "block",
+                            whiteSpace: "normal",
+                          },
+                        }}
+                        variant="outlined"
+                        label={`Created At: ${data.createdAt.substring(0, 10)}`}
+                      />
+                    </ListItemButton>
+                  </ListItem>
+                );
+              })}
+            </List>
           </div>
         </Box>
         <Box sx={boxStyle2}>

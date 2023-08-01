@@ -1,13 +1,12 @@
 import axios from "axios";
 
 export const getAllTba = async () => {
-  const communityAddress = window.location.pathname.split("/")[2];
-  console.log(communityAddress);
+  const currentCommunity = localStorage.getItem("currentCommunity");
 
   try {
     const response = await axios({
       method: "get",
-      url: `http://localhost:8080/tbaAdmin/${communityAddress}`,
+      url: `http://localhost:8080/tbaAdmin/${currentCommunity}`,
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
