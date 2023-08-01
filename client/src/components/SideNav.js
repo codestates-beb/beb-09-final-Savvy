@@ -40,24 +40,24 @@ export default function SideNav() {
   const logopurpleStyle = {
     width: "23px",
     height: "auto",
-    marginTop: "26px",
-    marginBottom: "18px",
+    marginTop: "28px",
+    marginBottom: "22px",
   };
 
   const logoblackStyle = {
     width: "70px",
     height: "auto",
-    marginTop: "26px",
-    marginBottom: "18px",
+    marginTop: "30px",
+    marginBottom: "20px",
     marginLeft: "-123px",
   };
 
   const activeStyle = {
     color: "#576ff6",
     background: "#f0f2fd",
-    fontSize: "14px",
+    fontSize: "13px",
     fontWeight: "600",
-    marginTop: "18px",
+    marginTop: "10px",
     fontFamily: "'tektur', sans-serif",
     transition: "transform 0.3s ease, box-shadow 0.3s ease",
     position: "relative",
@@ -65,9 +65,9 @@ export default function SideNav() {
 
   const inactiveStyle = {
     color: "#a6a4a4",
-    fontSize: "14px",
+    fontSize: "13px",
     fontWeight: "500",
-    marginTop: "18px",
+    marginTop: "10px",
     fontFamily: "'tektur', sans-serif",
     transition: "transform 0.3s ease, box-shadow 0.3s ease",
   };
@@ -84,21 +84,21 @@ export default function SideNav() {
   };
 
   const iconStyles = {
-    width: "40px",
+    width: "35px",
     marginTop: "2px",
   };
 
   const dashboardIconStyles = {
-    width: "25px",
+    width: "20px",
     marginLeft: "4px",
   };
 
   const airdropIconStyles = {
-    width: "36px",
+    width: "31px",
   };
 
   const contractsiconStyles = {
-    width: "40px",
+    width: "35px",
     marginLeft: "3px",
   };
 

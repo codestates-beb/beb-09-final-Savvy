@@ -3,25 +3,19 @@ import { Link, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { setContractData } from "../reducers/contractReducer";
 import "../assets/Admin.css";
-import {
-  Box,
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  TextField,
-  MenuItem,
+import { 
+  Box, Button, Dialog, DialogActions, DialogContent, 
+  DialogContentText, DialogTitle, TextField, MenuItem 
 } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { CONTRACTS } from "../assets/DUMMY_DATA";
 
-// api
+// API
 import { createContract } from "../api/post-create-contract";
 import { getContract } from "../api/get-contract";
 import { deleteContract } from "../api/delete-contract";
 import { updateContract } from "../api/put-contract";
+import ContractEnrollModal from "./ContractEnrollModal"; 
 
 const columns = [
   { field: "id", headerName: "ID", width: 90 },
@@ -68,6 +62,8 @@ export default function ContractPageContent() {
     : [];
 
   const { address } = useParams();
+
+
 
   useEffect(() => {
     const initContract = async () => {
@@ -163,232 +159,195 @@ export default function ContractPageContent() {
     });
   };
 
+  const columns = [
+    { field: 'id', headerName: 'ID', width: 105 },
+    { field: 'firstName', headerName: 'Name', width: 220 },
+    { field: 'type', headerName: 'Type', width: 220 },
+    { field: 'address', headerName: 'Address', width: 220 },
+  ];  
+  
+  const styles = {
+    textWithBackground: {
+      display: 'inline-block', 
+      background: `url(${process.env.PUBLIC_URL}/AdminHeader.gif) center/cover no-repeat`,
+      color: 'transparent',
+      WebkitBackgroundClip: 'text', 
+      backgroundClip: 'text',
+      fontSize: "38px",
+      fontWeight: "bold",
+      marginLeft: "8px",
+      marginTop: "25px",
+      userSelect: "none",
+      fontFamily: "'tektur', sans-serif",
+    },
+    manageText: {
+      color: "#8f8e8e",
+      marginTop: "0.3rem",
+      marginBottom: "1.8rem",
+      marginLeft: "0.6rem",
+      fontSize: "16px",
+      fontWeight: "bold",
+      whiteSpace: "nowrap",
+      fontFamily: "'tektur', sans-serif",
+      userSelect: "none",
+    }
+  };
+
   return (
     <div className="page-content">
-      <h1>Contract</h1>
+      <div>
+        <span style={styles.textWithBackground}>Contract</span>
+      </div>
+      <div style={styles.manageText}>Manage your CONTRACTS</div>
       <div style={{ display: "flex", justifyContent: "space-between" }}>
         <div>
-          <div style={{ color: "lightslategray", marginTop: "-0.8rem" }}>
-            Manage your CONTRACTS
-          </div>
-          {rowSelectionModel.length > 0 ? (
+          {rowSelectionModel.length > 0 ? ( 
             <div>
-              <Button
-                onClick={handleDelete}
-                size="small"
-                sx={{ color: "#5270ff" }}
-              >
+              <Button onClick={handleDelete} size="small" sx={{ width: "6rem", color: "#fff", fontSize: "0.7rem", fontWeight: "600", marginTop: "0.2rem", marginLeft: "0.2rem", backgroundColor: "#f88181", borderRadius: "0.5rem", padding: "0.65rem 1rem", boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)", "&:hover": { backgroundColor: "#eb6363", cursor: "pointer", }, }}>
                 Delete
               </Button>
-              <Button
-                onClick={handleOpenUpdate}
-                size="small"
-                sx={{ color: "#5270ff" }}
-              >
+              <Button onClick={handleOpenUpdate} size="small" sx={{ width: "6rem", color: "#fff", fontSize: "0.7rem", fontWeight: "600", marginTop: "0.2rem", marginLeft: "0.8rem", backgroundColor: "#576ff6", borderRadius: "0.5rem", padding: "0.65rem 1rem", boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)", "&:hover": { backgroundColor: "#3351e2", cursor: "pointer", }, }}>
                 Update
               </Button>
             </div>
           ) : null}
 
-          <Dialog open={openUpdate} onClose={() => setOpenUpdate(false)}>
-            <DialogTitle>Update Contract</DialogTitle>
-            <DialogContent>
-              <DialogContentText>
-                To airdrop items to community members, please{" "}
-                <b>enroll your contract</b> here. Then, you can send items at{" "}
-                <Link to="/airdrop" style={{ textDecoration: "none" }}>
-                  <b>airdrop page</b>
-                </Link>
-                .
-              </DialogContentText>
-              <TextField
-                autoFocus
-                margin="dense"
-                id="name"
-                label="Name"
-                type="text"
-                fullWidth
-                variant="standard"
-                placeholder="e.g. My NFT"
-                value={updateInput.name}
-                onChange={(e) =>
-                  setUpdateInput({ ...updateInput, name: e.target.value })
-                }
-              />
-              <TextField
-                margin="dense"
-                id="type"
-                label="Type"
-                select
-                fullWidth
-                variant="standard"
-                value={updateInput.type}
-                onChange={(e) =>
-                  setUpdateInput({ ...updateInput, type: e.target.value })
-                }
-              >
-                {["ERC20", "ERC721", "ERC1155"].map((option) => (
-                  <MenuItem key={option} value={option}>
-                    {option}
-                  </MenuItem>
-                ))}
-              </TextField>
-              <TextField
-                autoFocus
-                margin="dense"
-                id="address"
-                label="Address"
-                type="text"
-                fullWidth
-                variant="standard"
-                placeholder="e.g. 0x0xAdeb833eee668e50761B4BC8b3Ef476Dc2C869461234"
-                value={updateInput.address}
-                disabled={disableAddress}
-              />
-            </DialogContent>
-            <DialogActions>
-              <Button
-                sx={{ color: "#5270ff" }}
-                onClick={() => setOpenUpdate(false)}
-              >
-                Cancel
-              </Button>
-              <Button
-                sx={{ bgcolor: "#5270ff", color: "#ffffff" }}
-                onClick={handleUpdate}
-              >
-                Update
-              </Button>
-            </DialogActions>
-          </Dialog>
+          <ContractEnrollModal
+            open={openEnroll} 
+            handleClose={() => setOpenEnroll(false)} 
+            contractInput={contractInput}
+            setContractInput={setContractInput}
+            handleEnroll={handleEnroll}
+          />
         </div>
-        <Button onClick={() => setOpenEnroll(true)} sx={{ color: "#5270ff" }}>
+        <Button
+          onClick={() => setOpenEnroll(true)}
+          sx={{
+            color: "#fff",
+            fontSize: "0.7rem",
+            fontWeight: "600",
+            marginRight: "-0.2rem",
+            marginBottom: "0.8rem",
+            borderRadius: "0.5rem",
+            padding: "0.65rem 1rem",
+            boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
+            backgroundColor: "#576ff6",
+            "&:hover": {
+              backgroundColor: "#3351e2", 
+              cursor: "pointer", 
+            },
+          }}
+        >
           Enroll new contract
         </Button>
       </div>
-      <Dialog open={openEnroll} onClose={() => setOpenEnroll(false)}>
-        <DialogTitle>Enroll new Contract</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            To airdrop items to community members, please{" "}
-            <b>enroll your contract</b> here. Then, you can send items at{" "}
-            <Link to="/airdrop" style={{ textDecoration: "none" }}>
-              <b>airdrop page</b>
-            </Link>
-            .
-          </DialogContentText>
-          <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="Name"
-            type="text"
-            fullWidth
-            variant="standard"
-            placeholder="e.g. My NFT"
-            value={contractInput.name}
-            onChange={(e) =>
-              setContractInput({ ...contractInput, name: e.target.value })
-            }
-          />
-          <TextField
-            margin="dense"
-            id="type"
-            label="Type"
-            select
-            fullWidth
-            variant="standard"
-            defaultValue={"ERC721"}
-            value={contractInput.type}
-            onChange={(e) =>
-              setContractInput({ ...contractInput, type: e.target.value })
-            }
-          >
-            {["ERC20", "ERC721", "ERC1155"].map((option) => (
-              <MenuItem key={option} value={option}>
-                {option}
-              </MenuItem>
-            ))}
-          </TextField>
-          <TextField
-            autoFocus
-            margin="dense"
-            id="address"
-            label="Address"
-            type="text"
-            fullWidth
-            variant="standard"
-            placeholder="e.g. 0xAdeb833eee668e50761B4BC8b3Ef476Dc2C81234"
-            value={contractInput.address}
-            onChange={(e) =>
-              setContractInput({ ...contractInput, address: e.target.value })
-            }
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button
-            sx={{ color: "#5270ff" }}
-            onClick={() => setOpenEnroll(false)}
-          >
-            Cancel
-          </Button>
-          <Button
-            sx={{ bgcolor: "#5270ff", color: "#ffffff" }}
-            onClick={handleEnroll}
-          >
-            Enroll
-          </Button>
-        </DialogActions>
-      </Dialog>
       <div>
         <Box
           sx={{
+            backgroundColor: '#fff',
+            border: 'none', 
             height: "78vh",
             width: "100%",
-            boxShadow: "0 2px 4px rgba(0, 0, 0, 0.2)",
+            marginLeft: "0.2rem",
+            boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
           }}
         >
           <DataGrid
+            density="compact"
             columns={columns}
             rows={rows}
             checkboxSelection
             disableRowSelectionOnClick
+            disableColumnMenu
             slots={{ toolbar: GridToolbar }}
             rowSelectionModel={rowSelectionModel}
-            onRowSelectionModelChange={(newRowSelectionModel) => {
-              handleRowSelectionModelChange(newRowSelectionModel);
-            }}
-            sx={{
-              "& .MuiDataGrid-root": {
-                border: "none",
-              },
-              "& .MuiDataGrid-cell": {
-                borderBottom: "none",
-              },
-              "& .name-column--cell": {
-                color: "grey",
-              },
-              "& .MuiDataGrid-columnHeaders": {
-                backgroundColor: "#5270ff",
-                borderBottom: "none",
-              },
-              "& .MuiDataGrid-virtualScroller": {
-                backgroundColor: "#748af436",
-              },
-              "& .MuiDataGrid-footerContainer": {
-                borderTop: "none",
-                backgroundColor: "#5270ff",
-              },
-              "& .MuiCheckbox-root": {
-                // color: `grey !important`,
-              },
-              "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
-                color: `#5270ff !important`,
-              },
-            }}
-          />
-        </Box>
-      </div>
-    </div>
-  );
+            localeText={{ 
+              toolbarDensityCompact: 'Small',
+              toolbarDensityStandard: 'Medium',
+              toolbarDensityComfortable: 'Large',
+              noRowsLabel: <div style={{ fontSize: "1rem", fontWeight: "bold", color: "#828282" }}>No rows</div>,
+       }}
+       onRowSelectionModelChange={(newRowSelectionModel) => {
+         handleRowSelectionModelChange(newRowSelectionModel);
+       }}
+       sx={{
+        "& .MuiDataGrid-root": {
+          border: "none",
+          backgroundColor: "#fff",
+        },
+        "& .MuiDataGrid-cell": {
+          borderBottom: "none",
+          color: "#6c6c6c",
+          fontSize: "0.8rem",
+          fontWeight: 'bold', 
+          backgroundColor: "#ebeefb",
+        },
+        "& .name-column--cell": {
+          color: "#fff",
+        },
+        "& .MuiDataGrid-columnHeaders": {
+          borderTop: "1px solid #e0e0e0",
+          borderBottom: "1px solid #e0e0e0",
+          backgroundColor: "#f5f5f5",
+          fontSize: "0.8rem",
+          color: "#828282",
+        },
+        "& .MuiDataGrid-columnHeaders, .MuiDataGrid-columnHeaders *": {
+          fontWeight: 'bold !important',
+        },    
+        "& .MuiDataGrid-virtualScroller": {
+          backgroundColor: "#fff",
+        },
+        "& .MuiDataGrid-footerContainer": {
+          backgroundColor: "#f5f5f5",
+          width: "100%",
+        },
+        "& .MuiDataGrid-footerContainer, .MuiDataGrid-footerContainer *": {
+          color: "#828282 !important",
+          fontSize: "0.8rem",
+          fontWeight: 'bold',
+        },  
+        "& .MuiCheckbox-root": {
+          color: '#828282',  
+          '&.Mui-checked': {
+            color: '#576ff6',  
+          }
+        },      
+        "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
+          color: `#828282`,
+          fontSize: '0.75rem',
+          fontWeight: 'bold',
+          textAlign: 'left',
+          marginLeft: '0.6rem',
+        },
+        "& .MuiDataGrid-row": {
+          marginBottom: "0.4rem",
+        },
+        "& .MuiDataGrid-columnSeparator": {
+          display: "none",
+        },
+        "& .MuiDataGrid-sortIcon": {
+          color: "#828282", 
+          transform: "scale(0.8)",
+        },
+        "& .MuiDataGrid-menuOpen": {
+          color: "#fff",
+        },
+        "& .MuiDataGrid-toolbarContainer": {
+          backgroundColor: "#fff",
+        },
+        "& .MuiDataGrid-overlay": {
+          backgroundColor: "#fff",
+        },
+        "& .MuiSelect-select": {
+          backgroundColor: "#fff",
+          borderRadius: "0.5rem",
+          boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
+        },        
+      }}
+    />
+    </Box>
+   </div>
+  </div>
+ );
 }
