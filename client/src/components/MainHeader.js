@@ -124,9 +124,9 @@ const MainHeader = () => {
 
   const getAppBarPosition = () => {
     if (location.pathname === "/") {
-      return "fixed"; 
+      return "fixed";
     } else {
-      return "relative"; 
+      return "relative";
     }
   };
 
@@ -210,7 +210,7 @@ const MainHeader = () => {
             </Button>
           </Grid>
           <Grid item>
-            <Link to="/authentication">
+            <a href="http://localhost:3000/authentication">
               <Button
                 variant="contained"
                 color="primary"
@@ -219,7 +219,7 @@ const MainHeader = () => {
               >
                 Log in
               </Button>
-            </Link>
+            </a>
           </Grid>
         </Grid>
       </Toolbar>
