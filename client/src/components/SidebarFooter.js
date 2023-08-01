@@ -34,8 +34,8 @@ export default function SidebarFooter({ collapsed, user = {} }) {
                             background: "#fff", 
                             borderRadius: "50%", 
                             padding: "3px", 
-                            marginLeft: "-0.5rem",
-                            marginRight: "-0.9rem",
+                            marginLeft: "-0.1rem",
+                            marginRight: "-0.95rem",
                             boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)" 
                         }}>
                             <Avatar 
@@ -50,7 +50,8 @@ export default function SidebarFooter({ collapsed, user = {} }) {
                             padding: "0 0.3rem", 
                             fontSize: "0.85rem",
                             fontWeight: "700",
-                            color: "#323232" 
+                            color: "#323232", 
+                            marginLeft: "1rem",
                         }}>
                             <div>Admin</div>
                             <div style={{ 
@@ -63,7 +64,18 @@ export default function SidebarFooter({ collapsed, user = {} }) {
                                 Free Account
                             </div>
                         </div>
-                        <LogoutRoundedIcon style={{ fontSize: "20px", color: "#666", marginLeft: "14px" }} />
+                        <div style={{ 
+                            width: "35px",
+                            height: "35px",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            marginLeft: "25px",
+                            borderRadius: "10px",
+                            boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)"
+                        }}>
+                            <LogoutRoundedIcon style={{ fontSize: "17px", color: "#666" }} />
+                        </div>
                     </div>
                 </Link>
             )}

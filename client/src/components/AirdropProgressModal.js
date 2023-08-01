@@ -209,7 +209,7 @@ const AirdropProgressModal = ({ open, onClose }) => {
           />
           <DialogTitle
             sx={{
-              color: "#000",
+              color: "#272727",
               fontSize: "16px",
               fontWeight: "600",
               marginTop: "5px",
