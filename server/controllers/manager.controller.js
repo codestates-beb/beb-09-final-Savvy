@@ -1,20 +1,20 @@
-const jose = require("jose");
-const ethers = require("ethers");
+const jose = require('jose');
+const ethers = require('ethers');
 
-const { Alchemy, Network } = require("alchemy-sdk");
+const { Alchemy, Network } = require('alchemy-sdk');
 
-const Community = require("../models/community.model");
-const Admin = require("../models/admin.model");
-const Tba = require("../models/tba.model");
-const Item = require("../models/item.model");
-const Contract = require("../models/contract.model");
-const Tba_group = require("../models/tba_group.model");
+const Community = require('../models/community.model');
+const Admin = require('../models/admin.model');
+const Tba = require('../models/tba.model');
+const Item = require('../models/item.model');
+const Contract = require('../models/contract.model');
+const Tba_group = require('../models/tba_group.model');
 
-const erc6551RegistryAbi = require("../abi/ERC6551Registry.json");
-const accountAbi = require("../abi/Account.json");
-const nftContractAbi = require("../abi/NftContract.json");
+const erc6551RegistryAbi = require('../abi/ERC6551Registry.json');
+const accountAbi = require('../abi/Account.json');
+const nftContractAbi = require('../abi/NftContract.json');
 
-require("dotenv").config();
+require('dotenv').config();
 
 const provider = new ethers.providers.JsonRpcProvider(process.env.INFURA_URL);
 
@@ -38,12 +38,10 @@ module.exports = {
   createCommunity: async (req, res) => {
     const communityData = req.body;
 
-    const idToken = req.headers.authorization?.split(" ")[1];
-    const jwks = jose.createRemoteJWKSet(
-      new URL("https://api.openlogin.com/jwks")
-    );
+    const idToken = req.headers.authorization?.split(' ')[1];
+    const jwks = jose.createRemoteJWKSet(new URL('https://api.openlogin.com/jwks'));
     const jwtDecoded = await jose.jwtVerify(idToken, jwks, {
-      algorithms: ["ES256"],
+      algorithms: ['ES256'],
     });
 
     const adminEmail = jwtDecoded.payload.email;
@@ -55,10 +53,10 @@ module.exports = {
     try {
       if (existedCommunity) {
         res.status(404).json({
-          message: "Community already exists",
+          message: 'Community already exists',
         });
       } else {
-        console.log("Community does not exist");
+        console.log('Community does not exist');
         const admin = await Admin.findOne({ email: adminEmail });
         const adminCommunity = await Community.find({ admin_id: admin._id });
         //console.log(adminCommunity);
@@ -91,13 +89,9 @@ module.exports = {
 
         //const latestBlockNumber = await provider.getBlockNumber();
         const fromBlock = 1;
-        const toBlock = "latest";
+        const toBlock = 'latest';
 
-        const events = await erc6551Contract.queryFilter(
-          filter,
-          fromBlock,
-          toBlock
-        );
+        const events = await erc6551Contract.queryFilter(filter, fromBlock, toBlock);
 
         events.forEach(async (event) => {
           if (newCommunity.address === event.args.tokenContract) {
@@ -115,7 +109,7 @@ module.exports = {
             try {
               owner = await accountContract.owner();
             } catch (error) {
-              console.log("Error occurred while getting owner");
+              console.log('Error occurred while getting owner');
             }
 
             const nftContract = new ethers.Contract(
@@ -128,21 +122,19 @@ module.exports = {
             try {
               tokenURI = await nftContract.tokenURI(token.tokenId);
             } catch (error) {
-              console.log("Error occurred while getting tokenURI");
+              console.log('Error occurred while getting tokenURI');
             }
             if (owner !== null && tokenURI !== null) {
               const newTba = await Tba.create({
                 address: event.args.account,
                 owner: owner,
-                level: "0",
+                level: '0',
                 ethBalance: ethBalance,
                 tokenURI: tokenURI,
                 community_id: newCommunity._id,
               });
 
-              const nfts = await alchemy.nft.getNftsForOwner(
-                event.args.account
-              );
+              const nfts = await alchemy.nft.getNftsForOwner(event.args.account);
 
               if (nfts.ownedNfts.length > 0) {
                 for (const nft of nfts.ownedNfts) {
@@ -150,13 +142,13 @@ module.exports = {
                     type: nft.tokenType,
                     address: nft.contract.address,
                     tokenId: nft.tokenId,
-                    tokenAmount: "",
+                    tokenAmount: '',
                     Tba_id: newTba._id,
                   });
                   //console.log(newItem);
                 }
               } else {
-                console.log("No NFTs found for owner");
+                console.log('No NFTs found for owner');
               }
 
               const erc20Tokens = await alchemy.core.getTokensForOwner(
@@ -166,22 +158,22 @@ module.exports = {
               if (erc20Tokens.tokens.length > 0) {
                 for (const token of erc20Tokens.tokens) {
                   const newItem = await Item.create({
-                    type: "ERC20",
+                    type: 'ERC20',
                     address: token.contractAddress,
-                    tokenId: "",
+                    tokenId: '',
                     tokenAmount: token.balance,
                     Tba_id: newTba._id,
                   });
                 }
               } else {
-                console.log("No ERC20 tokens found for owner");
+                console.log('No ERC20 tokens found for owner');
               }
             }
           }
         });
 
         res.status(200).json({
-          message: "created new community data",
+          message: 'created new community data',
           CommunityData: {
             id: newCommunity._id,
             type: newCommunity.type,
@@ -194,7 +186,7 @@ module.exports = {
     } catch (error) {
       console.log(error);
       res.status(500).json({
-        error: "Internal Server Error",
+        error: 'Internal Server Error',
       });
     }
   },
@@ -219,7 +211,7 @@ module.exports = {
         const updatedCommunity = await Community.findById(communityData.id);
 
         res.status(200).json({
-          message: "updated community data",
+          message: 'updated community data',
           CommunityData: {
             id: updatedCommunity._id,
             type: updatedCommunity.type,
@@ -230,25 +222,23 @@ module.exports = {
         });
       } else {
         res.status(404).json({
-          message: "Community does not exist",
+          message: 'Community does not exist',
         });
       }
     } catch (error) {
       console.log(error);
       res.status(500).json({
-        error: "Internal Server Error",
+        error: 'Internal Server Error',
       });
     }
   },
   getManager: async (req, res) => {
-    const idToken = req.headers.authorization?.split(" ")[1];
-    const jwks = jose.createRemoteJWKSet(
-      new URL("https://api.openlogin.com/jwks")
-    );
+    const idToken = req.headers.authorization?.split(' ')[1];
+    const jwks = jose.createRemoteJWKSet(new URL('https://api.openlogin.com/jwks'));
 
     try {
       const jwtDecoded = await jose.jwtVerify(idToken, jwks, {
-        algorithms: ["ES256"],
+        algorithms: ['ES256'],
       });
 
       const adminEmail = jwtDecoded.payload.email;
@@ -298,7 +288,7 @@ module.exports = {
       const communities = await Community.find({ admin_id: updatedAdmin._id });
 
       res.status(200).json({
-        message: "get manager data",
+        message: 'get manager data',
         admin: updatedAdmin,
         communities: communities,
         items: {
@@ -309,7 +299,7 @@ module.exports = {
     } catch (error) {
       console.log(error);
       res.status(500).json({
-        error: "Internal Server Error",
+        error: 'Internal Server Error',
       });
     }
   },
@@ -325,14 +315,14 @@ module.exports = {
       }
 
       res.status(200).json({
-        message: "get community data",
+        message: 'get community data',
         community: community,
         tba: tba,
       });
     } catch (error) {
       console.log(error);
       res.status(500).json({
-        error: "Internal Server Error",
+        error: 'Internal Server Error',
       });
     }
   },
@@ -366,18 +356,17 @@ module.exports = {
         await Community.findOneAndDelete({ address: communityAddress });
 
         res.status(200).json({
-          message:
-            "Successfully deleted Community and tba, tba_group, and Items",
+          message: 'Successfully deleted Community and tba, tba_group, and Items',
         });
       } else {
         res.status(404).json({
-          error: "Community not found",
+          error: 'Community not found',
         });
       }
     } catch (error) {
       console.log(error);
       res.status(500).json({
-        error: "Internal Server Error",
+        error: 'Internal Server Error',
       });
     }
   },
