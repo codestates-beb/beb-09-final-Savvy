@@ -10,6 +10,7 @@ const AdminSchema = new Schema(
     name: String,
     profileImage: String,
     appPubKey: String,
+    plan: String,
     createdAt: { type: Date, default: Date.now },
   },
   { versionKey: '_somethingElse' }
