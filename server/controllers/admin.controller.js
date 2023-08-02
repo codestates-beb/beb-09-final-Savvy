@@ -41,6 +41,7 @@ module.exports = {
             name: adminData.name,
             profileImage: adminData.profileImage,
             appPubKey: adminData.appPubKey,
+            plan: 'free',
           });
           return res
             .status(201)
