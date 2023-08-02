@@ -1,0 +1,49 @@
+.container {
+  margin: 2rem;
+}
+
+.pricing-content {
+  display: flex;
+  justify-content: space-between;
+}
+
+.pricing-card {
+  flex: 1 1 0;
+  border: 1px solid #eaeaea;
+  border-radius: 2rem;
+  padding: 1rem;
+  background-color: #fff;
+  min-width: 15rem;
+}
+
+.pricing-card-title {
+  height: 4.5rem;
+}
+
+.pricing-card-subtitle {
+  color: grey;
+  font-size: 0.8rem;
+  margin-top: -0.5rem;
+}
+
+.pricing-card-btn {
+  text-align: center;
+}
+
+.pricing-card-price {
+  margin-bottom: 1rem;
+}
+
+.pricing-card-price-title {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.pricing-card-price-subtitle {
+  font-size: 0.8rem;
+  color: grey;
+}
+
+.pricing-card-content {
+  margin: 0.2rem;
+}

@@ -262,6 +262,25 @@ export default function SideNav() {
                   <div style={rectangleStyle}></div>
                 )}
               </MenuItem>
+              <MenuItem
+                onClick={() => setCollapsed((prev) => !prev)}
+                icon={
+                  <img
+                    src={process.env.PUBLIC_URL + "/ManagerIcon.png"}
+                    alt="Custom Icon"
+                    style={iconStyles}
+                  />
+                }
+                component={<Link to={`/setting`} />}
+                style={
+                  location.pathname === `/setting` ? activeStyle : inactiveStyle
+                }
+              >
+                Setting
+                {location.pathname === `/setting` && (
+                  <div style={rectangleStyle}></div>
+                )}
+              </MenuItem>
             </Menu>
           </div>
           <SidebarFooter collapsed={collapsed} />
