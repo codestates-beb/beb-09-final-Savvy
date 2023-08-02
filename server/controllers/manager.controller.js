@@ -59,7 +59,6 @@ module.exports = {
         console.log('Community does not exist');
         const admin = await Admin.findOne({ email: adminEmail });
         const adminCommunity = await Community.find({ admin_id: admin._id });
-        //console.log(adminCommunity);
 
         if (admin.plan === 'free' && adminCommunity.length > 0) {
           return res.status(400).json({
@@ -71,10 +70,6 @@ module.exports = {
           });
         } else if (admin.plan === 'business') {
           // unlimited
-        } else {
-          return res.status(404).json({
-            error: 'no plan',
-          });
         }
 
         const newCommunity = await Community.create({
