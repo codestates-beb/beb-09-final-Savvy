@@ -1,265 +1,308 @@
-import React, { useEffect } from "react";
-import { Box } from "@mui/material";
+import React, { useState, useRef, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { setManagerData } from "../reducers/managerReducer";
+import { Box, Slide } from "@mui/material";
+import { ADMIN_NFT_LIST } from "../assets/DUMMY_DATA";
 
-const boxStyle = {
+import "../assets/ManagerPageContent.css";
+
+// api
+import { getManagerData } from "../api/get-manager-data.js";
+
+const boxStyle2 = {
   backgroundColor: "#fff",
   borderRadius: "1rem",
   padding: "1rem",
-  minWidth: "55%",
-  height: "24rem",
+  minWidth: "20rem",
+  height: "20rem",
+  marginLeft: "0.5rem",
+  marginTop: "44.5rem",
   boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
-  position: "relative",
-  marginTop: "2rem",
-  marginRight: "2.5rem",
+  overflowY: "auto",
+  zIndex: "1",
 };
 
-const textStyle = {
+const textStyle1 = {
   fontFamily: "'tektur', sans-serif",
   fontSize: "1.1rem",
   fontWeight: "800",
   color: "#576ff6",
-  textAlign: 'center',
+  backgroundColor: "#fff",
+  paddingBottom: "0.5rem",
+  borderBottom: "1px solid transparent",
+  borderImage: "linear-gradient(100deg, #f8f8f8, #576ff6, #f8f8f8)",
+  borderImageSlice: 1,
+  textAlign: "center",
+  margin: "0 auto",
+  userSelect: "none",
 };
 
-const dummyData = [
-  {
-    number: "#8754",
-    image: process.env.PUBLIC_URL + "/Dashboarddummy1.png",
-    name: "Pixel1",
-    price: "$123",
+const styles = {
+  pageContent: {
+    display: "flex",
+    color: "#576ff6",
+    fontSize: "38px",
+    fontWeight: "bold",
+    marginTop: "-7px",
+    marginLeft: "10px",
+    userSelect: "none",
+    fontFamily: "'tektur', sans-serif",
+    userSelect: "none",
   },
-  {
-    number: "#8755",
-    image: process.env.PUBLIC_URL + "/Dashboarddummy2.png",
-    name: "Pixel2",
-    price: "$211",
+  textWithBackground: {
+    display: "inline-block",
+    background: `url(${process.env.PUBLIC_URL}/AdminHeader.gif) center/cover no-repeat`,
+    color: "transparent",
+    WebkitBackgroundClip: "text",
+    backgroundClip: "text",
+    marginTop: "2rem",
   },
-  {
-    number: "#8756",
-    image: process.env.PUBLIC_URL + "/Dashboarddummy3.png",
-    name: "Pixel3",
-    price: "$939",
-  },
-  {
-    number: "#8757",
-    image: process.env.PUBLIC_URL + "/Dashboarddummy4.png",
-    name: "Pixel4",
-    price: "$587",
-  },
-  {
-    number: "#8758",
-    image: process.env.PUBLIC_URL + "/Dashboarddummy1.png",
-    name: "Pixel5",
-    price: "$787",
-  },
-  {
-    number: "#8759",
-    image: process.env.PUBLIC_URL + "/Dashboarddummy2.png",
-    name: "Pixel6",
-    price: "$187",
-  },
-];
+};
 
-export default function DashboardBox() {
+export default function ManagerPageContent({ web3Auth }) {
+  const managerData = useSelector((state) => state.manager.managerData);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const [isLoading, setIsLoading] = useState(false);
+
   useEffect(() => {
-    function disableTextSelection(event) {
-      event.preventDefault();
-    }
-
-    function addEventListeners() {
-      document.addEventListener("selectstart", disableTextSelection);
-    }
-
-    function removeEventListeners() {
-      document.removeEventListener("selectstart", disableTextSelection);
-    }
-
-    addEventListeners();
-
-    return () => {
-      removeEventListeners();
+    const init = async () => {
+      setIsLoading(true);
+      try {
+        const data = await getManagerData();
+        const { admin, communities, items } = data;
+        dispatch(
+          setManagerData({
+            admin: admin,
+            communities: communities,
+            items: items,
+          })
+        );
+      } catch (error) {
+        console.log(error);
+        alert("JWT expired. Please login again.");
+        localStorage.removeItem("token");
+        localStorage.removeItem("app_pub_key");
+        navigate("/authentication");
+        return;
+      }
     };
-  }, []);
+    init();
+    if (managerData) {
+      setIsLoading(false);
+    }
+    console.log(managerData);
+  }, [isLoading]);
 
   return (
     <div className="page-content">
+      <div style={styles.pageContent}>
+        <span style={styles.textWithBackground}>Dashboard</span>
+      </div>
       <div className="content">
-        <div style={{ margin: "47rem -14.7rem 0rem", display: "flex", justifyContent: "space-between" }}>
-          <Box sx={boxStyle}>
-            <div style={textStyle}>Recent Created TBAs</div>
-            <div style={{
-              display: "flex",
-              justifyContent: "space-between",
-              marginTop: "1.7rem",
-              marginBottom: "1rem",
-              fontSize: "0.9rem",
-              fontWeight: "600",
-              color: "#666",
-            }}>
-              <div style={{ flex: 2, paddingLeft: "0.9rem", whiteSpace: "nowrap" }} className="nft-category">Item no</div>
-              <div style={{ flex: 3.5, textAlign: "center", paddingLeft: "0.5rem", whiteSpace: "nowrap" }} className="nft-category">Item name</div>
-              <div style={{ flex: 2, textAlign: "right", paddingRight: "2.8rem", whiteSpace: "nowrap" }} className="nft-category">Price</div>
-            </div>
-            <div style={{ 
-                borderBottom: "1px solid transparent", 
-                marginBottom: "0.5rem",
-                borderImage: 'linear-gradient(100deg, #f8f8f8, #576ff6, #f8f8f8)',
-                borderImageSlice: 1,
-              }}>
-            </div>
-            <div style={{ overflow: "auto", height: "19rem" }}>
-              {dummyData.map((data) => (
-                <div key={data.name} style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  gap: "1rem",
-                  height: "3.9rem",
-                  padding: "0rem",
+        <Box sx={boxStyle2}>
+          <div style={textStyle1}>Recent Created TBAs</div>
+          <div>
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "1fr 1fr 1fr 1fr",
+                justifyItems: "center",
+                margin: "0.5rem",
+              }}
+            >
+              <div
+                className="nft-category"
+                style={{
+                  bgcolor: "transparent",
+                  color: "#272727",
+                  fontSize: "13px",
+                  fontWeight: "bold",
+                  userSelect: "none",
                   marginTop: "0.5rem",
-                  marginBottom: "0.8rem",
-                  backgroundColor: "rgba(0, 0, 0, 0.01)",
-                  boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
-                  background: "linear-gradient(to left, rgba(0,0,0,0.01) 30%, rgba(211,211,211,0.1) 50%, rgba(223,220,220,0.05) 70%)",
-                  borderRadius: "10px",
-                  cursor: "pointer",
-                  color: "#666"
-                }}>
-                  <div style={{ flex: 2, fontSize: "0.8rem", fontWeight: "700", marginLeft: "1rem" }}>{data.number}</div>
-                  <div style={{
-                    flex: 3.5,
-                    display: "flex",
-                    flexDirection: "row",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}>
-                    <img style={{
-                      width: "3.2rem",
-                      height: "auto",
-                      borderRadius: "0.5rem",
-                      marginRight: "0.5rem",
-                      boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)",
-                    }} src={data.image} alt={data.name} />
-                    <div style={{ fontSize: "0.8rem", fontWeight: "700" }}>{data.name}</div>
-                  </div>
-                  <div style={{
-                    flex: 2,
-                    display: "flex",
-                    justifyContent: "flex-end",
-                    alignItems: "center",
-                    marginRight: "1.5rem",
-                    borderRadius: "5px",
-                  }}>
-                    <div style={{
-                      backgroundColor: "#576ff6",
-                      color: "#fff",
-                      fontSize: "0.8rem",
-                      fontWeight: "700",
-                      borderRadius: "5px",
-                      padding: "0.3rem 0.5rem",
-                    }}>
-                      {data.price}
+                }}
+              >
+                Image
+              </div>
+              <div
+                className="nft-category"
+                style={{
+                  bgcolor: "transparent",
+                  color: "#272727",
+                  fontSize: "13px",
+                  fontWeight: "bold",
+                  userSelect: "none",
+                  marginTop: "0.5rem",
+                }}
+              >
+                Name
+              </div>
+              <div
+                className="nft-category"
+                style={{
+                  bgcolor: "transparent",
+                  color: "#272727",
+                  fontSize: "13px",
+                  fontWeight: "bold",
+                  userSelect: "none",
+                  marginTop: "0.5rem",
+                }}
+              >
+                Price
+              </div>
+            </div>
+            <div style={{ overflow: "auto", height: "14.3rem" }}>
+              {ADMIN_NFT_LIST.map((data) => {
+                return (
+                  <div
+                    className="nft-list"
+                    key={data.name}
+                    style={{
+                      bgcolor: "transparent",
+                      color: "#272727",
+                      fontSize: "12px",
+                      fontWeight: "bold",
+                      userSelect: "none",
+                      marginTop: "0.5rem",
+                      boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
+                      borderRadius: "10px",
+                      marginBottom: "0.6rem",
+                    }}
+                  >
+                    <div>
+                      <img
+                        style={{
+                          width: "3rem",
+                          height: "3rem",
+                          borderRadius: "0.5rem",
+                        }}
+                        src={data.image}
+                      ></img>
                     </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </Box>
-  
-          <Box sx={boxStyle}>
-            <div style={textStyle}>Top item holding TBA</div>
-            <div style={{
-              display: "flex",
-              justifyContent: "space-between",
-              marginTop: "1.7rem",
-              marginBottom: "1rem",
-              fontSize: "0.9rem",
-              fontWeight: "600",
-              color: "#666"
-            }}>
-              <div style={{ flex: 2, paddingLeft: "0.9rem", whiteSpace: "nowrap" }} className="nft-category">Item no</div>
-              <div style={{ flex: 3.5, textAlign: "center", paddingLeft: "0.5rem", whiteSpace: "nowrap" }} className="nft-category">Item name</div>
-              <div style={{ flex: 2, textAlign: "right", paddingRight: "2.8rem", whiteSpace: "nowrap" }} className="nft-category">Price</div>
-            </div>
-              <div style={{ 
-                borderBottom: "1px solid transparent", 
-                marginBottom: "0.5rem",
-                borderImage: 'linear-gradient(100deg, #f8f8f8, #576ff6, #f8f8f8)',
-                borderImageSlice: 1,
-              }}>
-            </div>
-            <div style={{ overflow: "auto", height: "19rem" }}>
-              {dummyData.map((data) => (
-                <div
-                  key={data.name + 'second'}
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    gap: "1rem",
-                    height: "3.9rem",
-                    marginTop: "0.5rem",
-                    marginBottom: "0.8rem",
-                    backgroundColor: "rgba(0, 0, 0, 0.01)",
-                    boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
-                    background: "linear-gradient(to left, rgba(0,0,0,0.01) 30%, rgba(211,211,211,0.1) 50%, rgba(223,220,220,0.05) 70%)",
-                    borderRadius: "10px",
-                    cursor: "pointer",
-                    color: "#666"
-                  }}
-                >
-                  <div style={{ flex: 2, fontSize: "0.8rem", fontWeight: "700", marginLeft: "1rem" }}>{data.number}</div>
-                  <div
-                    style={{
-                      flex: 3.5,
-                      display: "flex",
-                      flexDirection: "row",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                  >
-                    <img
-                      style={{
-                        width: "3.2rem",
-                        height: "auto",
-                        borderRadius: "0.5rem",
-                        marginRight: "0.5rem",
-                        boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)",
-                      }}
-                      src={data.image}
-                      alt={data.name + 'second'}
-                    />
-                    <div style={{ fontSize: "0.8rem", fontWeight: "700" }}>{data.name}</div>
-                  </div>
-                  <div
-                    style={{
-                      flex: 2,
-                      display: "flex",
-                      justifyContent: "flex-end",
-                      alignItems: "center",
-                      marginRight: "1.5rem",
-                      borderRadius: "5px",
-                    }}
-                  >
+                    <div style={{ color: "#666" }}>{data.name}</div>
                     <div
                       style={{
-                        backgroundColor: "#576ff6",
                         color: "#fff",
-                        fontSize: "0.8rem",
-                        fontWeight: "700",
-                        borderRadius: "5px",
-                        padding: "0.3rem 0.5rem",
+                        backgroundColor: "#576ff6",
+                        borderRadius: "6px",
+                        padding: "1px",
+                        width: "4rem",
+                        height: "20px",
+                        textAlign: "center",
+                        marginTop: "23px",
                       }}
                     >
-                      {data.price}
+                      {data.type}
                     </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
-          </Box>
-        </div>
+          </div>
+        </Box>
+        <Box sx={boxStyle2}>
+          <div style={textStyle1}>NFT list</div>
+          <div>
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "1fr 1fr 1fr 1fr",
+                justifyItems: "center",
+                margin: "0.5rem",
+              }}
+            >
+              <div
+                className="nft-category"
+                style={{
+                  bgcolor: "transparent",
+                  color: "#272727",
+                  fontSize: "13px",
+                  fontWeight: "bold",
+                  userSelect: "none",
+                  marginTop: "0.5rem",
+                }}
+              >
+                Image
+              </div>
+              <div
+                className="nft-category"
+                style={{
+                  bgcolor: "transparent",
+                  color: "#272727",
+                  fontSize: "13px",
+                  fontWeight: "bold",
+                  userSelect: "none",
+                  marginTop: "0.5rem",
+                }}
+              >
+                Name
+              </div>
+              <div
+                className="nft-category"
+                style={{
+                  bgcolor: "transparent",
+                  color: "#272727",
+                  fontSize: "13px",
+                  fontWeight: "bold",
+                  userSelect: "none",
+                  marginTop: "0.5rem",
+                }}
+              >
+                Price
+              </div>
+            </div>
+            <div style={{ overflow: "auto", height: "14.3rem" }}>
+              {ADMIN_NFT_LIST.map((data) => {
+                return (
+                  <div
+                    className="nft-list"
+                    key={data.name}
+                    style={{
+                      bgcolor: "transparent",
+                      color: "#272727",
+                      fontSize: "12px",
+                      fontWeight: "bold",
+                      userSelect: "none",
+                      marginTop: "0.5rem",
+                      boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
+                      borderRadius: "10px",
+                      marginBottom: "0.6rem",
+                    }}
+                  >
+                    <div>
+                      <img
+                        style={{
+                          width: "3rem",
+                          height: "3rem",
+                          borderRadius: "0.5rem",
+                        }}
+                        src={data.image}
+                      ></img>
+                    </div>
+                    <div style={{ color: "#666" }}>{data.name}</div>
+                    <div
+                      style={{
+                        color: "#fff",
+                        backgroundColor: "#576ff6",
+                        borderRadius: "6px",
+                        padding: "1px",
+                        width: "4rem",
+                        height: "20px",
+                        textAlign: "center",
+                        marginTop: "23px",
+                      }}
+                    >
+                      {data.type}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </Box>
       </div>
     </div>
   );
-}  
+}

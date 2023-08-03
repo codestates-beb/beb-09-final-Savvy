@@ -36,7 +36,7 @@ const activeStyle = {
   background: "#f0f2fd",
   fontSize: "14px",
   fontWeight: "600",
-  marginTop: "18px",
+  marginTop: "15px",
   fontFamily: "'tektur', sans-serif",
   transition: "transform 0.3s ease, box-shadow 0.3s ease",
   position: "relative",
@@ -46,7 +46,7 @@ const inactiveStyle = {
   color: "#a6a4a4",
   fontSize: "14px",
   fontWeight: "500",
-  marginTop: "18px",
+  marginTop: "15px",
   fontFamily: "'tektur', sans-serif",
   transition: "transform 0.3s ease, box-shadow 0.3s ease",
 };
@@ -148,7 +148,7 @@ export default function SideNav() {
             <div icon={<MenuIcon />} style={{ textAlign: "center" }}>
               <Link to={`/main/${addressCurrent}`}>
                 <img
-                  src="/logocolor2.png"
+                  src="/logocolor3.png"
                   alt="Logoblack"
                   style={logoblackStyle}
                   onContextMenu={preventImageCopy}

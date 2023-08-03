@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import Modal from '@mui/material/Modal';
-import { keyframes } from '@mui/system';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import AccountBalanceWalletOutlinedIcon from '@mui/icons-material/AccountBalanceWalletOutlined';
-import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
-import TbaModalExpBar from './TbaModalExpBar';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import Modal from "@mui/material/Modal";
+import { keyframes } from "@mui/system";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import AccountBalanceWalletOutlinedIcon from "@mui/icons-material/AccountBalanceWalletOutlined";
+import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
+import TbaModalExpBar from "./TbaModalExpBar";
 
 function TbaModal({ open, handleClose, userId }) {
   // 더미 데이터
@@ -16,18 +16,19 @@ function TbaModal({ open, handleClose, userId }) {
     address: "0x5E22031e91C6f30392e2A3Cd6a56f80B48f9fAdA",
     image: `${process.env.PUBLIC_URL}/Dashboarddummy1.png`,
     text1: "Pixel Dummy Data 1",
-    text2: "Pixel Dummy Data 2"
+    text2: "Pixel Dummy Data 2",
   });
 
   useEffect(() => {
     if (open) {
       // Modal이 열릴 때만 API 호출
-      axios.get(`YOUR_API_ENDPOINT/${userId}`)
-        .then(response => {
+      axios
+        .get(`YOUR_API_ENDPOINT/${userId}`)
+        .then((response) => {
           const { name, address, image, text1, text2 } = response.data;
           setUserData({ name, address, image, text1, text2 });
         })
-        .catch(error => {
+        .catch((error) => {
           console.error("Error fetching user data", error);
         });
     }
@@ -101,7 +102,9 @@ function TbaModal({ open, handleClose, userId }) {
           borderRadius: 5,
           outline: "none",
           background: "linear-gradient(90deg, #fff, #fff)",
-          animation: open ? `${slideUp} 0.3s ease-out` : `${slideDown} 0.3s ease-in`,
+          animation: open
+            ? `${slideUp} 0.3s ease-out`
+            : `${slideDown} 0.3s ease-in`,
         }}
         onContextMenu={preventRightClick}
       >
@@ -118,19 +121,27 @@ function TbaModal({ open, handleClose, userId }) {
             position: "relative",
           }}
         >
-          <img src={process.env.PUBLIC_URL + '/tbadetail.png'} alt="icon" style={{ width: "27px", verticalAlign: 'middle', marginRight: '8px' }} />
+          <img
+            src={process.env.PUBLIC_URL + "/tbadetail.png"}
+            alt="icon"
+            style={{
+              width: "27px",
+              verticalAlign: "middle",
+              marginRight: "8px",
+            }}
+          />
           TBA Detail
           <span
             style={{
               content: '""',
-              position: 'absolute',
+              position: "absolute",
               left: 0,
-              right: '-100%',
-              bottom: '-5px',
-              height: '2px',
-              marginLeft: '-130px',
-              background: 'linear-gradient(100deg, white, #576ff6, white)',
-              borderRadius: '3px',
+              right: "-100%",
+              bottom: "-5px",
+              height: "2px",
+              marginLeft: "-130px",
+              background: "linear-gradient(100deg, white, #576ff6, white)",
+              borderRadius: "3px",
             }}
           />
         </Typography>
@@ -181,61 +192,72 @@ function TbaModal({ open, handleClose, userId }) {
             borderRadius: "15px",
             backgroundColor: "#fff",
             boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.25)",
-            overflowY: 'auto',
-            maxHeight: '160px',
+            overflowY: "auto",
+            maxHeight: "160px",
           }}
         >
-          {Array(3).fill(null).map((_, index) => (
-            <div
-              key={index}
-              className="nftsmallbox"
-              style={{
-                width: "200px",
-                height: "40px",
-                backgroundColor: "white",
-                borderRadius: "10px",
-                boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.25)",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                overflow: "hidden",
-                marginTop: "5px",
-                marginBottom: "5px",
-                pointerEvents: 'none',
-              }}
-            >
-              <img src={userData.image} alt="NFT Image" style={{
-                width: "32px",
-                borderRadius: "10px",
-                marginLeft: "10px",
-                marginBottom: "-28px",
-                left: "0"
-              }} />
+          {Array(3)
+            .fill(null)
+            .map((_, index) => (
+              <div
+                key={index}
+                className="nftsmallbox"
+                style={{
+                  width: "200px",
+                  height: "40px",
+                  backgroundColor: "white",
+                  borderRadius: "10px",
+                  boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.25)",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  overflow: "hidden",
+                  marginTop: "5px",
+                  marginBottom: "5px",
+                  pointerEvents: "none",
+                }}
+              >
+                <img
+                  src={userData.image}
+                  alt="NFT Image"
+                  style={{
+                    width: "32px",
+                    borderRadius: "10px",
+                    marginLeft: "10px",
+                    marginBottom: "-28px",
+                    left: "0",
+                  }}
+                />
 
-              <span style={{
-                color: "#666",
-                fontSize: "12px",
-                fontWeight: "bold",
-                transform: "translateY(-3px)",
-                marginLeft: "53px",
-                left: "0"
-              }}>
-                {truncateText(userData.text1, 20)}
-              </span>
+                <span
+                  style={{
+                    color: "#666",
+                    fontSize: "12px",
+                    fontWeight: "bold",
+                    transform: "translateY(-3px)",
+                    marginLeft: "53px",
+                    left: "0",
+                  }}
+                >
+                  {truncateText(userData.text1, 20)}
+                </span>
 
-              <span style={{
-                color: "#888",
-                fontSize: "11px",
-                transform: "translateY(2px)",
-                marginLeft: "53px"
-              }}>
-                {truncateText(userData.text2, 20)}
-              </span>
-            </div>
-          ))}
+                <span
+                  style={{
+                    color: "#888",
+                    fontSize: "11px",
+                    transform: "translateY(2px)",
+                    marginLeft: "53px",
+                  }}
+                >
+                  {truncateText(userData.text2, 20)}
+                </span>
+              </div>
+            ))}
         </div>
 
-        <div className="namebox"
+        <div
+          className="namebox"
           style={{
             width: "400px",
             height: "40px",
@@ -252,16 +274,27 @@ function TbaModal({ open, handleClose, userId }) {
             opacity: "0.8",
           }}
         >
-          <div style={{ height: '36px', display: 'flex', alignItems: 'center', justifyContent: 'flex-start', width: '100%' }}>
-            <AccountCircleOutlinedIcon
-              sx={{ color: "#333", transform: "translateX(10px)" }}
+          <div
+            style={{
+              height: "36px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "flex-start",
+              width: "100%",
+            }}
+          >
+            <img
+              src={`${process.env.PUBLIC_URL}/ManagerIcon.png`}
+              alt="Manager Icon"
+              style={{ transform: "translateX(10px)", width: "25px" }}
             />
+
             <Typography
               variant="body1"
               sx={{
                 fontSize: "13px",
                 fontWeight: "600",
-                color: "#333",
+                color: "#272727",
                 marginLeft: "20px",
               }}
             >
@@ -270,7 +303,8 @@ function TbaModal({ open, handleClose, userId }) {
           </div>
         </div>
 
-        <div className="addressbox"
+        <div
+          className="addressbox"
           style={{
             width: "400px",
             height: "40px",
@@ -286,22 +320,36 @@ function TbaModal({ open, handleClose, userId }) {
             backgroundColor: "#fff",
             boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.3)",
             opacity: "0.8",
-            position: 'relative'
+            position: "relative",
+          }}
+        ></div>
+
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "flex-start",
+            width: "100%",
           }}
         >
-        </div>
-
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start', width: '100%' }}>
-          <AccountBalanceWalletOutlinedIcon
-            sx={{ color: "#666", marginRight: "5px", transform: "translateX(15px)", marginBottom: "-45px" }}
+          <img
+            src={`${process.env.PUBLIC_URL}/walletIcon.png`}
+            alt="wallet Icon"
+            style={{
+              transform: "translateX(16px)",
+              width: "25px",
+              position: "relative",
+              top: "23px",
+            }}
           />
+
           <Typography
             variant="body1"
             sx={{
               fontSize: "13px",
               fontWeight: "600",
               color: "#666",
-              marginLeft: "19.5px",
+              marginLeft: "24.5px",
               marginBottom: "5px",
               transform: "translateY(25px)",
             }}
@@ -322,10 +370,13 @@ function TbaModal({ open, handleClose, userId }) {
             borderRadius: "15px",
             marginTop: "45px",
             backgroundColor: "#fff",
-            boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.25)"
+            boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.25)",
           }}
         >
-          <TbaModalExpBar currentExp={userData.currentExp} maxExp={userData.maxExp} />
+          <TbaModalExpBar
+            currentExp={userData.currentExp}
+            maxExp={userData.maxExp}
+          />
         </div>
 
         <Button
@@ -339,7 +390,7 @@ function TbaModal({ open, handleClose, userId }) {
             fontWeight: "bold",
             alignSelf: "center",
             marginTop: "auto",
-            boxShadow: '0px 3px 10px rgba(0, 0, 0, 0.3)',
+            boxShadow: "0px 3px 10px rgba(0, 0, 0, 0.3)",
             borderRadius: "20px",
             backgroundColor: "#576ff6",
             "&:hover": {
