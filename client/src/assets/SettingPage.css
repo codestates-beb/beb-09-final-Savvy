@@ -2,6 +2,48 @@
   margin: 2rem;
 }
 
+.order {
+  display: flex;
+}
+
+.order-content {
+  flex: 3 3 0;
+  margin: 2rem;
+}
+
+.order-content-title {
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.order-content-subtitle {
+  font-size: 0.8rem;
+  color: grey;
+  margin-bottom: 1rem;
+}
+
+.order-info {
+  flex: 2 2 0;
+  padding: 1.3rem;
+  box-sizing: border-box;
+  background-color: rgb(250, 246, 240);
+  box-shadow: 0 0 0.5rem 0.1rem rgb(0 0 0 / 10%);
+}
+
+.order-info-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.order-info-subtitle {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
 .pricing-content {
   display: flex;
   justify-content: space-between;

@@ -1,11 +1,53 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button, Box, Tabs, Tab, LinearProgress } from "@mui/material";
+import { useSelector, useDispatch } from "react-redux";
+import { Button, Box, Tabs, Tab, LinearProgress, Dialog } from "@mui/material";
 
 import DoneOutlineIcon from "@mui/icons-material/DoneOutline";
 
+const PLAN_INFO = [
+  {
+    title: "Basic",
+    subtitle: "Perfect Plan for Beginners.",
+    price: "Free",
+    priceSubtitle: "For a Life time",
+    content: ["1 Community Available", "10 TBAs per 1 Community"],
+  },
+  {
+    title: "Plus",
+    subtitle: "For uses who want to do more with their community.",
+    price: "10 SVY",
+    priceSubtitle: "/ month",
+    content: ["3 Communities Available", "100 TBAs per 1 Community"],
+  },
+  {
+    title: "Business",
+    subtitle: "For enterprises and large organizations that need more.",
+    price: "100 SVY",
+    priceSubtitle: "/ month",
+    content: ["Unlimited Communities", "Unlimited TBAs"],
+  },
+];
+
 export default function SettingPageContent() {
+  const managerData = useSelector((state) => state.manager.managerData);
   const [sector, setSector] = useState(0);
+  const [openPricing, setOpenPricing] = useState(false);
+  const [pricingInfo, setPricingInfo] = useState(0);
+
+  const currentPlan = managerData?.admin.plan;
+
+  const handleOpenPricing = (e) => {
+    setOpenPricing(true);
+    setPricingInfo(
+      PLAN_INFO.findIndex((plan) => plan.title.toLowerCase() === e.target.value)
+    );
+    console.log(e.target.value);
+  };
+
+  const handlePayment = async () => {
+    setOpenPricing(false);
+  };
 
   return (
     <div className="page-content">
@@ -17,6 +59,85 @@ export default function SettingPageContent() {
         </Tabs>
       </div>
       <div>
+        {/* Billing Modal */}
+        <Dialog
+          open={openPricing}
+          onClose={() => setOpenPricing(false)}
+          fullWidth
+          maxWidth="sm"
+        >
+          <div className="order">
+            <div className="order-content">
+              <div className="order-content-title">{`Upgrate to ${PLAN_INFO[pricingInfo].title}`}</div>
+              <div className="order-content-subtitle">
+                {`You are about to upgrade to ${PLAN_INFO[pricingInfo].title} plan.
+                You will be charged ${PLAN_INFO[pricingInfo].price} per month.`}
+              </div>
+              <hr />
+              <div className="order-content-body">
+                <div className="pricing-card-content">
+                  <ul style={{ listStyle: "none", paddingLeft: "0" }}>
+                    {PLAN_INFO[pricingInfo].content.map((item, index) => {
+                      return (
+                        <li
+                          key={item.title}
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            padding: "0.5rem 0",
+                          }}
+                        >
+                          <DoneOutlineIcon
+                            sx={{ color: "green", pr: "0.4rem" }}
+                          />
+                          <span>{item}</span>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div className="order-info">
+              <div className="order-info-title">Order Summary</div>
+              <div className="order-info-subtitle">
+                <div>Price</div>
+                <div>{PLAN_INFO[pricingInfo].price}</div>
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  fontSize: "0.8rem",
+                }}
+              >
+                <div>
+                  <div>{`${PLAN_INFO[pricingInfo].title} plan`}</div>
+                  <div className="order-content-subtitle">{`${PLAN_INFO[pricingInfo].price} ${PLAN_INFO[pricingInfo].priceSubtitle}`}</div>
+                </div>
+                <div>{PLAN_INFO[pricingInfo].price}</div>
+              </div>
+              <div style={{ textAlign: "center", margin: "1rem 0" }}>
+                <Button
+                  variant="contained"
+                  style={{ width: "13.5rem" }}
+                  onClick={handlePayment}
+                >
+                  Confirm changes
+                </Button>
+              </div>
+              <div
+                className="order-content-subtitle"
+                style={{ marginBottom: "0" }}
+              >
+                By clicking "Confirm changes", you agree to the Savvy Terms and
+                Conditions.
+              </div>
+            </div>
+          </div>
+        </Dialog>
+
         <div>
           {sector === 0 && (
             <div>
@@ -28,156 +149,63 @@ export default function SettingPageContent() {
                 sx={{ width: "70%", margin: "2rem auto" }}
               />
               <div className="pricing-content">
-                <div className="pricing-card">
-                  <div className="pricing-card-title">
-                    <h3>Basic</h3>
-                    <p className="pricing-card-subtitle">
-                      Perfect Plan for Beginners.
-                    </p>
-                  </div>
-                  <div className="pricing-card-price">
-                    <div className="pricing-card-price-title">Free</div>
-                    <div className="pricing-card-price-subtitle">
-                      For a Life time
+                {PLAN_INFO.map((plan, index) => {
+                  return (
+                    <div className="pricing-card" key={plan.title}>
+                      <div className="pricing-card-title">
+                        <h3>{plan.title}</h3>
+                        <p className="pricing-card-subtitle">{plan.subtitle}</p>
+                      </div>
+                      <div className="pricing-card-price">
+                        <div className="pricing-card-price-title">
+                          {plan.price}
+                        </div>
+                        <div className="pricing-card-price-subtitle">
+                          {plan.priceSubtitle}
+                        </div>
+                      </div>
+                      <div className="pricing-card-btn">
+                        <Button
+                          variant={
+                            currentPlan === plan.price.toLowerCase()
+                              ? "outlined"
+                              : "contained"
+                          }
+                          color="primary"
+                          style={{ width: "13rem" }}
+                          onClick={(e) => handleOpenPricing(e)}
+                          value={plan.title.toLowerCase()}
+                          disabled={currentPlan === plan.price.toLowerCase()}
+                        >
+                          {currentPlan === plan.price.toLowerCase()
+                            ? "Current Plan"
+                            : "Get Started"}
+                        </Button>
+                      </div>
+                      <div className="pricing-card-content">
+                        <ul style={{ listStyle: "none", paddingLeft: "0" }}>
+                          {plan.content.map((item, index) => {
+                            return (
+                              <li
+                                key={item}
+                                style={{
+                                  display: "flex",
+                                  alignItems: "center",
+                                  padding: "0.5rem 0",
+                                }}
+                              >
+                                <DoneOutlineIcon
+                                  sx={{ color: "green", pr: "0.4rem" }}
+                                />
+                                <span>{item}</span>
+                              </li>
+                            );
+                          })}
+                        </ul>
+                      </div>
                     </div>
-                  </div>
-                  <div className="pricing-card-btn">
-                    <Button
-                      variant="outlined"
-                      color="primary"
-                      style={{ width: "13rem" }}
-                      disabled
-                    >
-                      Current Plan
-                    </Button>
-                  </div>
-                  <div className="pricing-card-content">
-                    <ul style={{ listStyle: "none", paddingLeft: "0" }}>
-                      <li
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          padding: "0.5rem 0",
-                        }}
-                      >
-                        <DoneOutlineIcon
-                          sx={{ color: "green", pr: "0.4rem" }}
-                        />
-                        <span>1 Community Available</span>
-                      </li>
-                      <li
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          padding: "0.5rem 0",
-                        }}
-                      >
-                        <DoneOutlineIcon
-                          sx={{ color: "green", pr: "0.4rem" }}
-                        />
-                        <span>10 TBAs per 1 Community</span>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-                <div className="pricing-card">
-                  <div className="pricing-card-title">
-                    <h3>Plus</h3>
-                    <p className="pricing-card-subtitle">
-                      For uses who want to do more with their community.
-                    </p>
-                  </div>
-                  <div className="pricing-card-price">
-                    <div className="pricing-card-price-title">0.05 ETH</div>
-                    <div className="pricing-card-price-subtitle">/ month</div>
-                  </div>
-                  <div className="pricing-card-btn">
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      style={{ width: "13rem" }}
-                    >
-                      Get Started
-                    </Button>
-                  </div>
-                  <div className="pricing-card-content">
-                    <ul style={{ listStyle: "none", paddingLeft: "0" }}>
-                      <li
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          padding: "0.5rem 0",
-                        }}
-                      >
-                        <DoneOutlineIcon
-                          sx={{ color: "green", pr: "0.4rem" }}
-                        />
-                        <span>3 Communities Available</span>
-                      </li>
-                      <li
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          padding: "0.5rem 0",
-                        }}
-                      >
-                        <DoneOutlineIcon
-                          sx={{ color: "green", pr: "0.4rem" }}
-                        />
-                        <span>100 TBAs per 1 Community</span>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-                <div className="pricing-card">
-                  <div className="pricing-card-title">
-                    <h3>Business</h3>
-                    <p className="pricing-card-subtitle">
-                      For enterprises and large organizations that need more.
-                    </p>
-                  </div>
-                  <div className="pricing-card-price">
-                    <div className="pricing-card-price-title">0.1 ETH</div>
-                    <div className="pricing-card-price-subtitle">/ month</div>
-                  </div>
-                  <div className="pricing-card-btn">
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      style={{ width: "13rem" }}
-                    >
-                      Get Started
-                    </Button>
-                  </div>
-                  <div className="pricing-card-content">
-                    <ul style={{ listStyle: "none", paddingLeft: "0" }}>
-                      <li
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          padding: "0.5rem 0",
-                        }}
-                      >
-                        <DoneOutlineIcon
-                          sx={{ color: "green", pr: "0.4rem" }}
-                        />
-                        <span>Unlimited Communities</span>
-                      </li>
-                      <li
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          padding: "0.5rem 0",
-                        }}
-                      >
-                        <DoneOutlineIcon
-                          sx={{ color: "green", pr: "0.4rem" }}
-                        />
-                        <span>Unlimited TBAs</span>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
+                  );
+                })}
               </div>
             </div>
           )}
