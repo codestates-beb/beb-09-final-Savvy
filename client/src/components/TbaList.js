@@ -69,13 +69,12 @@ const LevelCircle = styled("div")({
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  width: "30px",
-  height: "30px",
-  borderRadius: "50%",
-  backgroundColor: "rgba(87, 111, 246, 0.7)",
-  color: "white",
-  boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.2)",
-  right: "260px",
+  width: "50px",
+  height: "20px",
+  background: "#f5f5f5",
+  color: "#576ff6",
+  borderRadius: "5px",
+  right: "256px",
   display: "flex",
   alignItems: "center",
 });
@@ -83,10 +82,27 @@ const LevelCircle = styled("div")({
 const LevelContainer = styled("div")({
   position: "absolute",
   top: "4.5px",
-  right: "288px",
+  right: "295px",
   display: "flex",
   alignItems: "center",
 });
+
+const getLevelColor = (level) => {
+  switch (level) {
+    case 1:
+      return { color: "#666", border: "1px solid #d5d5d5" };
+    case 2:
+      return { color: "#15be64", border: "1px solid #9dd0b5" };
+    case 3:
+      return { color: "#576ff6", border: "1px solid #8d96cd" };
+    case 4:
+      return { color: "#c020ca", border: "1px solid #de78e4" };
+    case 5:
+      return { color: "#e60a0a", border: "1px solid #d5d5d5" };
+    default:
+      return { color: "#666", border: "1px solid #d5d5d5" };
+  }
+};
 
 const AirdropImage = styled("img")({
   width: "23px",
@@ -307,6 +323,7 @@ function TbaList({ data = [] }) {
     <StyledBox onCopy={preventCopy} overflow="auto">
       <TbaModal open={openTbaModal} handleClose={handleCloseTbaModal} />
       <TbaFilterButton onFilter={handleFilter} />
+      
       <SortContainer>
         <SortItemContainer>
           <SortHeader onClick={() => handleSort("owner")}>
@@ -314,23 +331,20 @@ function TbaList({ data = [] }) {
             {getSortIcon("owner")}
           </SortHeader>
         </SortItemContainer>
-
         {/* 
-          <PositionedSortItemContainer left="500px" top="10px">
-            <SortHeader onClick={() => handleSort('address')}>
-              <SortHeaderSpan>Address</SortHeaderSpan>
-              {getSortIcon('address')}
-            </SortHeader>
-          </PositionedSortItemContainer>
-          */}
-
+        <PositionedSortItemContainer left="500px" top="10px">
+          <SortHeader onClick={() => handleSort('address')}>
+            <SortHeaderSpan>Address</SortHeaderSpan>
+            {getSortIcon('address')}
+          </SortHeader>
+        </PositionedSortItemContainer>
+        */}
         <LevelContainer>
           <SortHeader onClick={() => handleSort("level")}>
             <SortHeaderSpan>Level</SortHeaderSpan>
             {getSortIcon("level")}
           </SortHeader>
         </LevelContainer>
-
         <SelectAllItemContainer>
           <SelectAllText
             isAllSelected={isAllSelected}
@@ -339,7 +353,6 @@ function TbaList({ data = [] }) {
             Select All
           </SelectAllText>
         </SelectAllItemContainer>
-
         <AirdropText
           style={{ fontSize: "13px", fontWeight: "bold", color: "#757575" }}
         >
@@ -348,7 +361,7 @@ function TbaList({ data = [] }) {
         <TbaGroupButton selectedItems={selectedItems} />
         <TbaAirdropButton />
       </SortContainer>
-
+      
       {sortedData.map((user) => (
         <StyledPaper elevation={2} key={user._id}>
           <List>
@@ -366,10 +379,9 @@ function TbaList({ data = [] }) {
                 <ItemContainer>
                   <StyledListItemText
                     primary={
-                      <BoldTypography>{`${user.owner.substring(
-                        0,
-                        4
-                      )}...${user.owner.substring(37)}`}</BoldTypography>
+                      <BoldTypography sx={{ fontSize: "13px" }}>
+                        {`${user.owner.substring(0, 4)}...${user.owner.substring(37)}`}
+                      </BoldTypography>
                     }
                   />
                 </ItemContainer>
@@ -380,15 +392,12 @@ function TbaList({ data = [] }) {
                         text={user.address}
                         onCopy={handleCopyAddress}
                       >
-                        <BoldTypography>{`${user.address.substring(
-                          0,
-                          4
-                        )}...${user.address.substring(37)}`}</BoldTypography>
+                        <BoldTypography sx={{ fontSize: "13px" }}>
+                          {`${user.address.substring(0, 4)}...${user.address.substring(30)}`}
+                        </BoldTypography>
                       </CopyToClipboard>
                     }
                   />
-
-                  {/* snack bar */}
                   <Snackbar
                     open={isCopied}
                     autoHideDuration={3000}
@@ -407,7 +416,19 @@ function TbaList({ data = [] }) {
                 </ItemContainer>
                 <ItemContainer>
                   <LevelCircle>
-                    <Typography>{user.level}</Typography>
+                    <Typography 
+                      sx={{ 
+                        fontSize: "12px",
+                        fontWeight: "bold",
+                        width: "100%",
+                        textAlign: "center",
+                        borderRadius: "5px",
+                        border: getLevelColor(user.level),
+                        color: getLevelColor(user.level) 
+                      }}
+                    >
+                      Lv.{user.level}
+                    </Typography>
                   </LevelCircle>
                 </ItemContainer>
                 <CheckboxContainer>
@@ -432,5 +453,6 @@ function TbaList({ data = [] }) {
     </StyledBox>
   );
 }
-
+  
 export default TbaList;
+  

@@ -92,29 +92,25 @@ const CONTRACTS = [
 
 const ADMIN_NFT_LIST = [
   {
-    image:
-      "https://lh3.googleusercontent.com/a/AAcHTte83IMxEWM9hrGZHygQDWwhkB8TacLUQDEtXOeHvfvqAA=s96-c",
+    image: "/Dashboarddummy1.png",
     name: "test1",
     type: "ERC-721",
     address: "0x2B839411985B474B725fd5E562E7969172F58f55",
   },
   {
-    image:
-      "https://lh3.googleusercontent.com/a/AAcHTte83IMxEWM9hrGZHygQDWwhkB8TacLUQDEtXOeHvfvqAA=s96-c",
+    image: "/Dashboarddummy2.png",
     name: "test2",
     type: "ERC-1155",
     address: "0x2B839411985B474B725fd5E562E7969172F58f55",
   },
   {
-    image:
-      "https://lh3.googleusercontent.com/a/AAcHTte83IMxEWM9hrGZHygQDWwhkB8TacLUQDEtXOeHvfvqAA=s96-c",
+    image: "/Dashboarddummy3.png",
     name: "test3",
     type: "ERC-721",
     address: "0x2B839411985B474B725fd5E562E7969172F58f55",
   },
   {
-    image:
-      "https://lh3.googleusercontent.com/a/AAcHTte83IMxEWM9hrGZHygQDWwhkB8TacLUQDEtXOeHvfvqAA=s96-c",
+    image: "/Dashboarddummy4.png",
     name: "test4",
     type: "ERC-721",
     address: "0x2B839411985B474B725fd5E562E7969172F58f55",

@@ -46,7 +46,7 @@ function ContractEnrollModal({ open, handleClose, contractInput, setContractInpu
       </video>
 
       <DialogTitle style={{ color: "#272727", textAlign: "center", fontSize: "16px", fontWeight: "600" }}>
-        <img src={process.env.PUBLIC_URL + '/contractImage.png'} alt="icon" style={{ width: "4.3%", verticalAlign: 'middle', marginRight: '10px' }} />
+        <img src={process.env.PUBLIC_URL + '/contractImage.png'} alt="icon" style={{ width: "5%", verticalAlign: 'middle', marginRight: '8px' }} />
         Enroll new Contract
       </DialogTitle>
 
