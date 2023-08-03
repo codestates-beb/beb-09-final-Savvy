@@ -187,6 +187,7 @@ module.exports = {
   },
   updateCommunity: async (req, res) => {
     const communityData = req.body;
+    console.log(communityData);
 
     try {
       //const community = await Community.findOne({ _id: communityData.id });
