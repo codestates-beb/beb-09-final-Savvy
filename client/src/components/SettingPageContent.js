@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { setManagerData } from "../reducers/managerReducer";
 import {
   Button,
   Box,
@@ -9,38 +10,42 @@ import {
   LinearProgress,
   Dialog,
   CircularProgress,
-} from '@mui/material';
+} from "@mui/material";
 
-import DoneOutlineIcon from '@mui/icons-material/DoneOutline';
+import DoneOutlineIcon from "@mui/icons-material/DoneOutline";
 
 // api
-import { updatePlan } from '../api/put-plan';
+import { updatePlan } from "../api/put-plan";
+import { getManagerData } from "../api/get-manager-data";
 
 const PLAN_INFO = [
   {
-    title: 'Basic',
-    subtitle: 'Perfect Plan for Beginners.',
-    price: 'Free',
-    priceSubtitle: 'For a Life time',
-    content: ['1 Community Available', '10 TBAs per 1 Community'],
+    title: "Basic",
+    subtitle: "Perfect Plan for Beginners.",
+    price: "Free",
+    priceSubtitle: "For a Life time",
+    content: ["1 Community Available", "10 TBAs per 1 Community"],
   },
   {
-    title: 'Plus',
-    subtitle: 'For uses who want to do more with their community.',
-    price: '10 SVY',
-    priceSubtitle: '/ month',
-    content: ['3 Communities Available', '100 TBAs per 1 Community'],
+    title: "Plus",
+    subtitle: "For uses who want to do more with their community.",
+    price: "10 SVY",
+    priceSubtitle: "/ month",
+    content: ["3 Communities Available", "100 TBAs per 1 Community"],
   },
   {
-    title: 'Business',
-    subtitle: 'For enterprises and large organizations that need more.',
-    price: '100 SVY',
-    priceSubtitle: '/ month',
-    content: ['Unlimited Communities', 'Unlimited TBAs'],
+    title: "Business",
+    subtitle: "For enterprises and large organizations that need more.",
+    price: "100 SVY",
+    priceSubtitle: "/ month",
+    content: ["Unlimited Communities", "Unlimited TBAs"],
   },
 ];
 
 export default function SettingPageContent({ web3Auth }) {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const managerData = useSelector((state) => state.manager.managerData);
   const [sector, setSector] = useState(0);
   const [openPricing, setOpenPricing] = useState(false);
@@ -48,6 +53,31 @@ export default function SettingPageContent({ web3Auth }) {
   const [isLoading, setIsLoading] = useState(false);
 
   const currentPlan = managerData?.admin.plan;
+
+  useEffect(() => {
+    const init = async () => {
+      try {
+        const data = await getManagerData();
+        const { admin, communities, items } = data;
+        dispatch(
+          setManagerData({
+            admin: admin,
+            communities: communities,
+            items: items,
+          })
+        );
+      } catch (error) {
+        console.log(error);
+        alert("JWT expired. Please login again.");
+        localStorage.removeItem("token");
+        localStorage.removeItem("app_pub_key");
+        navigate("/authentication");
+        return;
+      }
+    };
+    init();
+    console.log(managerData);
+  }, [isLoading]);
 
   const handleOpenPricing = (e) => {
     setOpenPricing(true);
@@ -70,7 +100,7 @@ export default function SettingPageContent({ web3Auth }) {
     } else if (response) {
       setIsLoading(false);
     }
-    alert('Successfully updated plan');
+    alert("Successfully updated plan");
     setOpenPricing(false);
   };
 
@@ -101,18 +131,20 @@ export default function SettingPageContent({ web3Auth }) {
               <hr />
               <div className="order-content-body">
                 <div className="pricing-card-content">
-                  <ul style={{ listStyle: 'none', paddingLeft: '0' }}>
+                  <ul style={{ listStyle: "none", paddingLeft: "0" }}>
                     {PLAN_INFO[pricingInfo].content.map((item, index) => {
                       return (
                         <li
                           key={item.title}
                           style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            padding: '0.5rem 0',
+                            display: "flex",
+                            alignItems: "center",
+                            padding: "0.5rem 0",
                           }}
                         >
-                          <DoneOutlineIcon sx={{ color: 'green', pr: '0.4rem' }} />
+                          <DoneOutlineIcon
+                            sx={{ color: "green", pr: "0.4rem" }}
+                          />
                           <span>{item}</span>
                         </li>
                       );
@@ -130,9 +162,9 @@ export default function SettingPageContent({ web3Auth }) {
               </div>
               <div
                 style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  fontSize: '0.8rem',
+                  display: "flex",
+                  justifyContent: "space-between",
+                  fontSize: "0.8rem",
                 }}
               >
                 <div>
@@ -142,14 +174,14 @@ export default function SettingPageContent({ web3Auth }) {
                 <div>{PLAN_INFO[pricingInfo].price}</div>
               </div>
               {isLoading ? (
-                <div style={{ textAlign: 'center', margin: '2rem 0' }}>
+                <div style={{ textAlign: "center", margin: "2rem 0" }}>
                   <CircularProgress />
                 </div>
               ) : (
-                <div style={{ textAlign: 'center', margin: '1rem 0' }}>
+                <div style={{ textAlign: "center", margin: "1rem 0" }}>
                   <Button
                     variant="contained"
-                    style={{ width: '13.5rem' }}
+                    style={{ width: "13.5rem" }}
                     onClick={handlePayment}
                   >
                     Confirm changes
@@ -157,7 +189,10 @@ export default function SettingPageContent({ web3Auth }) {
                 </div>
               )}
 
-              <div className="order-content-subtitle" style={{ marginBottom: '0' }}>
+              <div
+                className="order-content-subtitle"
+                style={{ marginBottom: "0" }}
+              >
                 By clicking "Confirm changes", you agree to the Savvy Terms and
                 Conditions.
               </div>
@@ -173,7 +208,7 @@ export default function SettingPageContent({ web3Auth }) {
               <LinearProgress
                 variant="determinate"
                 value={50}
-                sx={{ width: '70%', margin: '2rem auto' }}
+                sx={{ width: "70%", margin: "2rem auto" }}
               />
               <div className="pricing-content">
                 {PLAN_INFO.map((plan, index) => {
@@ -184,7 +219,9 @@ export default function SettingPageContent({ web3Auth }) {
                         <p className="pricing-card-subtitle">{plan.subtitle}</p>
                       </div>
                       <div className="pricing-card-price">
-                        <div className="pricing-card-price-title">{plan.price}</div>
+                        <div className="pricing-card-price-title">
+                          {plan.price}
+                        </div>
                         <div className="pricing-card-price-subtitle">
                           {plan.priceSubtitle}
                         </div>
@@ -193,33 +230,35 @@ export default function SettingPageContent({ web3Auth }) {
                         <Button
                           variant={
                             currentPlan === plan.title.toLowerCase()
-                              ? 'outlined'
-                              : 'contained'
+                              ? "outlined"
+                              : "contained"
                           }
                           color="primary"
-                          style={{ width: '13rem' }}
+                          style={{ width: "13rem" }}
                           onClick={(e) => handleOpenPricing(e)}
                           value={plan.title.toLowerCase()}
                           disabled={currentPlan === plan.title.toLowerCase()}
                         >
                           {currentPlan === plan.title.toLowerCase()
-                            ? 'Current Plan'
-                            : 'Get Started'}
+                            ? "Current Plan"
+                            : "Get Started"}
                         </Button>
                       </div>
                       <div className="pricing-card-content">
-                        <ul style={{ listStyle: 'none', paddingLeft: '0' }}>
+                        <ul style={{ listStyle: "none", paddingLeft: "0" }}>
                           {plan.content.map((item, index) => {
                             return (
                               <li
                                 key={item}
                                 style={{
-                                  display: 'flex',
-                                  alignItems: 'center',
-                                  padding: '0.5rem 0',
+                                  display: "flex",
+                                  alignItems: "center",
+                                  padding: "0.5rem 0",
                                 }}
                               >
-                                <DoneOutlineIcon sx={{ color: 'green', pr: '0.4rem' }} />
+                                <DoneOutlineIcon
+                                  sx={{ color: "green", pr: "0.4rem" }}
+                                />
                                 <span>{item}</span>
                               </li>
                             );

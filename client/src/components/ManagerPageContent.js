@@ -42,7 +42,9 @@ import { deleteCommunity } from "../api/delete-community";
 const TRANSITION_DURATION = 350;
 
 const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} timeout={TRANSITION_DURATION} {...props} />;
+  return (
+    <Slide direction="up" ref={ref} timeout={TRANSITION_DURATION} {...props} />
+  );
 });
 
 const boxStyle1 = {
@@ -65,7 +67,7 @@ const boxStyle2 = {
   height: "19rem",
   marginLeft: "0.5rem",
   boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
-  overflowY: 'auto'
+  overflowY: "auto",
 };
 
 const textStyle1 = {
@@ -247,6 +249,13 @@ export default function ManagerPageContent({ web3Auth }) {
       "main",
       communityName
     );
+    if (CommunityData === 404) {
+      alert("Community already exists.");
+      setOpenAdd(false);
+      setCommunityAddress("");
+      setCommunityName("");
+      return;
+    }
     const newCommunity = [...managerData.communities, CommunityData];
     dispatch(
       setManagerData({
@@ -255,6 +264,8 @@ export default function ManagerPageContent({ web3Auth }) {
         items: managerData.items,
       })
     );
+    setCommunityAddress("");
+    setCommunityName("");
     setOpenAdd(false);
   };
 
@@ -284,7 +295,7 @@ export default function ManagerPageContent({ web3Auth }) {
   return (
     <div className="page-content">
       <div style={styles.pageContent}>
-       <span style={styles.textWithBackground}>Manager</span>
+        <span style={styles.textWithBackground}>Manager</span>
       </div>
       <div className="content">
         <Box sx={boxStyle1}>
@@ -304,134 +315,147 @@ export default function ManagerPageContent({ web3Auth }) {
               <div className="admin-info-content">
                 <Chip
                   label="Name"
-                  sx={{ bgcolor: "transparent",
-                       color: "#272727", 
-                       fontSize: "12px", 
-                       fontWeight: "bold",
-                       marginLeft: "-0.5rem",  
-                       marginTop: "-1.9rem",
-                       userSelect: "none",
-                      }}
+                  sx={{
+                    bgcolor: "transparent",
+                    color: "#272727",
+                    fontSize: "12px",
+                    fontWeight: "bold",
+                    marginLeft: "-0.5rem",
+                    marginTop: "-1.9rem",
+                    userSelect: "none",
+                  }}
                 />
-{managerData ? (
-    <div className="nft-list" key={managerData.admin.name}
-    style={{  
-        width: "20vw",
-        color: "#666", 
-        fontSize: "12px", 
-        fontWeight: "bold",
-        userSelect: "none",
-        boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
-        borderRadius: "8px",
-        marginBottom: "0.3rem",
-        marginTop: "-0.3rem",
-        marginLeft: "-2.9rem",
-        whiteSpace: "nowrap",
-        borderColor: "#fff",
-        textAlign: "center",
-        display: "flex",       
-        alignItems: "center", 
-        justifyContent: "center" 
-    }}>
-        <div>{managerData.admin.name}</div>
-    </div>
-) : null}
+                {managerData ? (
+                  <div
+                    className="nft-list"
+                    key={managerData.admin.name}
+                    style={{
+                      width: "20vw",
+                      color: "#666",
+                      fontSize: "12px",
+                      fontWeight: "bold",
+                      userSelect: "none",
+                      boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
+                      borderRadius: "8px",
+                      marginBottom: "0.3rem",
+                      marginTop: "-0.3rem",
+                      marginLeft: "-2.9rem",
+                      whiteSpace: "nowrap",
+                      borderColor: "#fff",
+                      textAlign: "center",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <div>{managerData.admin.name}</div>
+                  </div>
+                ) : null}
               </div>
               <div className="admin-info-content">
                 <Chip
                   label="Email"
-                  sx={{ 
+                  sx={{
                     bgcolor: "transparent",
-                  color: "#272727", 
-                  fontSize: "12px", 
-                  fontWeight: "bold",
-                  marginLeft: "-0.5rem",  
-                  marginTop: "-0.3rem",
-                  userSelect: "none",
-                 }}
+                    color: "#272727",
+                    fontSize: "12px",
+                    fontWeight: "bold",
+                    marginLeft: "-0.5rem",
+                    marginTop: "-0.3rem",
+                    userSelect: "none",
+                  }}
                 />
                 {managerData ? (
-    <div className="nft-list" key={managerData.admin.email}  
-    style={{  
-        width: "20vw",
-        height: "30px",            
-        lineHeight: "30px",         
-        color: "#666", 
-        fontSize: "12px", 
-        fontWeight: "bold",
-        userSelect: "none",
-        boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
-        borderRadius: "8px",
-        marginBottom: "0.3rem",
-        marginTop: "1.4rem",          
-        marginLeft: "-2.9rem",
-        whiteSpace: "nowrap",
-        backgroundColor: "#fff",      
-        borderColor: "#fff",
-        textAlign: "center",
-        display: "flex",       
-        alignItems: "center",  
-        justifyContent: "center"
-    }}>
-        <div>{managerData.admin.email}</div> 
-    </div>
-) : null}
-
+                  <div
+                    className="nft-list"
+                    key={managerData.admin.email}
+                    style={{
+                      width: "20vw",
+                      height: "30px",
+                      lineHeight: "30px",
+                      color: "#666",
+                      fontSize: "12px",
+                      fontWeight: "bold",
+                      userSelect: "none",
+                      boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
+                      borderRadius: "8px",
+                      marginBottom: "0.3rem",
+                      marginTop: "1.4rem",
+                      marginLeft: "-2.9rem",
+                      whiteSpace: "nowrap",
+                      backgroundColor: "#fff",
+                      borderColor: "#fff",
+                      textAlign: "center",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <div>{managerData.admin.email}</div>
+                  </div>
+                ) : null}
               </div>
               <div className="admin-info-content">
                 <Chip
-                                    sx={{ bgcolor: "transparent",
-                                    color: "#272727", 
-                                    fontSize: "12px", 
-                                    fontWeight: "bold",
-                                    marginLeft: "-0.5rem",  
-                                    marginTop: "-0.1rem",
-                                    userSelect: "none",
-                                   }}
+                  sx={{
+                    bgcolor: "transparent",
+                    color: "#272727",
+                    fontSize: "12px",
+                    fontWeight: "bold",
+                    marginLeft: "-0.5rem",
+                    marginTop: "-0.1rem",
+                    userSelect: "none",
+                  }}
                   label="Address"
                 />
-{managerData ? (
-    <CopyToClipboard
-      text={managerData.admin.address}
-      onCopy={() => setIsCopied(true)}
-    >
-      <div className="address-list" key={managerData.admin.address}
-      style={{  
-          width: "20vw",
-          height: "30px",
-          lineHeight: "30px",
-          color: "#666", 
-          fontSize: "12px", 
-          fontWeight: "bold",
-          userSelect: "none",
-          boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
-          borderRadius: "8px",
-          marginBottom: "0.3rem",
-          marginTop: "1.6rem",       
-          marginLeft: "-3.83rem",
-          whiteSpace: "nowrap",
-          backgroundColor: "#fff",
-          borderColor: "#fff",
-          textAlign: "center",
-          display: "flex",       
-          alignItems: "center", 
-          justifyContent: "center", 
-          cursor: "pointer"
-      }}>
-          <div>
-            {`${managerData.admin.address.substring(0, 4)}...${managerData.admin.address.substring(30)}`}
-          </div>
-          <FileCopyOutlinedIcon
-              style={{ 
-                  color: "#666", 
-                  fontSize: "medium",
-                  marginBottom: "-0.1rem",
-                  marginLeft: "0.3rem",  
-              }}
-          />
-      </div>
-    </CopyToClipboard>
-) : null}
+                {managerData ? (
+                  <CopyToClipboard
+                    text={managerData.admin.address}
+                    onCopy={() => setIsCopied(true)}
+                  >
+                    <div
+                      className="address-list"
+                      key={managerData.admin.address}
+                      style={{
+                        width: "20vw",
+                        height: "30px",
+                        lineHeight: "30px",
+                        color: "#666",
+                        fontSize: "12px",
+                        fontWeight: "bold",
+                        userSelect: "none",
+                        boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
+                        borderRadius: "8px",
+                        marginBottom: "0.3rem",
+                        marginTop: "1.6rem",
+                        marginLeft: "-3.83rem",
+                        whiteSpace: "nowrap",
+                        backgroundColor: "#fff",
+                        borderColor: "#fff",
+                        textAlign: "center",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        cursor: "pointer",
+                      }}
+                    >
+                      <div>
+                        {`${managerData.admin.address?.substring(
+                          0,
+                          4
+                        )}...${managerData.admin.address?.substring(30)}`}
+                      </div>
+                      <FileCopyOutlinedIcon
+                        style={{
+                          color: "#666",
+                          fontSize: "medium",
+                          marginBottom: "-0.1rem",
+                          marginLeft: "0.3rem",
+                        }}
+                      />
+                    </div>
+                  </CopyToClipboard>
+                ) : null}
 
                 {/* copy alert */}
                 <Snackbar
@@ -456,146 +480,176 @@ export default function ManagerPageContent({ web3Auth }) {
         <Box sx={boxStyle1}>
           <div style={textStyle1}>Balance</div>
           <div
-    style={{
-        display: "flex",
-        margin: "1rem",
-        height: "11.3rem",
-        justifyContent: "space-between",
-        overflow: "auto",
-        backgroundColor: "#fff",
-        boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
-        borderRadius: "1rem",
-        borderBottom: "none",
-        position: "relative"
-    }}
->
-    <div
-        style={{
-            position: "absolute",
-            bottom: "135px",  
-            left: "0",
-            right: "0",
-            borderBottom: "1px solid #e0e1e2",
-        }}
-    ></div>
+            style={{
+              display: "flex",
+              margin: "1rem",
+              height: "11.3rem",
+              justifyContent: "space-between",
+              overflow: "auto",
+              backgroundColor: "#fff",
+              boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
+              borderRadius: "1rem",
+              borderBottom: "none",
+              position: "relative",
+            }}
+          >
+            <div
+              style={{
+                position: "absolute",
+                bottom: "135px",
+                left: "0",
+                right: "0",
+                borderBottom: "1px solid #e0e1e2",
+              }}
+            ></div>
 
-    <div
-        style={{
-            position: "absolute",
-            bottom: "90px", 
-            left: "0",
-            right: "0",
-            borderBottom: "1px solid #e0e1e2",
-        }}
-    ></div>
+            <div
+              style={{
+                position: "absolute",
+                bottom: "90px",
+                left: "0",
+                right: "0",
+                borderBottom: "1px solid #e0e1e2",
+              }}
+            ></div>
 
-    <div
-        style={{
-            position: "absolute",
-            bottom: "45px", 
-            left: "0",
-            right: "0",
-            borderBottom: "1px solid #e0e1e2",
-        }}
-    ></div>
+            <div
+              style={{
+                position: "absolute",
+                bottom: "45px",
+                left: "0",
+                right: "0",
+                borderBottom: "1px solid #e0e1e2",
+              }}
+            ></div>
 
-    <div
-        style={{
-            position: "absolute",
-            bottom: "0",  
-            left: "0",
-            right: "0",
-            borderBottom: "1px solid #e0e1e2",
-        }}
-    ></div>
+            <div
+              style={{
+                position: "absolute",
+                bottom: "0",
+                left: "0",
+                right: "0",
+                borderBottom: "1px solid #e0e1e2",
+              }}
+            ></div>
             <div>
-              <div className="balance-category"
-                                                 style={{ 
-                                                  display: "flex",
-                                                  justifyContent: "center",
-                                                  alignItems: "center",
-                                                  bgcolor: "transparent",
-                                                 color: "#272727", 
-                                                 width: "5rem",
-                                                 height: "1.8rem",
-                                                 textAlign: "center",
-                                            fontSize: "14px", 
-                                               fontWeight: "bold", 
-                                               marginLeft: "2.1rem", 
-                                                userSelect: "none",
-                                 
-                                                               }}
+              <div
+                className="balance-category"
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  bgcolor: "transparent",
+                  color: "#272727",
+                  width: "5rem",
+                  height: "1.8rem",
+                  textAlign: "center",
+                  fontSize: "14px",
+                  fontWeight: "bold",
+                  marginLeft: "2.1rem",
+                  userSelect: "none",
+                }}
               >
-                 <img src={process.env.PUBLIC_URL + '/managerToken.png'} alt="icon" style={{ width: "25px", verticalAlign: 'middle', marginRight: '5px' }} />
-                Token</div>
-                <ul className="balance-ul"
-     style={{
-         bgcolor: "transparent",
-         color: "#576ff6", 
-         fontSize: "13px", 
-         fontWeight: "bold",
-         marginLeft: "1rem", 
-         width: "8rem",
-         marginTop: "1rem",
-         userSelect: "none",
-         borderRadius: "5px",
-     }}
->
-    {ADMIN_TOKEN_LIST.map((data) => {
-        return (
-            <li key={data.token} style={{marginBottom: "0.5rem", 
-                                         marginTop: "0.8rem",
-                                         width: "100px",
-                                         boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
-                                         borderRadius: "10px",  
-                                        }}
-                                        >
-                                          {data.token}
-            </li>
-        );
-    })}
-</ul>
-            </div>
-            <div>
-              <div className="balance-category"
-                                                  style={{ 
-                                                    display: "flex",
-                                                    justifyContent: "center",
-                                                    alignItems: "center",
-                                                    bgcolor: "transparent",
-                                                  color: "#272727", 
-                                                  fontSize: "14px", 
-                                                  fontWeight: "bold",
-                                                  width: "5rem",
-                                                  height: "1.8rem",
-                                                  marginLeft: "-7.15rem",
-                                                  userSelect: "none",
-                                                  textAlign: "center",
-                                                 }}
-              >            
-                <img src={process.env.PUBLIC_URL + '/managerAmount.png'} alt="icon" style={{ width: "27px", verticalAlign: 'middle', marginRight: '3px' }} />
-                Amount</div>
-              <ul className="balance-ul"
-                                                style={{ 
-                                                  width: "8rem",
-                                        bgcolor: "transparent",
-                                          color: "#576ff6", 
-                                           fontSize: "13px", 
-                                         fontWeight: "bold",
-                                         marginLeft: "-8rem", 
-                                        marginTop: "1rem",
-                                        userSelect: "none",
-                                   }}
+                <img
+                  src={process.env.PUBLIC_URL + "/managerToken.png"}
+                  alt="icon"
+                  style={{
+                    width: "25px",
+                    verticalAlign: "middle",
+                    marginRight: "5px",
+                  }}
+                />
+                Token
+              </div>
+              <ul
+                className="balance-ul"
+                style={{
+                  bgcolor: "transparent",
+                  color: "#576ff6",
+                  fontSize: "13px",
+                  fontWeight: "bold",
+                  marginLeft: "1rem",
+                  width: "8rem",
+                  marginTop: "1rem",
+                  userSelect: "none",
+                  borderRadius: "5px",
+                }}
               >
                 {ADMIN_TOKEN_LIST.map((data) => {
-                  return <li key={data.token} style={{marginBottom: "0.5rem",
-                                                    marginTop: "0.8rem",   
-                                                    width: "100px",
-                                                    boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
-                                                    borderRadius: "10px", 
-                                                  }}
-                                                  >
-                                                    {data.amount}</li>;
+                  return (
+                    <li
+                      key={data.token}
+                      style={{
+                        marginBottom: "0.5rem",
+                        marginTop: "0.8rem",
+                        width: "100px",
+                        boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
+                        borderRadius: "10px",
+                      }}
+                    >
+                      {data.token}
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+            <div>
+              <div
+                className="balance-category"
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  bgcolor: "transparent",
+                  color: "#272727",
+                  fontSize: "14px",
+                  fontWeight: "bold",
+                  width: "5rem",
+                  height: "1.8rem",
+                  marginLeft: "-7.15rem",
+                  userSelect: "none",
+                  textAlign: "center",
+                }}
+              >
+                <img
+                  src={process.env.PUBLIC_URL + "/managerAmount.png"}
+                  alt="icon"
+                  style={{
+                    width: "27px",
+                    verticalAlign: "middle",
+                    marginRight: "3px",
+                  }}
+                />
+                Amount
+              </div>
+              <ul
+                className="balance-ul"
+                style={{
+                  width: "8rem",
+                  bgcolor: "transparent",
+                  color: "#576ff6",
+                  fontSize: "13px",
+                  fontWeight: "bold",
+                  marginLeft: "-8rem",
+                  marginTop: "1rem",
+                  userSelect: "none",
+                }}
+              >
+                {ADMIN_TOKEN_LIST.map((data) => {
+                  return (
+                    <li
+                      key={data.token}
+                      style={{
+                        marginBottom: "0.5rem",
+                        marginTop: "0.8rem",
+                        width: "100px",
+                        boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
+                        borderRadius: "10px",
+                      }}
+                    >
+                      {data.amount}
+                    </li>
+                  );
                 })}
               </ul>
             </div>
@@ -669,63 +723,73 @@ export default function ManagerPageContent({ web3Auth }) {
             </div>
 
             {/* add community modal */}
-            <Dialog open={openAdd}
-                                      sx={{
-                                        "& .MuiDialog-paper": {
-                                          width: "415px",
-                                          height: "290px",
-                                          borderRadius: "15px",
-                                          boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
-                                        },
-                                      }}
-                                      >
-                       <DialogTitle style={{ 
-                           color: "#272727", 
-                           textAlign: "center", 
-                           marginTop: "8px",
-                           fontSize: "16px", 
-                           fontWeight: "600", 
-                           userSelect: "none",
-                           whiteSpace: "nowrap",
-                          
-                          }}
-                           >
-        <img src={process.env.PUBLIC_URL + '/manageraddModal.png'} alt="icon" style={{ width: "25px", verticalAlign: 'middle', marginRight: '8px' }} />
-              Add Community</DialogTitle>
+            <Dialog
+              open={openAdd}
+              sx={{
+                "& .MuiDialog-paper": {
+                  width: "415px",
+                  height: "290px",
+                  borderRadius: "15px",
+                  boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
+                },
+              }}
+            >
+              <DialogTitle
+                style={{
+                  color: "#272727",
+                  textAlign: "center",
+                  marginTop: "8px",
+                  fontSize: "16px",
+                  fontWeight: "600",
+                  userSelect: "none",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                <img
+                  src={process.env.PUBLIC_URL + "/manageraddModal.png"}
+                  alt="icon"
+                  style={{
+                    width: "25px",
+                    verticalAlign: "middle",
+                    marginRight: "8px",
+                  }}
+                />
+                Add Community
+              </DialogTitle>
               <DialogContent>
                 <DialogContentText>
                   <TextField
-                                              sx={{
-                                                width: "100%",
-                                                height: "50px",
-                                                whiteSpace: "nowrap",
-                                                backgroundColor: "#fff",
-                                                boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
-                                                borderRadius: "10px",
-                                                marginBottom: "-5px",
-                                                marginTop: "10px",
-                                                '& .MuiOutlinedInput-root': {
-                                                  '& fieldset': {
-                                                    borderColor: 'transparent',
-                                                  },
-                                                  '&:hover fieldset': {
-                                                    borderColor: 'transparent',
-                                                  },
-                                                  '&.Mui-focused fieldset': {
-                                                    borderColor: 'transparent',
-                                                  }
-                                                },
-                                                '& .MuiInputLabel-root': {
-                                                  color: '#a6a4a4',
-                                                  fontSize: '12px',
-                                                  fontWeight: 'bold',
-                                                },
-                                                '& .MuiOutlinedInput-input::placeholder': {
-                                                  fontSize: '14px',
-                                                  fontWeight: 'bold',
-                                                  color: '#8d8c8c',
-                                                },
-                                              }}
+                    sx={{
+                      width: "100%",
+                      height: "50px",
+                      whiteSpace: "nowrap",
+                      backgroundColor: "#fff",
+                      boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
+                      borderRadius: "10px",
+                      marginBottom: "-5px",
+                      marginTop: "10px",
+                      "& .MuiOutlinedInput-root": {
+                        "& fieldset": {
+                          borderColor: "transparent",
+                        },
+                        "&:hover fieldset": {
+                          borderColor: "transparent",
+                        },
+                        "&.Mui-focused fieldset": {
+                          borderColor: "transparent",
+                        },
+                      },
+                      "& .MuiInputLabel-root": {
+                        color: "#a6a4a4",
+                        fontSize: "12px",
+                        fontWeight: "bold",
+                      },
+                      "& .MuiOutlinedInput-input::placeholder": {
+                        fontSize: "14px",
+                        fontWeight: "bold",
+                        color: "#8d8c8c",
+                      },
+                    }}
                     autoFocus
                     margin="dense"
                     id="name"
@@ -738,37 +802,37 @@ export default function ManagerPageContent({ web3Auth }) {
                     onChange={(e) => setCommunityName(e.target.value)}
                   />
                   <TextField
-                                                 sx={{
-                                                  width: "100%",
-                                                  height: "50px",
-                                                  whiteSpace: "nowrap",
-                                                  backgroundColor: "#fff",
-                                                  boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
-                                                  borderRadius: "10px",
-                                                  marginBottom: "-5px",
-                                                  marginTop: "25px",
-                                                  '& .MuiOutlinedInput-root': {
-                                                    '& fieldset': {
-                                                      borderColor: 'transparent',
-                                                    },
-                                                    '&:hover fieldset': {
-                                                      borderColor: 'transparent',
-                                                    },
-                                                    '&.Mui-focused fieldset': {
-                                                      borderColor: 'transparent',
-                                                    }
-                                                  },
-                                                  '& .MuiInputLabel-root': {
-                                                    color: '#a6a4a4',
-                                                    fontSize: '12px',
-                                                    fontWeight: 'bold',
-                                                  },
-                                                  '& .MuiOutlinedInput-input::placeholder': {
-                                                    fontSize: '14px',
-                                                    fontWeight: 'bold',
-                                                    color: '#8d8c8c',
-                                                  },
-                                                }}
+                    sx={{
+                      width: "100%",
+                      height: "50px",
+                      whiteSpace: "nowrap",
+                      backgroundColor: "#fff",
+                      boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
+                      borderRadius: "10px",
+                      marginBottom: "-5px",
+                      marginTop: "25px",
+                      "& .MuiOutlinedInput-root": {
+                        "& fieldset": {
+                          borderColor: "transparent",
+                        },
+                        "&:hover fieldset": {
+                          borderColor: "transparent",
+                        },
+                        "&.Mui-focused fieldset": {
+                          borderColor: "transparent",
+                        },
+                      },
+                      "& .MuiInputLabel-root": {
+                        color: "#a6a4a4",
+                        fontSize: "12px",
+                        fontWeight: "bold",
+                      },
+                      "& .MuiOutlinedInput-input::placeholder": {
+                        fontSize: "14px",
+                        fontWeight: "bold",
+                        color: "#8d8c8c",
+                      },
+                    }}
                     autoFocus
                     margin="dense"
                     id="address"
@@ -783,22 +847,23 @@ export default function ManagerPageContent({ web3Auth }) {
                 </DialogContentText>
               </DialogContent>
               <DialogActions>
-                <Button 
-                                            sx={{
-                                              backgroundColor: "#f88181",
-                                              color: "#fff",
-                                              width: "43%",
-                                              height: "40px",
-                                              fontSize: "12px",
-                                              fontWeight: "600",
-                                              marginBottom: "8px",
-                                              marginRight: "14.5px",
-                                              borderRadius: "10px",
-                                              "&:hover": {
-                                                backgroundColor: "#eb6363",
-                                              },
-                                            }}
-                onClick={handleCloseAdd}>
+                <Button
+                  sx={{
+                    backgroundColor: "#f88181",
+                    color: "#fff",
+                    width: "43%",
+                    height: "40px",
+                    fontSize: "12px",
+                    fontWeight: "600",
+                    marginBottom: "8px",
+                    marginRight: "14.5px",
+                    borderRadius: "10px",
+                    "&:hover": {
+                      backgroundColor: "#eb6363",
+                    },
+                  }}
+                  onClick={handleCloseAdd}
+                >
                   Cancel
                 </Button>
                 <Button
@@ -825,60 +890,73 @@ export default function ManagerPageContent({ web3Auth }) {
             </Dialog>
 
             {/* delete community modal */}
-            <Dialog open={openDelete}
-                     sx={{
-                      "& .MuiDialog-paper": {
-                        width: "360px",
-                        height: "180px",
-                        borderRadius: "15px",
-                        boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
-                      },
-                    }}
+            <Dialog
+              open={openDelete}
+              sx={{
+                "& .MuiDialog-paper": {
+                  width: "360px",
+                  height: "180px",
+                  borderRadius: "15px",
+                  boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
+                },
+              }}
             >
-              <DialogTitle 
-                        sx={{
-                          color: "#272727",
-                          fontSize: "16px",
-                          fontWeight: "600",
-                          marginTop: "8px",
-                          marginLeft: "68px",
-                          userSelect: "none",
-                          whiteSpace: "nowrap",
-                        }}
+              <DialogTitle
+                sx={{
+                  color: "#272727",
+                  fontSize: "16px",
+                  fontWeight: "600",
+                  marginTop: "8px",
+                  marginLeft: "68px",
+                  userSelect: "none",
+                  whiteSpace: "nowrap",
+                }}
               >
-                <img src={process.env.PUBLIC_URL + '/managerdeleteModal.png'} alt="icon" style={{ width: "24px", verticalAlign: 'middle', marginRight: '10px' }} />
-                Delete Community</DialogTitle>
+                <img
+                  src={process.env.PUBLIC_URL + "/managerdeleteModal.png"}
+                  alt="icon"
+                  style={{
+                    width: "24px",
+                    verticalAlign: "middle",
+                    marginRight: "10px",
+                  }}
+                />
+                Delete Community
+              </DialogTitle>
               <DialogContent>
                 <DialogContentText
-                          sx={{
-                            color: "#838383",
-                            fontSize: "14px",
-                            fontWeight: "400",
-                            marginTop: "5px",
-                            marginLeft: "13.7px",
-                            userSelect: "none",
-                            whiteSpace: "nowrap",
-                          }}
-                          >
-                  Are you sure you want to delete <span style={{color: "#576ff6", fontWeight: "600"}}>community?</span>
+                  sx={{
+                    color: "#838383",
+                    fontSize: "14px",
+                    fontWeight: "400",
+                    marginTop: "5px",
+                    marginLeft: "13.7px",
+                    userSelect: "none",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  Are you sure you want to delete{" "}
+                  <span style={{ color: "#576ff6", fontWeight: "600" }}>
+                    community?
+                  </span>
                 </DialogContentText>
               </DialogContent>
               <DialogActions>
                 <Button
-                            sx={{
-                              backgroundColor: "#f88181",
-                              color: "#fff",
-                              width: "43%",
-                              height: "40px",
-                              fontSize: "12px",
-                              fontWeight: "600",
-                              marginBottom: "5px",
-                              marginRight: "10px",
-                              borderRadius: "10px",
-                              "&:hover": {
-                                backgroundColor: "#eb6363",
-                              },
-                            }}
+                  sx={{
+                    backgroundColor: "#f88181",
+                    color: "#fff",
+                    width: "43%",
+                    height: "40px",
+                    fontSize: "12px",
+                    fontWeight: "600",
+                    marginBottom: "5px",
+                    marginRight: "10px",
+                    borderRadius: "10px",
+                    "&:hover": {
+                      backgroundColor: "#eb6363",
+                    },
+                  }}
                   onClick={() => setOpenDelete(false)}
                 >
                   Cancel
@@ -907,62 +985,73 @@ export default function ManagerPageContent({ web3Auth }) {
             </Dialog>
 
             {/* update community modal */}
-            <Dialog open={openUpdate}
-                          sx={{
-                            "& .MuiDialog-paper": {
-                              width: "415px",
-                              height: "290px",
-                              borderRadius: "15px",
-                              boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
-                            },
-                          }}
+            <Dialog
+              open={openUpdate}
+              sx={{
+                "& .MuiDialog-paper": {
+                  width: "415px",
+                  height: "290px",
+                  borderRadius: "15px",
+                  boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
+                },
+              }}
             >
-            <DialogTitle style={{ 
-                           color: "#272727", 
-                           textAlign: "center", 
-                           marginTop: "8px",
-                           fontSize: "16px", 
-                           fontWeight: "600", 
-                           userSelect: "none",
-                           whiteSpace: "nowrap"}}
-                           >
-        <img src={process.env.PUBLIC_URL + '/managerupdateModal.png'} alt="icon" style={{ width: "25px", verticalAlign: 'middle', marginRight: '8px' }} />
-        Update Community
-      </DialogTitle>
+              <DialogTitle
+                style={{
+                  color: "#272727",
+                  textAlign: "center",
+                  marginTop: "8px",
+                  fontSize: "16px",
+                  fontWeight: "600",
+                  userSelect: "none",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                <img
+                  src={process.env.PUBLIC_URL + "/managerupdateModal.png"}
+                  alt="icon"
+                  style={{
+                    width: "25px",
+                    verticalAlign: "middle",
+                    marginRight: "8px",
+                  }}
+                />
+                Update Community
+              </DialogTitle>
               <DialogContent>
                 <DialogContentText>
                   <TextField
-                            sx={{
-                              width: "100%",
-                              height: "50px",
-                              whiteSpace: "nowrap",
-                              backgroundColor: "#fff",
-                              boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
-                              borderRadius: "10px",
-                              marginBottom: "-5px",
-                              marginTop: "10px",
-                              '& .MuiOutlinedInput-root': {
-                                '& fieldset': {
-                                  borderColor: 'transparent',
-                                },
-                                '&:hover fieldset': {
-                                  borderColor: 'transparent',
-                                },
-                                '&.Mui-focused fieldset': {
-                                  borderColor: 'transparent',
-                                }
-                              },
-                              '& .MuiInputLabel-root': {
-                                color: '#a6a4a4',
-                                fontSize: '12px',
-                                fontWeight: 'bold',
-                              },
-                              '& .MuiOutlinedInput-input::placeholder': {
-                                fontSize: '14px',
-                                fontWeight: 'bold',
-                                color: '#8d8c8c',
-                              },
-                            }}
+                    sx={{
+                      width: "100%",
+                      height: "50px",
+                      whiteSpace: "nowrap",
+                      backgroundColor: "#fff",
+                      boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
+                      borderRadius: "10px",
+                      marginBottom: "-5px",
+                      marginTop: "10px",
+                      "& .MuiOutlinedInput-root": {
+                        "& fieldset": {
+                          borderColor: "transparent",
+                        },
+                        "&:hover fieldset": {
+                          borderColor: "transparent",
+                        },
+                        "&.Mui-focused fieldset": {
+                          borderColor: "transparent",
+                        },
+                      },
+                      "& .MuiInputLabel-root": {
+                        color: "#a6a4a4",
+                        fontSize: "12px",
+                        fontWeight: "bold",
+                      },
+                      "& .MuiOutlinedInput-input::placeholder": {
+                        fontSize: "14px",
+                        fontWeight: "bold",
+                        color: "#8d8c8c",
+                      },
+                    }}
                     autoFocus
                     margin="dense"
                     id="name"
@@ -975,37 +1064,37 @@ export default function ManagerPageContent({ web3Auth }) {
                     onChange={(e) => setCommunityName(e.target.value)}
                   />
                   <TextField
-                            sx={{
-                              width: "100%",
-                              height: "50px",
-                              whiteSpace: "nowrap",
-                              backgroundColor: "#fff",
-                              boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
-                              borderRadius: "10px",
-                              marginBottom: "-5px",
-                              marginTop: "25px",
-                              '& .MuiOutlinedInput-root': {
-                                '& fieldset': {
-                                  borderColor: 'transparent',
-                                },
-                                '&:hover fieldset': {
-                                  borderColor: 'transparent',
-                                },
-                                '&.Mui-focused fieldset': {
-                                  borderColor: 'transparent',
-                                }
-                              },
-                              '& .MuiInputLabel-root': {
-                                color: '#a6a4a4',
-                                fontSize: '12px',
-                                fontWeight: 'bold',
-                              },
-                              '& .MuiOutlinedInput-input::placeholder': {
-                                fontSize: '14px',
-                                fontWeight: 'bold',
-                                color: '#8d8c8c',
-                              },
-                            }}
+                    sx={{
+                      width: "100%",
+                      height: "50px",
+                      whiteSpace: "nowrap",
+                      backgroundColor: "#fff",
+                      boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
+                      borderRadius: "10px",
+                      marginBottom: "-5px",
+                      marginTop: "25px",
+                      "& .MuiOutlinedInput-root": {
+                        "& fieldset": {
+                          borderColor: "transparent",
+                        },
+                        "&:hover fieldset": {
+                          borderColor: "transparent",
+                        },
+                        "&.Mui-focused fieldset": {
+                          borderColor: "transparent",
+                        },
+                      },
+                      "& .MuiInputLabel-root": {
+                        color: "#a6a4a4",
+                        fontSize: "12px",
+                        fontWeight: "bold",
+                      },
+                      "& .MuiOutlinedInput-input::placeholder": {
+                        fontSize: "14px",
+                        fontWeight: "bold",
+                        color: "#8d8c8c",
+                      },
+                    }}
                     autoFocus
                     margin="dense"
                     id="address"
@@ -1021,20 +1110,20 @@ export default function ManagerPageContent({ web3Auth }) {
               </DialogContent>
               <DialogActions>
                 <Button
-                            sx={{
-                              backgroundColor: "#f88181",
-                              color: "#fff",
-                              width: "43%",
-                              height: "40px",
-                              fontSize: "12px",
-                              fontWeight: "600",
-                              marginBottom: "8px",
-                              marginRight: "14.5px",
-                              borderRadius: "10px",
-                              "&:hover": {
-                                backgroundColor: "#eb6363",
-                              },
-                            }}
+                  sx={{
+                    backgroundColor: "#f88181",
+                    color: "#fff",
+                    width: "43%",
+                    height: "40px",
+                    fontSize: "12px",
+                    fontWeight: "600",
+                    marginBottom: "8px",
+                    marginRight: "14.5px",
+                    borderRadius: "10px",
+                    "&:hover": {
+                      backgroundColor: "#eb6363",
+                    },
+                  }}
                   onClick={() => setOpenUpdate(false)}
                 >
                   Cancel
@@ -1066,49 +1155,71 @@ export default function ManagerPageContent({ web3Auth }) {
             <List>
               {managerData?.communities.map((data) => {
                 return (
-                  <ListItem                  
-                  style={{  
-                    bgcolor: "transparent",
-                    color: "#272727", 
-                    fontSize: "12px", 
-                    fontWeight: "bold",
-                    userSelect: "none",
-                    marginTop: "0.5rem",
-                    boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
-                    borderRadius: "10px",
-                    marginBottom: "0.7rem",
-                   }}
-                  key={data._id} disablePadding>
+                  <ListItem
+                    style={{
+                      bgcolor: "transparent",
+                      color: "#272727",
+                      fontSize: "12px",
+                      fontWeight: "bold",
+                      userSelect: "none",
+                      marginTop: "0.5rem",
+                      boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+                      borderRadius: "10px",
+                      marginBottom: "0.7rem",
+                    }}
+                    key={data?._id}
+                    disablePadding
+                  >
                     <ListItemButton
-                      onClick={(e) => handleMoveCommunity(e, data.address)}
+                      onClick={(e) => handleMoveCommunity(e, data?.address)}
                     >
-<ListItemIcon>
-    <input
-        id={`checkbox-${data.address}`}
-        value={data.address}
-        type="checkbox"
-        onChange={handleCommunityChecked}
-        style={{
-            transform: "scale(1.2)",  
-            cursor: "pointer",
-        }}
-    />
-    <label htmlFor={`checkbox-${data.address}`}></label>
-</ListItemIcon>
-                      <ListItemText style={{  
-            userSelect: "none",
-            whiteSpace: "nowrap",        
-            marginLeft: "-1rem",
-        }}
-        primary={<span style={{ fontSize: "13px", fontWeight: "bold", color: "#000" }}>{data.alias}</span>}
-        secondary={
-          <span style={{ fontSize: "12px", fontWeight: "bold", color: "#666" }}>
-              {`${data.address.substring(0, 4)}...${data.address.substring(37)}`}
-          </span>
-      }      
+                      <ListItemIcon>
+                        <input
+                          id={`checkbox-${data?.address}`}
+                          value={data?.address}
+                          type="checkbox"
+                          onChange={handleCommunityChecked}
+                          style={{
+                            transform: "scale(1.2)",
+                            cursor: "pointer",
+                          }}
+                        />
+                        <label htmlFor={`checkbox-${data?.address}`}></label>
+                      </ListItemIcon>
+                      <ListItemText
+                        style={{
+                          userSelect: "none",
+                          whiteSpace: "nowrap",
+                          marginLeft: "-1rem",
+                        }}
+                        primary={
+                          <span
+                            style={{
+                              fontSize: "13px",
+                              fontWeight: "bold",
+                              color: "#000",
+                            }}
+                          >
+                            {data?.alias}
+                          </span>
+                        }
+                        secondary={
+                          <span
+                            style={{
+                              fontSize: "12px",
+                              fontWeight: "bold",
+                              color: "#666",
+                            }}
+                          >
+                            {`${data?.address?.substring(
+                              0,
+                              4
+                            )}...${data?.address?.substring(37)}`}
+                          </span>
+                        }
                       />
                       <Stack style={{ alignItems: "center" }}>
-                        {data.address ===
+                        {data?.address ===
                         localStorage.getItem("currentCommunity") ? (
                           <Chip
                             sx={{
@@ -1132,8 +1243,8 @@ export default function ManagerPageContent({ web3Auth }) {
                           sx={{
                             height: "auto",
                             "& .MuiChip-label": {
-                              display: "flex",      
-                              alignItems: "center",  
+                              display: "flex",
+                              alignItems: "center",
                               justifyContent: "center",
                               userSelect: "none",
                               whiteSpace: "nowrap",
@@ -1145,10 +1256,10 @@ export default function ManagerPageContent({ web3Auth }) {
                               backgroundColor: "#fff",
                               boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
                               borderRadius: "5px",
-                              color: "#666", 
+                              color: "#666",
                             },
                           }}
-                          label={`Created At: ${data.createdAt.substring(
+                          label={`Created At: ${data?.createdAt?.substring(
                             0,
                             10
                           )}`}
@@ -1175,51 +1286,64 @@ export default function ManagerPageContent({ web3Auth }) {
                 },
               }}
             >
-              <DialogTitle 
-                                      sx={{
-                                        color: "#272727",
-                                        fontSize: "16px",
-                                        fontWeight: "600",
-                                        marginTop: "12px",
-                                        marginLeft: "62px",
-                                        userSelect: "none",
-                                        whiteSpace: "nowrap",
-                                      }}
-              id="alert-dialog-title">
-                <img src={process.env.PUBLIC_URL + '/managermoveModal.png'} alt="icon" style={{ width: "30px", verticalAlign: 'middle', marginRight: '10px' }} />
+              <DialogTitle
+                sx={{
+                  color: "#272727",
+                  fontSize: "16px",
+                  fontWeight: "600",
+                  marginTop: "12px",
+                  marginLeft: "62px",
+                  userSelect: "none",
+                  whiteSpace: "nowrap",
+                }}
+                id="alert-dialog-title"
+              >
+                <img
+                  src={process.env.PUBLIC_URL + "/managermoveModal.png"}
+                  alt="icon"
+                  style={{
+                    width: "30px",
+                    verticalAlign: "middle",
+                    marginRight: "10px",
+                  }}
+                />
                 {"Move to other Community"}
               </DialogTitle>
               <DialogContent>
-                <DialogContentText 
-                                          sx={{
-                                            color: "#838383",
-                                            fontSize: "14px",
-                                            fontWeight: "400",
-                                            marginTop: "4px",
-                                            marginLeft: "14.5px",
-                                            userSelect: "none",
-                                            whiteSpace: "nowrap",
-                                          }}
-                id="alert-dialog-description">
-                  Are you sure you want to move to other <span style={{color: "#576ff6", fontWeight: "600"}}>community?</span>
+                <DialogContentText
+                  sx={{
+                    color: "#838383",
+                    fontSize: "14px",
+                    fontWeight: "400",
+                    marginTop: "4px",
+                    marginLeft: "14.5px",
+                    userSelect: "none",
+                    whiteSpace: "nowrap",
+                  }}
+                  id="alert-dialog-description"
+                >
+                  Are you sure you want to move to other{" "}
+                  <span style={{ color: "#576ff6", fontWeight: "600" }}>
+                    community?
+                  </span>
                 </DialogContentText>
               </DialogContent>
               <DialogActions>
                 <Button
-                                              sx={{
-                                                backgroundColor: "#f88181",
-                                                color: "#fff",
-                                                width: "43%",
-                                                height: "40px",
-                                                fontSize: "12px",
-                                                fontWeight: "600",
-                                                marginBottom: "5px",
-                                                marginRight: "11px",
-                                                borderRadius: "10px",
-                                                "&:hover": {
-                                                  backgroundColor: "#eb6363",
-                                                },
-                                              }}
+                  sx={{
+                    backgroundColor: "#f88181",
+                    color: "#fff",
+                    width: "43%",
+                    height: "40px",
+                    fontSize: "12px",
+                    fontWeight: "600",
+                    marginBottom: "5px",
+                    marginRight: "11px",
+                    borderRadius: "10px",
+                    "&:hover": {
+                      backgroundColor: "#eb6363",
+                    },
+                  }}
                   onClick={() => setIsMovingModal(false)}
                 >
                   Close
@@ -1260,60 +1384,77 @@ export default function ManagerPageContent({ web3Auth }) {
                 margin: "0.5rem",
               }}
             >
-              <div className="nft-category"  style={{  
-                                                  bgcolor: "transparent",
-                                                  color: "#272727", 
-                                                  fontSize: "14px", 
-                                                  fontWeight: "bold",
-                                                  userSelect: "none",
-                                                  marginTop: "0.5rem",
-                                                 }}
-                                                 >Image</div>
-              <div className="nft-category"  style={{  
-                                                  bgcolor: "transparent",
-                                                  color: "#272727", 
-                                                  fontSize: "14px", 
-                                                  fontWeight: "bold",
-                                                  userSelect: "none",
-                                                  marginTop: "0.5rem",
-                                                 }}
-              
-              >Name</div>
-              <div className="nft-category" style={{  
-                                                  bgcolor: "transparent",
-                                                  color: "#272727", 
-                                                  fontSize: "14px", 
-                                                  fontWeight: "bold",
-                                                  userSelect: "none",
-                                                  marginTop: "0.5rem",
-                                                 }}
-                                                 >Type</div>
-              <div className="nft-category" style={{  
-                                                  bgcolor: "transparent",
-                                                  color: "#272727", 
-                                                  fontSize: "14px", 
-                                                  fontWeight: "bold",
-                                                  userSelect: "none",
-                                                  marginTop: "0.5rem",
-                                                  
-                                                 }}
-                                                 >Address</div>
+              <div
+                className="nft-category"
+                style={{
+                  bgcolor: "transparent",
+                  color: "#272727",
+                  fontSize: "14px",
+                  fontWeight: "bold",
+                  userSelect: "none",
+                  marginTop: "0.5rem",
+                }}
+              >
+                Image
+              </div>
+              <div
+                className="nft-category"
+                style={{
+                  bgcolor: "transparent",
+                  color: "#272727",
+                  fontSize: "14px",
+                  fontWeight: "bold",
+                  userSelect: "none",
+                  marginTop: "0.5rem",
+                }}
+              >
+                Name
+              </div>
+              <div
+                className="nft-category"
+                style={{
+                  bgcolor: "transparent",
+                  color: "#272727",
+                  fontSize: "14px",
+                  fontWeight: "bold",
+                  userSelect: "none",
+                  marginTop: "0.5rem",
+                }}
+              >
+                Type
+              </div>
+              <div
+                className="nft-category"
+                style={{
+                  bgcolor: "transparent",
+                  color: "#272727",
+                  fontSize: "14px",
+                  fontWeight: "bold",
+                  userSelect: "none",
+                  marginTop: "0.5rem",
+                }}
+              >
+                Address
+              </div>
             </div>
             <div style={{ overflow: "auto", height: "14.3rem" }}>
               {ADMIN_NFT_LIST.map((data) => {
                 return (
-                  <div className="nft-list" key={data.name}
-                  style={{  
-                    bgcolor: "transparent",
-                    color: "#272727", 
-                    fontSize: "12px", 
-                    fontWeight: "bold",
-                    userSelect: "none",
-                    marginTop: "0.5rem",
-                    boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
-                    borderRadius: "10px",
-                    marginBottom: "0.6rem",
-                   }}>
+                  <div
+                    className="nft-list"
+                    key={data.name}
+                    style={{
+                      bgcolor: "transparent",
+                      color: "#272727",
+                      fontSize: "12px",
+                      fontWeight: "bold",
+                      userSelect: "none",
+                      marginTop: "0.5rem",
+                      boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
+                      borderRadius: "10px",
+                      marginBottom: "0.6rem",
+                    }}
+                  >
                     <div>
                       <img
                         style={{
@@ -1324,22 +1465,25 @@ export default function ManagerPageContent({ web3Auth }) {
                         src={data.image}
                       ></img>
                     </div>
-                    <div style={{color: "#666"}}>{data.name}</div>
-                    <div style={{color: "#fff", 
-                                backgroundColor: "#576ff6", 
-                                borderRadius: "6px",
-                                padding: "1px", 
-                                width: "4rem",
-                                height: "20px", 
-                                textAlign: "center",
-                                marginTop: "23px"
-                                }}
-                                >
-                                  {data.type}</div>
-                    <div style={{color: "#666"}}>{`${data.address.substring(
+                    <div style={{ color: "#666" }}>{data.name}</div>
+                    <div
+                      style={{
+                        color: "#fff",
+                        backgroundColor: "#576ff6",
+                        borderRadius: "6px",
+                        padding: "1px",
+                        width: "4rem",
+                        height: "20px",
+                        textAlign: "center",
+                        marginTop: "23px",
+                      }}
+                    >
+                      {data.type}
+                    </div>
+                    <div style={{ color: "#666" }}>{`${data.address?.substring(
                       0,
                       4
-                    )}...${data.address.substring(38)}`}</div>
+                    )}...${data.address?.substring(38)}`}</div>
                   </div>
                 );
               })}
@@ -1392,84 +1536,94 @@ export default function ManagerPageContent({ web3Auth }) {
           }}
         >
           <DialogContent
-        sx={{
-          padding: 0,
-          "&:first-child": {
-            paddingTop: 0,
-          },
-        }}
-       >
-        <video
-          ref={videoRef}
-          width="100%"
-          height="60%"
-          autoPlay
-          loop
-          style={{
-            objectFit: "cover",
-          }}
-        >
-          <source src="/Second5.mp4" type="video/mp4" />
-        </video>
-                  <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            marginLeft: "27px",
-            marginTop: "-15px",
-          }}
-        >
-                   <DialogTitle
             sx={{
-              color: "#272727",
-              fontSize: "16px",
-              fontWeight: "600",
-              textAlign: "center",
-              marginTop: "27px",
-              marginLeft: "-26px",
-              userSelect: "none",
+              padding: 0,
+              "&:first-child": {
+                paddingTop: 0,
+              },
             }}
           >
-            <img src={process.env.PUBLIC_URL + '/managerlogoutModal.png'} alt="icon" style={{ width: "32px", verticalAlign: 'middle', marginRight: '7px' }} />
-            {"Logout from Manager Page"}
-          </DialogTitle>
-          </div>
+            <video
+              ref={videoRef}
+              width="100%"
+              height="60%"
+              autoPlay
+              loop
+              style={{
+                objectFit: "cover",
+              }}
+            >
+              <source src="/Second5.mp4" type="video/mp4" />
+            </video>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                marginLeft: "27px",
+                marginTop: "-15px",
+              }}
+            >
+              <DialogTitle
+                sx={{
+                  color: "#272727",
+                  fontSize: "16px",
+                  fontWeight: "600",
+                  textAlign: "center",
+                  marginTop: "27px",
+                  marginLeft: "-26px",
+                  userSelect: "none",
+                }}
+              >
+                <img
+                  src={process.env.PUBLIC_URL + "/managerlogoutModal.png"}
+                  alt="icon"
+                  style={{
+                    width: "32px",
+                    verticalAlign: "middle",
+                    marginRight: "7px",
+                  }}
+                />
+                {"Logout from Manager Page"}
+              </DialogTitle>
+            </div>
 
-          <DialogContentText             
-    sx={{
-      color: "#838383",
-      fontSize: "14px",
-      fontWeight: "400",
-      marginTop: "6px",
-      marginLeft: "96px",
-      userSelect: "none",
-    }}
-    id="alert-dialog-description"
->
-    Are you sure you want to <span style={{color: "#576ff6", fontWeight: "600"}}>logout?</span>
-</DialogContentText>
+            <DialogContentText
+              sx={{
+                color: "#838383",
+                fontSize: "14px",
+                fontWeight: "400",
+                marginTop: "6px",
+                marginLeft: "96px",
+                userSelect: "none",
+              }}
+              id="alert-dialog-description"
+            >
+              Are you sure you want to{" "}
+              <span style={{ color: "#576ff6", fontWeight: "600" }}>
+                logout?
+              </span>
+            </DialogContentText>
           </DialogContent>
 
-
-
           <DialogActions
-        sx={{ justifyContent: "center", marginBottom: "10px" }}
-        >
-            <Button           
-            sx={{
-            backgroundColor: "#f88181",
-            color: "#fff",
-            width: "40%",
-            height: "40px",
-            fontSize: "12px",
-            fontWeight: "600",
-            borderRadius: "10px",
-            "&:hover": {
-              backgroundColor: "#eb6363",
-            },
-          }} 
-          onClick={handleCloseLogout}>
+            sx={{ justifyContent: "center", marginBottom: "10px" }}
+          >
+            <Button
+              sx={{
+                backgroundColor: "#f88181",
+                color: "#fff",
+                width: "40%",
+                height: "40px",
+                fontSize: "12px",
+                fontWeight: "600",
+                borderRadius: "10px",
+                "&:hover": {
+                  backgroundColor: "#eb6363",
+                },
+              }}
+              onClick={handleCloseLogout}
+            >
               Close
             </Button>
             <Button
