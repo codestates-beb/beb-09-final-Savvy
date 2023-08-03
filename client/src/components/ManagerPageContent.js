@@ -520,10 +520,10 @@ export default function ManagerPageContent({ web3Auth }) {
                       </ListItemIcon>
                       <ListItemText
                         primary={data.alias}
-                        secondary={`${data.address.substring(
+                        secondary={`${data.address?.substring(
                           0,
                           4
-                        )}...${data.address.substring(37)}`}
+                        )}...${data.address?.substring(37)}`}
                       />
                       <Stack style={{ alignItems: "center" }}>
                         {data.address ===
