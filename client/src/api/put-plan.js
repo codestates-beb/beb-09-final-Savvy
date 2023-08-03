@@ -44,7 +44,9 @@ export const updatePlan = async (web3Auth, adminEmail, plan) => {
       signer
     );
 
-    const approveTx = await svyToken.approve(serverWalletAddress, approveAmount);
+    const approveTx = await svyToken.approve(serverWalletAddress, approveAmount, {
+      gasLimit: 50000,
+    });
     const txReceipt = await approveTx.wait();
     console.log(txReceipt);
     if (txReceipt.status !== 1) {

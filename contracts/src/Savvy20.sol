@@ -15,10 +15,10 @@ contract MyToken is ERC20 {
         uint256 amount;
         if (keccak256(bytes(plan)) == keccak256(bytes("plus"))) {
             to = 0x16c348c6309460080e1614ffFE54cab666d0a93A; // receiving wallet address
-            amount = 10; // plus plan fee
+            amount = 10000000000000000000; // plus plan fee; 10 token
         } else if (keccak256(bytes(plan)) == keccak256(bytes("business"))) {
             to = 0x16c348c6309460080e1614ffFE54cab666d0a93A; // receiving wallet address
-            amount = 100; // business plan fee
+            amount = 100000000000000000000; // business plan fee; 100 token
         } else {
             revert("Invalid plan");
         }
