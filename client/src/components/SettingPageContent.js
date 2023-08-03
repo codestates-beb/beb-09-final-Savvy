@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import { setManagerData } from "../reducers/managerReducer";
 import {
   Button,
   Box,
@@ -15,6 +16,7 @@ import DoneOutlineIcon from "@mui/icons-material/DoneOutline";
 
 // api
 import { updatePlan } from "../api/put-plan";
+import { getManagerData } from "../api/get-manager-data";
 
 const PLAN_INFO = [
   {
@@ -41,6 +43,9 @@ const PLAN_INFO = [
 ];
 
 export default function SettingPageContent({ web3Auth }) {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const managerData = useSelector((state) => state.manager.managerData);
   const [sector, setSector] = useState(0);
   const [openPricing, setOpenPricing] = useState(false);
@@ -48,6 +53,31 @@ export default function SettingPageContent({ web3Auth }) {
   const [isLoading, setIsLoading] = useState(false);
 
   const currentPlan = managerData?.admin.plan;
+
+  useEffect(() => {
+    const init = async () => {
+      try {
+        const data = await getManagerData();
+        const { admin, communities, items } = data;
+        dispatch(
+          setManagerData({
+            admin: admin,
+            communities: communities,
+            items: items,
+          })
+        );
+      } catch (error) {
+        console.log(error);
+        alert("JWT expired. Please login again.");
+        localStorage.removeItem("token");
+        localStorage.removeItem("app_pub_key");
+        navigate("/authentication");
+        return;
+      }
+    };
+    init();
+    console.log(managerData);
+  }, [isLoading]);
 
   const handleOpenPricing = (e) => {
     setOpenPricing(true);

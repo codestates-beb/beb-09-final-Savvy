@@ -18,6 +18,6 @@ export const createCommunity = async (address, type, communityName) => {
     return response.data.CommunityData;
   } catch (e) {
     console.log(e);
-    return;
+    return e.response.status;
   }
 };
