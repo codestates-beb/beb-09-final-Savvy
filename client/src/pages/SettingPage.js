@@ -6,11 +6,11 @@ import SettingPageContent from "../components/SettingPageContent";
 import "../assets/SettingPage.css";
 import "../assets/Admin.css";
 
-export default function SettingPage() {
+export default function SettingPage({ web3Auth }) {
   return (
     <div className="dashboard">
       <SideNav />
-      <SettingPageContent />
+      <SettingPageContent web3Auth={web3Auth} />
     </div>
   );
 }
