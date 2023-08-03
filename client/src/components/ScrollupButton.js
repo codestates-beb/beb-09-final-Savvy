@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { Button, IconButton } from '@mui/material';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import React, { useState, useEffect } from "react";
+import { Button, IconButton } from "@mui/material";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 
 const ScrollUpButton = () => {
   const [showButton, setShowButton] = useState(false);
@@ -14,32 +14,32 @@ const ScrollUpButton = () => {
   };
 
   useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
     <IconButton
       onClick={scrollToTop}
       style={{
-        position: 'fixed',
-        bottom: '40px',
-        right: '40px',
-        display: showButton ? 'block' : 'none',
+        position: "fixed",
+        bottom: "40px",
+        right: "40px",
+        display: showButton ? "block" : "none",
         zIndex: 999,
-        backgroundColor: 'rgba(255, 255, 255, 0.1)',
+        backgroundColor: "rgba(255, 255, 255, 0.1)",
       }}
       color="primary"
       aria-label="scroll-up"
     >
-      <KeyboardArrowUpIcon style={{ color: 'white', width: '30px' }} />
+      <KeyboardArrowUpIcon style={{ color: "white", width: "30px" }} />
     </IconButton>
   );
 };

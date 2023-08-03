@@ -13,7 +13,7 @@ const StyledButton = styled(Button)({
   fontSize: "11px",
   fontWeight: "600",
   position: "absolute",
-  right: "0px", 
+  right: "-7px", 
   top: "190%",   
   transform: "translateY(-50%)",   
   userSelect: "none", 
