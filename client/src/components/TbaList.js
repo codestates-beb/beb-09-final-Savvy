@@ -33,7 +33,6 @@ const StyledListItemText = styled(ListItemText)({
 });
 
 const EllipsisListItemText = styled(StyledListItemText)({
-  overflow: "hidden",
   textOverflow: "ellipsis",
   whiteSpace: "pre-wrap",
   maxWidth: "100%",
@@ -43,7 +42,7 @@ const StyledBox = styled(Box)({
   width: "2500px",
   marginTop: "130px",
   marginLeft: "-75px",
-  marginRight: "36px",
+  marginRight: "35px",
 });
 
 const StyledListItem = styled(ListItem)({
@@ -305,12 +304,23 @@ function TbaList({ data = [] }) {
   });
 
   const isSortedBy = (column) => column === sortBy;
-  const getSortIcon = (column) => {
-    const iconStyle = {
+  const getSortIconStyle = (column) => {
+    const baseStyle = {
       color: "#666",
       position: "relative",
-      top: "18px",
     };
+
+    if (column === "owner") {
+      return { ...baseStyle, top: "22.3px" };
+    } else if (column === "level") {
+      return { ...baseStyle, top: "18px" };
+    }
+    return baseStyle;
+  };
+
+  const getSortIcon = (column) => {
+    const iconStyle = getSortIconStyle(column);
+
     if (!isSortedBy(column)) return <ArrowDropDownIcon style={iconStyle} />;
     return sortDirection === "asc" ? (
       <ArrowDropDownIcon style={iconStyle} />
@@ -320,14 +330,16 @@ function TbaList({ data = [] }) {
   };
 
   return (
-    <StyledBox onCopy={preventCopy} overflow="auto">
+    <StyledBox onCopy={preventCopy} /* overflow="auto" */>
       <TbaModal open={openTbaModal} handleClose={handleCloseTbaModal} />
       <TbaFilterButton onFilter={handleFilter} />
-      
+
       <SortContainer>
         <SortItemContainer>
           <SortHeader onClick={() => handleSort("owner")}>
-            <SortHeaderSpan>owner</SortHeaderSpan>
+            <SortHeaderSpan style={{ transform: "translateY(3.8px)" }}>
+              owner
+            </SortHeaderSpan>
             {getSortIcon("owner")}
           </SortHeader>
         </SortItemContainer>
@@ -361,7 +373,7 @@ function TbaList({ data = [] }) {
         <TbaGroupButton selectedItems={selectedItems} />
         <TbaAirdropButton />
       </SortContainer>
-      
+
       {sortedData.map((user) => (
         <StyledPaper elevation={2} key={user._id}>
           <List>
@@ -378,9 +390,13 @@ function TbaList({ data = [] }) {
               >
                 <ItemContainer>
                   <StyledListItemText
+                    className="truncate"
                     primary={
                       <BoldTypography sx={{ fontSize: "13px" }}>
-                        {`${user.owner.substring(0, 4)}...${user.owner.substring(37)}`}
+                        {`${user.owner.substring(
+                          0,
+                          4
+                        )}...${user.owner.substring(37)}`}
                       </BoldTypography>
                     }
                   />
@@ -392,8 +408,18 @@ function TbaList({ data = [] }) {
                         text={user.address}
                         onCopy={handleCopyAddress}
                       >
-                        <BoldTypography sx={{ fontSize: "13px" }}>
-                          {`${user.address.substring(0, 4)}...${user.address.substring(30)}`}
+                        <BoldTypography
+                          className="truncate"
+                          sx={{
+                            fontSize: "13px",
+                            whitespace: "nowrap",
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                            maxWidth: "100%",
+                            marginRight: "22px",
+                          }}
+                        >
+                          {user.address}
                         </BoldTypography>
                       </CopyToClipboard>
                     }
@@ -416,15 +442,15 @@ function TbaList({ data = [] }) {
                 </ItemContainer>
                 <ItemContainer>
                   <LevelCircle>
-                    <Typography 
-                      sx={{ 
+                    <Typography
+                      sx={{
                         fontSize: "12px",
                         fontWeight: "bold",
                         width: "100%",
                         textAlign: "center",
                         borderRadius: "5px",
                         border: getLevelColor(user.level),
-                        color: getLevelColor(user.level) 
+                        color: getLevelColor(user.level),
                       }}
                     >
                       Lv.{user.level}
@@ -453,6 +479,5 @@ function TbaList({ data = [] }) {
     </StyledBox>
   );
 }
-  
+
 export default TbaList;
-  
