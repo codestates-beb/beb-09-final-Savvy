@@ -111,13 +111,14 @@ function TbaModal({ open, handleClose, userId }) {
           component="h2"
           sx={{
             mt: -1,
-            fontSize: "19px",
+            fontSize: "18px",
             fontWeight: "600",
-            color: "#3b3b3b",
+            color: "#272727",
             marginTop: "-16px",
             position: "relative",
           }}
         >
+          <img src={process.env.PUBLIC_URL + '/tbadetail.png'} alt="icon" style={{ width: "27px", verticalAlign: 'middle', marginRight: '8px' }} />
           TBA Detail
           <span
             style={{
@@ -259,8 +260,7 @@ function TbaModal({ open, handleClose, userId }) {
               variant="body1"
               sx={{
                 fontSize: "13px",
-                fontWeight: "500",
-                fontFamily: "'tektur', sans-serif",
+                fontWeight: "600",
                 color: "#333",
                 marginLeft: "20px",
               }}
@@ -299,8 +299,7 @@ function TbaModal({ open, handleClose, userId }) {
             variant="body1"
             sx={{
               fontSize: "13px",
-              fontWeight: "500",
-              fontFamily: "'tektur', sans-serif",
+              fontWeight: "600",
               color: "#666",
               marginLeft: "19.5px",
               marginBottom: "5px",

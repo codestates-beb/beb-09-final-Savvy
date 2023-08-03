@@ -68,7 +68,7 @@ function CurrentTimeBox() {
       height={20}
       border={1}
       padding={2}
-      borderColor="white"
+      borderColor="#fff"
       style={{
         marginTop: "20px",
         marginRight: "32px",
@@ -84,16 +84,22 @@ function CurrentTimeBox() {
     >
       <Typography
         style={{
-          color: "#9c9c9c",
+          color: "#3276f0",
           fontSize: "12.5px",
           fontFamily: "'tektur', sans-serif",
           fontWeight: "800",
-          // marginLeft: "10px",
           textAlign: "center",
         }}
         as="div"
       >
-        <div>{currentCommunityData?.alias}</div>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <img 
+            src={`${process.env.PUBLIC_URL}/adminheaderImage.png`} 
+            alt="adminheader Icon" 
+            style={{ width: "20px", marginRight: "4px", marginLeft: "5px" }} 
+          />
+          {currentCommunityData?.alias}
+        </div>
         <div>{`${currentCommunityData?.address.substring(
           0,
           4
