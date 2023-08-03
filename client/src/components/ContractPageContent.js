@@ -3,11 +3,19 @@ import { Link, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { setContractData } from "../reducers/contractReducer";
 import "../assets/Admin.css";
-import { 
-  Box, Button, Dialog, DialogActions, DialogContent, 
-  DialogContentText, DialogTitle, TextField, MenuItem 
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  TextField,
+  MenuItem,
 } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import ContractEnrollModal from "./ContractEnrollModal";
 import { CONTRACTS } from "../assets/DUMMY_DATA";
 
 // API
@@ -15,18 +23,18 @@ import { createContract } from "../api/post-create-contract";
 import { getContract } from "../api/get-contract";
 import { deleteContract } from "../api/delete-contract";
 import { updateContract } from "../api/put-contract";
-import ContractEnrollModal from "./ContractEnrollModal"; 
 
 const columns = [
-  { field: "id", headerName: "ID", width: 90 },
-  { field: "name", headerName: "Name", width: 150 },
-  { field: "type", headerName: "Type", width: 150 },
-  { field: "address", headerName: "Address", width: 300 },
+  { field: "id", headerName: "ID", width: 105 },
+  { field: "name", headerName: "Name", width: 220 },
+  { field: "type", headerName: "Type", width: 220 },
+  { field: "address", headerName: "Address", width: 220 },
 ];
 
 export default function ContractPageContent() {
   const dispatch = useDispatch();
   const contractData = useSelector((state) => state.contract.contractData);
+  console.log(contractData);
   const [openEnroll, setOpenEnroll] = useState(false);
   const [openUpdate, setOpenUpdate] = useState(false);
   const [rowSelectionModel, setRowSelectionModel] = useState([]);
@@ -62,8 +70,6 @@ export default function ContractPageContent() {
     : [];
 
   const { address } = useParams();
-
-
 
   useEffect(() => {
     const initContract = async () => {
@@ -159,20 +165,13 @@ export default function ContractPageContent() {
     });
   };
 
-  const columns = [
-    { field: 'id', headerName: 'ID', width: 105 },
-    { field: 'firstName', headerName: 'Name', width: 220 },
-    { field: 'type', headerName: 'Type', width: 220 },
-    { field: 'address', headerName: 'Address', width: 220 },
-  ];  
-  
   const styles = {
     textWithBackground: {
-      display: 'inline-block', 
+      display: "inline-block",
       background: `url(${process.env.PUBLIC_URL}/AdminHeader.gif) center/cover no-repeat`,
-      color: 'transparent',
-      WebkitBackgroundClip: 'text', 
-      backgroundClip: 'text',
+      color: "transparent",
+      WebkitBackgroundClip: "text",
+      backgroundClip: "text",
       fontSize: "38px",
       fontWeight: "bold",
       marginLeft: "8px",
@@ -190,7 +189,7 @@ export default function ContractPageContent() {
       whiteSpace: "nowrap",
       fontFamily: "'tektur', sans-serif",
       userSelect: "none",
-    }
+    },
   };
 
   return (
@@ -201,20 +200,52 @@ export default function ContractPageContent() {
       <div style={styles.manageText}>Manage your CONTRACTS</div>
       <div style={{ display: "flex", justifyContent: "space-between" }}>
         <div>
-          {rowSelectionModel.length > 0 ? ( 
+          {rowSelectionModel.length > 0 ? (
             <div>
-              <Button onClick={handleDelete} size="small" sx={{ width: "6rem", color: "#fff", fontSize: "0.7rem", fontWeight: "600", marginTop: "0.2rem", marginLeft: "0.2rem", backgroundColor: "#f88181", borderRadius: "0.5rem", padding: "0.65rem 1rem", boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)", "&:hover": { backgroundColor: "#eb6363", cursor: "pointer", }, }}>
+              <Button
+                onClick={handleDelete}
+                size="small"
+                sx={{
+                  width: "6rem",
+                  color: "#fff",
+                  fontSize: "0.7rem",
+                  fontWeight: "600",
+                  marginTop: "0.2rem",
+                  marginLeft: "0.2rem",
+                  backgroundColor: "#f88181",
+                  borderRadius: "0.5rem",
+                  padding: "0.65rem 1rem",
+                  boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
+                  "&:hover": { backgroundColor: "#eb6363", cursor: "pointer" },
+                }}
+              >
                 Delete
               </Button>
-              <Button onClick={handleOpenUpdate} size="small" sx={{ width: "6rem", color: "#fff", fontSize: "0.7rem", fontWeight: "600", marginTop: "0.2rem", marginLeft: "0.8rem", backgroundColor: "#576ff6", borderRadius: "0.5rem", padding: "0.65rem 1rem", boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)", "&:hover": { backgroundColor: "#3351e2", cursor: "pointer", }, }}>
+              <Button
+                onClick={handleOpenUpdate}
+                size="small"
+                sx={{
+                  width: "6rem",
+                  color: "#fff",
+                  fontSize: "0.7rem",
+                  fontWeight: "600",
+                  marginTop: "0.2rem",
+                  marginLeft: "0.8rem",
+                  backgroundColor: "#576ff6",
+                  borderRadius: "0.5rem",
+                  padding: "0.65rem 1rem",
+                  boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
+                  "&:hover": { backgroundColor: "#3351e2", cursor: "pointer" },
+                }}
+              >
                 Update
               </Button>
             </div>
           ) : null}
 
           <ContractEnrollModal
-            open={openEnroll} 
-            handleClose={() => setOpenEnroll(false)} 
+            open={openEnroll}
+            handleClose={() => setOpenEnroll(false)}
             contractInput={contractInput}
             setContractInput={setContractInput}
             handleEnroll={handleEnroll}
@@ -233,8 +264,8 @@ export default function ContractPageContent() {
             boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
             backgroundColor: "#576ff6",
             "&:hover": {
-              backgroundColor: "#3351e2", 
-              cursor: "pointer", 
+              backgroundColor: "#3351e2",
+              cursor: "pointer",
             },
           }}
         >
@@ -244,8 +275,8 @@ export default function ContractPageContent() {
       <div>
         <Box
           sx={{
-            backgroundColor: '#fff',
-            border: 'none', 
+            backgroundColor: "#fff",
+            border: "none",
             height: "78vh",
             width: "100%",
             marginLeft: "0.2rem",
@@ -261,93 +292,104 @@ export default function ContractPageContent() {
             disableColumnMenu
             slots={{ toolbar: GridToolbar }}
             rowSelectionModel={rowSelectionModel}
-            localeText={{ 
-              toolbarDensityCompact: 'Small',
-              toolbarDensityStandard: 'Medium',
-              toolbarDensityComfortable: 'Large',
-              noRowsLabel: <div style={{ fontSize: "1rem", fontWeight: "bold", color: "#828282" }}>No rows</div>,
-       }}
-       onRowSelectionModelChange={(newRowSelectionModel) => {
-         handleRowSelectionModelChange(newRowSelectionModel);
-       }}
-       sx={{
-        "& .MuiDataGrid-root": {
-          border: "none",
-          backgroundColor: "#fff",
-        },
-        "& .MuiDataGrid-cell": {
-          borderBottom: "none",
-          color: "#6c6c6c",
-          fontSize: "0.8rem",
-          fontWeight: 'bold', 
-          backgroundColor: "#ebeefb",
-        },
-        "& .name-column--cell": {
-          color: "#fff",
-        },
-        "& .MuiDataGrid-columnHeaders": {
-          borderTop: "1px solid #e0e0e0",
-          borderBottom: "1px solid #e0e0e0",
-          backgroundColor: "#f5f5f5",
-          fontSize: "0.8rem",
-          color: "#828282",
-        },
-        "& .MuiDataGrid-columnHeaders, .MuiDataGrid-columnHeaders *": {
-          fontWeight: 'bold !important',
-        },    
-        "& .MuiDataGrid-virtualScroller": {
-          backgroundColor: "#fff",
-        },
-        "& .MuiDataGrid-footerContainer": {
-          backgroundColor: "#f5f5f5",
-          width: "100%",
-        },
-        "& .MuiDataGrid-footerContainer, .MuiDataGrid-footerContainer *": {
-          color: "#828282 !important",
-          fontSize: "0.8rem",
-          fontWeight: 'bold',
-        },  
-        "& .MuiCheckbox-root": {
-          color: '#828282',  
-          '&.Mui-checked': {
-            color: '#576ff6',  
-          }
-        },      
-        "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
-          color: `#828282`,
-          fontSize: '0.75rem',
-          fontWeight: 'bold',
-          textAlign: 'left',
-          marginLeft: '0.6rem',
-        },
-        "& .MuiDataGrid-row": {
-          marginBottom: "0.4rem",
-        },
-        "& .MuiDataGrid-columnSeparator": {
-          display: "none",
-        },
-        "& .MuiDataGrid-sortIcon": {
-          color: "#828282", 
-          transform: "scale(0.8)",
-        },
-        "& .MuiDataGrid-menuOpen": {
-          color: "#fff",
-        },
-        "& .MuiDataGrid-toolbarContainer": {
-          backgroundColor: "#fff",
-        },
-        "& .MuiDataGrid-overlay": {
-          backgroundColor: "#fff",
-        },
-        "& .MuiSelect-select": {
-          backgroundColor: "#fff",
-          borderRadius: "0.5rem",
-          boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
-        },        
-      }}
-    />
-    </Box>
-   </div>
-  </div>
- );
+            localeText={{
+              toolbarDensityCompact: "Small",
+              toolbarDensityStandard: "Medium",
+              toolbarDensityComfortable: "Large",
+              noRowsLabel: (
+                <div
+                  style={{
+                    fontSize: "1rem",
+                    fontWeight: "bold",
+                    color: "#828282",
+                  }}
+                >
+                  No rows
+                </div>
+              ),
+            }}
+            onRowSelectionModelChange={(newRowSelectionModel) => {
+              handleRowSelectionModelChange(newRowSelectionModel);
+            }}
+            sx={{
+              "& .MuiDataGrid-root": {
+                border: "none",
+                backgroundColor: "#fff",
+              },
+              "& .MuiDataGrid-cell": {
+                borderBottom: "none",
+                color: "#6c6c6c",
+                fontSize: "0.8rem",
+                fontWeight: "bold",
+                backgroundColor: "#ebeefb",
+              },
+              "& .name-column--cell": {
+                color: "#fff",
+              },
+              "& .MuiDataGrid-columnHeaders": {
+                borderTop: "1px solid #e0e0e0",
+                borderBottom: "1px solid #e0e0e0",
+                backgroundColor: "#f5f5f5",
+                fontSize: "0.8rem",
+                color: "#828282",
+              },
+              "& .MuiDataGrid-columnHeaders, .MuiDataGrid-columnHeaders *": {
+                fontWeight: "bold !important",
+              },
+              "& .MuiDataGrid-virtualScroller": {
+                backgroundColor: "#fff",
+              },
+              "& .MuiDataGrid-footerContainer": {
+                backgroundColor: "#f5f5f5",
+                width: "100%",
+              },
+              "& .MuiDataGrid-footerContainer, .MuiDataGrid-footerContainer *":
+                {
+                  color: "#828282 !important",
+                  fontSize: "0.8rem",
+                  fontWeight: "bold",
+                },
+              "& .MuiCheckbox-root": {
+                color: "#828282",
+                "&.Mui-checked": {
+                  color: "#576ff6",
+                },
+              },
+              "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
+                color: `#828282`,
+                fontSize: "0.75rem",
+                fontWeight: "bold",
+                textAlign: "left",
+                marginLeft: "0.6rem",
+              },
+              "& .MuiDataGrid-row": {
+                marginBottom: "0.4rem",
+              },
+              "& .MuiDataGrid-columnSeparator": {
+                display: "none",
+              },
+              "& .MuiDataGrid-sortIcon": {
+                color: "#828282",
+                transform: "scale(0.8)",
+              },
+              "& .MuiDataGrid-menuOpen": {
+                color: "#fff",
+              },
+              "& .MuiDataGrid-toolbarContainer": {
+                backgroundColor: "#fff",
+              },
+              "& .MuiDataGrid-overlay": {
+                backgroundColor: "#fff",
+              },
+              "& .MuiSelect-select": {
+                backgroundColor: "#fff",
+                borderRadius: "0.5rem",
+                boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
+              },
+            }}
+          />
+        </Box>
+      </div>
+    </div>
+  );
 }
