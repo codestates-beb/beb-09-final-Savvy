@@ -78,7 +78,10 @@ function App() {
               element={<ManagerPage web3Auth={web3Auth} />}
             />
           </Route>
-          <Route path="/setting" element={<SettingPage />} />
+          <Route
+            path="/setting"
+            element={<SettingPage web3Auth={web3Auth} />}
+          />
           <Route path="*" element={<ErrorPage />} />
         </Routes>
       </Router>

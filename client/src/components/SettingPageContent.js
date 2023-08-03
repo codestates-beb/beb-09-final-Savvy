@@ -1,9 +1,20 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { Button, Box, Tabs, Tab, LinearProgress, Dialog } from "@mui/material";
+import {
+  Button,
+  Box,
+  Tabs,
+  Tab,
+  LinearProgress,
+  Dialog,
+  CircularProgress,
+} from "@mui/material";
 
 import DoneOutlineIcon from "@mui/icons-material/DoneOutline";
+
+// api
+import { updatePlan } from "../api/put-plan";
 
 const PLAN_INFO = [
   {
@@ -29,11 +40,12 @@ const PLAN_INFO = [
   },
 ];
 
-export default function SettingPageContent() {
+export default function SettingPageContent({ web3Auth }) {
   const managerData = useSelector((state) => state.manager.managerData);
   const [sector, setSector] = useState(0);
   const [openPricing, setOpenPricing] = useState(false);
   const [pricingInfo, setPricingInfo] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
 
   const currentPlan = managerData?.admin.plan;
 
@@ -46,6 +58,19 @@ export default function SettingPageContent() {
   };
 
   const handlePayment = async () => {
+    setIsLoading(true);
+    const response = await updatePlan(
+      web3Auth,
+      managerData.admin.email,
+      PLAN_INFO[pricingInfo].title.toLowerCase()
+    );
+    if (response.error) {
+      alert(response.error);
+      return;
+    } else if (response) {
+      setIsLoading(false);
+    }
+    alert("Successfully updated plan");
     setOpenPricing(false);
   };
 
@@ -118,15 +143,22 @@ export default function SettingPageContent() {
                 </div>
                 <div>{PLAN_INFO[pricingInfo].price}</div>
               </div>
-              <div style={{ textAlign: "center", margin: "1rem 0" }}>
-                <Button
-                  variant="contained"
-                  style={{ width: "13.5rem" }}
-                  onClick={handlePayment}
-                >
-                  Confirm changes
-                </Button>
-              </div>
+              {isLoading ? (
+                <div style={{ textAlign: "center", margin: "2rem 0" }}>
+                  <CircularProgress />
+                </div>
+              ) : (
+                <div style={{ textAlign: "center", margin: "1rem 0" }}>
+                  <Button
+                    variant="contained"
+                    style={{ width: "13.5rem" }}
+                    onClick={handlePayment}
+                  >
+                    Confirm changes
+                  </Button>
+                </div>
+              )}
+
               <div
                 className="order-content-subtitle"
                 style={{ marginBottom: "0" }}
@@ -167,7 +199,7 @@ export default function SettingPageContent() {
                       <div className="pricing-card-btn">
                         <Button
                           variant={
-                            currentPlan === plan.price.toLowerCase()
+                            currentPlan === plan.title.toLowerCase()
                               ? "outlined"
                               : "contained"
                           }
@@ -175,9 +207,9 @@ export default function SettingPageContent() {
                           style={{ width: "13rem" }}
                           onClick={(e) => handleOpenPricing(e)}
                           value={plan.title.toLowerCase()}
-                          disabled={currentPlan === plan.price.toLowerCase()}
+                          disabled={currentPlan === plan.title.toLowerCase()}
                         >
-                          {currentPlan === plan.price.toLowerCase()
+                          {currentPlan === plan.title.toLowerCase()
                             ? "Current Plan"
                             : "Get Started"}
                         </Button>
