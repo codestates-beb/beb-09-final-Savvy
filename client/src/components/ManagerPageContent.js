@@ -99,7 +99,7 @@ export default function ManagerPageContent({ web3Auth }) {
     if (managerData) {
       setIsLoading(false);
     }
-    console.log(managerData);
+    // console.log(managerData);
   }, [isLoading]);
 
   const handleLogout = async () => {
