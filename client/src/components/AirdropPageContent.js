@@ -297,10 +297,10 @@ export default function AirdropPageContent({ web3Auth }) {
                 }}
               >
                 <img
-                  src={`${process.env.PUBLIC_URL}/AirdropPageImage.gif`}
+                  src={`${process.env.PUBLIC_URL}/AirdropPageimage.gif`}
                   alt="Dummy"
                   style={{
-                    marginTop: "35px",
+                    marginTop: "23px",
                     marginLeft: "2px",
                     width: "120px",
                     pointerEvents: "none",

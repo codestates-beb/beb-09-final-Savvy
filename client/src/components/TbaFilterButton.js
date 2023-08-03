@@ -2,7 +2,6 @@ import { useState } from "react";
 import {
   Button,
   Menu,
-  MenuItem,
   Typography,
   Box,
   FormControl,
@@ -16,31 +15,33 @@ import { DatePicker } from "@mui/x-date-pickers/";
 
 const durationsStyles = {
   typography: {
-    variant: "body1",
-    fontSize: "13px",
+    fontSize: "14px",
     fontWeight: "bold",
-    color: "#515151",
+    color: "#272727",
+    marginTop: "5px",
     marginRight: "-10px",
-    marginLeft: "5px",
+    marginLeft: "136px",
+    position: 'relative',
+    top: '2px',
   },
 };
 
 const numberOfItemsStyles = {
   typography: {
-    variant: "body1",
     flexGrow: 1,
-    fontSize: "13px",
-    fontWeight: "bold",
-    color: "#515151",
-    marginLeft: "5px",
+    fontSize: "14px",
+    fontWeight: "600",
+    color: "#272727",
+    marginLeft: "114.5px",
     marginBottom: "-5px",
+    position: 'relative',
+    top: '52px',
   },
 };
 
-const datePickerStyles = {
-  width: "8rem",
-  marginTop: "10px",
-  marginRight: "16px",
+const datePickerAndTextFieldStyles = {
+  width: "8.5rem",
+  marginRight: "15px",
   whiteSpace: "nowrap",
   backgroundColor: "#fff",
   boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
@@ -57,15 +58,22 @@ const datePickerStyles = {
     '&.Mui-focused fieldset': {
       borderColor: 'none',
       borderWidth: 0,
-    }
+    },
   },
   '& .MuiInputLabel-root': {
     color: '#a6a4a4',
     fontSize: '12px',
+    marginTop: '2px',
     fontWeight: 'bold',
   },
   '& .MuiMenuItem-root': {
     fontSize: '12px',
+  },
+  '& .MuiIconButton-root': {
+    marginLeft: '-15px',
+  },
+  '& .MuiIconButton-label': {
+    fontSize: '1rem',
   },
 };
 
@@ -74,6 +82,8 @@ function TbaFilterButton({ onFilter }) {
   const [value, setValue] = useState(dayjs());
   const [minItems, setMinItems] = useState("");
   const [maxItems, setMaxItems] = useState("");
+  const [startDate, setStartDate] = useState(dayjs());
+  const [endDate, setEndDate] = useState(dayjs());
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -92,40 +102,8 @@ function TbaFilterButton({ onFilter }) {
     setValue(dayjs());
     setMinItems("");
     setMaxItems("");
-  };
-
-  const initializeButtonStyles = {
-    width: "30%",
-    height: "35px",
-    position: "absolute",
-    bottom: "-68px",
-    right: "292px",
-    borderRadius: "6px",
-    backgroundColor: "#f88181",
-    color: "#fff",
-    fontSize: "12px",
-    fontWeight: "bold",
-    border: "none",
-    boxShadow: "2px 2px 5px rgba(0, 0, 0, 0.2)",
-    "&:hover": {
-      backgroundColor: "#eb6363",
-      border: "none",
-    },
-  };
-
-  const applyButtonStyles = {
-    width: "30%",
-    height: "35px",
-    position: "absolute",
-    bottom: "-68px",
-    right: "23px",
-    backgroundColor: "#576ff6",
-    borderRadius: "6px",
-    color: "#fff",
-    fontSize: "12px",
-    fontWeight: "bold",
-    border: "none",
-    boxShadow: "2px 2px 5px rgba(0, 0, 0, 0.2)",
+    setStartDate(dayjs());
+    setEndDate(dayjs());
   };
 
   return (
@@ -133,7 +111,7 @@ function TbaFilterButton({ onFilter }) {
       <Box
         sx={{
           width: "auto",
-          boxShadow: "2px 2px 5px rgba(0, 0, 0, 0.15)",
+          boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
           borderRadius: "10px",
           display: "inline-block",
         }}
@@ -161,6 +139,7 @@ function TbaFilterButton({ onFilter }) {
           </Typography>
         </Button>
       </Box>
+  
       <Menu
         anchorEl={anchorEl}
         open={Boolean(anchorEl)}
@@ -168,8 +147,10 @@ function TbaFilterButton({ onFilter }) {
         PaperProps={{
           elevation: 3,
           sx: {
-            borderRadius: 2,
-            width: "450px",
+            borderRadius: 5,
+            width: "335px",
+            height: "280px",
+            marginTop: "5px",
             minHeight: "220px",
             maxHeight: "300px",
             overflowY: "auto",
@@ -182,34 +163,66 @@ function TbaFilterButton({ onFilter }) {
       >
         <div>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <MenuItem onClick={(event) => event.stopPropagation()} sx={durationsStyles}>
+            <div sx={durationsStyles}>
               <Typography {...durationsStyles.typography}>Durations</Typography>
-              <div style={{ display: "flex", alignItems: "center", width: "18rem", height: "40px", marginLeft: "86px" }}>
-                <div style={{ display: "inline-block", marginRight: "8px" }}>
+              <div style={{
+                display: "flex",
+                alignItems: "center",
+                marginTop: "-10px",
+                marginLeft: "25px",
+                position: 'relative',
+                top: '20px',
+              }}>
+                <div style={{ display: "inline-block" }}>
                   <DatePicker
+                    value={startDate}
+                    onChange={setStartDate}
                     defaultValue={dayjs()}
+                    format="YYYY/MM/DD"
                     renderInput={(params) => <FormControl fullWidth variant="standard">{params.input}</FormControl>}
+                    sx={datePickerAndTextFieldStyles}
+                    inputProps={{ style: { fontSize: '12px' } }}
                   />
+                  <div style={{
+                    height: '1px',
+                    background: '#d2ced2',
+                    width: '189%',
+                    position: 'relative',
+                    top: '18px',
+                  }}></div>
                 </div>
-                <div style={datePickerStyles}>
+                <div>
                   <DatePicker
+                    value={endDate}
+                    onChange={setEndDate}
                     defaultValue={dayjs()}
+                    format="YYYY/MM/DD"
                     renderInput={(params) => <FormControl fullWidth variant="standard">{params.input}</FormControl>}
+                    sx={datePickerAndTextFieldStyles}
+                    inputProps={{ style: { fontSize: '12px' } }}
                   />
                 </div>
               </div>
-            </MenuItem>
+            </div>
           </LocalizationProvider>
-          <MenuItem onClick={(event) => event.stopPropagation()} sx={numberOfItemsStyles}>
+  
+          <div sx={numberOfItemsStyles}>
             <Typography {...numberOfItemsStyles.typography}>Number of Items</Typography>
-            <div style={{ display: "flex", alignItems: "center" }}>
+            <div style={{
+              display: "flex",
+              alignItems: "center",
+              marginLeft: "25px",
+              width: "400px",
+              position: 'relative',
+              top: '66.5px',
+            }}>
               <TextField
                 variant="outlined"
                 size="small"
                 label="Min"
                 value={minItems}
                 onChange={(e) => setMinItems(e.target.value)}
-                sx={datePickerStyles}
+                sx={datePickerAndTextFieldStyles}
               />
               <TextField
                 variant="outlined"
@@ -217,32 +230,67 @@ function TbaFilterButton({ onFilter }) {
                 label="Max"
                 value={maxItems}
                 onChange={(e) => setMaxItems(e.target.value)}
-                sx={datePickerStyles}
+                sx={datePickerAndTextFieldStyles}
               />
             </div>
-          </MenuItem>
+          </div>
         </div>
+  
         <div>
           <Button
             onClick={initializeFilters}
             size="small"
-            variant="outlined"
-            sx={initializeButtonStyles}
+            sx={{
+              backgroundColor: "#f88181",
+              color: "#fff",
+              "&:hover": {
+                backgroundColor: "#eb6363"
+              },
+              width: "136px",
+              height: "35px",
+              marginTop: "90px",
+              marginLeft: "23px",
+              fontSize: "12px",
+              fontWeight: "600",
+              borderRadius: "5px",
+              boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
+            }}
           >
             Initialize
           </Button>
+  
           <Button
-            onClick={() => handleFilter({ value, minItems, maxItems })}
-            size="small"
+            onClick={() => handleFilter({
+              startDate: startDate.format('YYYY-MM-DD'),
+              endDate: endDate.format('YYYY-MM-DD'),
+              minItems: minItems,
+              maxItems: maxItems
+            })}
             variant="contained"
-            sx={applyButtonStyles}
+            color="primary"
+            size="small"
+            sx={{
+              backgroundColor: "#576ff6",
+              color: "#fff",
+              "&:hover": {
+                backgroundColor: "#3351e2"
+              },
+              width: "136px",
+              height: "35px",
+              marginTop: "90px",
+              marginLeft: "18px",
+              fontSize: "12px",
+              fontWeight: "600",
+              borderRadius: "5px",
+              boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
+            }}
           >
             Apply
           </Button>
         </div>
       </Menu>
     </>
-  );
-}
-
-export default TbaFilterButton;
+   );
+  }
+  export default TbaFilterButton;
+  

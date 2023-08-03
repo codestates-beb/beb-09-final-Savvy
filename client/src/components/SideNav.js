@@ -62,23 +62,33 @@ const rectangleStyle = {
   borderRadius: "10px",
 };
 
-const iconStyles = {
-  width: "40px",
-  marginTop: "2px",
-};
-
 const dashboardIconStyles = {
-  width: "25px",
-  marginLeft: "4px",
+  width: "30px",
+  marginLeft: "3px",
 };
 
-const airdropIconStyles = {
-  width: "36px",
+const tbaiconStyles = {
+  width: "28px",
 };
 
 const contractsiconStyles = {
-  width: "40px",
+  width: "28px",
   marginLeft: "3px",
+};
+
+const airdropIconStyles = {
+  width: "32px",
+  marginRight: "2px",
+};
+
+const managericonStyles = {
+  width: "30px",
+  marginRight: "3.3px",
+};
+
+const settingiconStyles = {
+  width: "30px",
+  marginRight: "3.3px",
 };
 
 export default function SideNav() {
@@ -184,7 +194,7 @@ export default function SideNav() {
                   <img
                     src={process.env.PUBLIC_URL + "/TbaIcon.png"}
                     alt="Custom Icon"
-                    style={iconStyles}
+                    style={tbaiconStyles}
                   />
                 }
                 component={<Link to={`/tbalist/${addressCurrent}`} />}
@@ -247,7 +257,7 @@ export default function SideNav() {
                   <img
                     src={process.env.PUBLIC_URL + "/ManagerIcon.png"}
                     alt="Custom Icon"
-                    style={iconStyles}
+                    style={managericonStyles}
                   />
                 }
                 component={<Link to={`/manager/${addressCurrent}`} />}
@@ -266,9 +276,9 @@ export default function SideNav() {
                 onClick={() => setCollapsed((prev) => !prev)}
                 icon={
                   <img
-                    src={process.env.PUBLIC_URL + "/ManagerIcon.png"}
+                    src={process.env.PUBLIC_URL + "/settingIcon.png"}
                     alt="Custom Icon"
-                    style={iconStyles}
+                    style={settingiconStyles}
                   />
                 }
                 component={<Link to={`/setting`} />}
