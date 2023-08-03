@@ -145,10 +145,10 @@ const MainHeader = () => {
             src={process.env.PUBLIC_URL + "/logo.png"}
             alt="Logo"
             style={{
-              width: "110px",
+              width: "90px",
               height: "auto",
               marginTop: "25px",
-              marginLeft: "10px",
+              marginLeft: "5px",
               cursor: "pointer",
             }}
           />

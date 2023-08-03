@@ -166,6 +166,7 @@ export default function TbaGroupButton({ selectedItems }) {
         <DialogTitle
           style={{ fontSize: "14px", fontWeight: "bold", color: "#272727" }}
         >
+        <img src={process.env.PUBLIC_URL + '/createnewgroup.png'} alt="icon" style={{ width: "9%", verticalAlign: 'middle', marginRight: '7px' }} />
           Create New Group
         </DialogTitle>
         <div
