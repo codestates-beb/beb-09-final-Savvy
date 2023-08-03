@@ -40,7 +40,7 @@ module.exports = {
       async function callSubscription() {
         try {
           const tx = await savvy20Contract.subscription(admin.address, plan, {
-            gasLimit: 50000,
+            gasLimit: 1500000,
           });
           console.log(tx.hash);
           let receipt = await provider.getTransactionReceipt(tx.hash);
@@ -73,7 +73,7 @@ module.exports = {
       async function callSubscriptionWithTimeout() {
         try {
           const tx = await savvy20Contract.subscription(admin.address, plan, {
-            gasLimit: 50000,
+            gasLimit: 1500000,
           });
           console.log(tx.hash);
 
