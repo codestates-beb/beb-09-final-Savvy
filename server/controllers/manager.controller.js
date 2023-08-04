@@ -60,9 +60,9 @@ module.exports = {
         const admin = await Admin.findOne({ email: adminEmail });
         const adminCommunity = await Community.find({ admin_id: admin._id });
 
-        if (admin.plan === 'free' && adminCommunity.length > 0) {
+        if (admin.plan === 'basic' && adminCommunity.length > 0) {
           return res.status(400).json({
-            message: 'You can create only one community in free plan',
+            message: 'You can create only one community in basic plan',
           });
         } else if (admin.plan === 'plus' && adminCommunity.length >= 3) {
           return res.status(402).json({

@@ -21,8 +21,8 @@ app.use(
 );
 
 app.use('/', routes);
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
-//app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerFile, { explorer: true }));
+//app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerFile, { explorer: true }));
 
 const PORT = process.env.PORT || 8080;
 
