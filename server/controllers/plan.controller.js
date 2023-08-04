@@ -1,9 +1,9 @@
-const ethers = require('ethers');
+const ethers = require("ethers");
 
-const Admin = require('../models/admin.model');
-const savvy20Abi = require('../abi/Savvy20.json');
+const Admin = require("../models/admin.model");
+const savvy20Abi = require("../abi/Savvy20.json");
 
-require('dotenv').config();
+require("dotenv").config();
 
 // 구독 서비스
 const provider = new ethers.providers.JsonRpcProvider(process.env.INFURA_URL);
@@ -16,9 +16,15 @@ module.exports = {
       const admin = await Admin.findOne({ email: adminEmail });
 
       if (!admin) {
-        return res.status(400).json({ error: 'No admin found' });
+        return res.status(400).json({ error: "No admin found" });
       } else if (admin.plan === plan) {
-        return res.status(402).json({ error: 'Same plan' });
+        return res.status(402).json({ error: "Same plan" });
+      } else if (plan === "basic") {
+        await Admin.updateOne({ email: adminEmail }, { plan: plan });
+
+        return res.status(200).json({
+          message: "Successfully updated plan",
+        });
       }
 
       const savvy20Address = process.env.ERC20_CONTRACT_ADDRESS;
@@ -55,11 +61,11 @@ module.exports = {
             await Admin.updateOne({ email: adminEmail }, { plan: plan });
 
             res.status(200).json({
-              message: 'Successfully updated plan',
+              message: "Successfully updated plan",
             });
           } else {
             res.status(400).json({
-              message: 'Failed to update plan',
+              message: "Failed to update plan",
             });
           }
         } catch (error) {
@@ -86,9 +92,9 @@ module.exports = {
           }
 
           if (receipt.status === 1) {
-            console.log('Successfully transferred token');
+            console.log("Successfully transferred token");
           } else {
-            console.log('Failed to transfer token');
+            console.log("Failed to transfer token");
           }
         } catch (error) {
           console.log(error);
@@ -105,7 +111,7 @@ module.exports = {
     } catch (error) {
       console.log(error);
       res.status(500).json({
-        error: 'Internal server error',
+        error: "Internal server error",
       });
     }
   },

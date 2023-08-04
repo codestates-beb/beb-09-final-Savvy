@@ -9,7 +9,10 @@ import AccountBalanceWalletOutlinedIcon from "@mui/icons-material/AccountBalance
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import TbaModalExpBar from "./TbaModalExpBar";
 
-function TbaModal({ open, handleClose, userId }) {
+// api
+import { getTbaById } from "../api/get-tba";
+
+function TbaModal({ open, handleClose, userId, tbaId }) {
   // 더미 데이터
   const [userData, setUserData] = useState({
     name: "Adriene Watson",
@@ -18,21 +21,22 @@ function TbaModal({ open, handleClose, userId }) {
     text1: "Pixel Dummy Data 1",
     text2: "Pixel Dummy Data 2",
   });
+  const [tbaItemData, setTbaItemData] = useState([]);
+  const [tbaData, setTbaData] = useState(null);
 
   useEffect(() => {
     if (open) {
-      // Modal이 열릴 때만 API 호출
-      axios
-        .get(`YOUR_API_ENDPOINT/${userId}`)
-        .then((response) => {
-          const { name, address, image, text1, text2 } = response.data;
-          setUserData({ name, address, image, text1, text2 });
-        })
-        .catch((error) => {
-          console.error("Error fetching user data", error);
-        });
+      const fetchTba = async () => {
+        const response = await getTbaById(tbaId);
+        // console.log(response);
+        if (response) {
+          setTbaItemData(response.items);
+          setTbaData(response.TBA);
+        }
+      };
+      fetchTba();
     }
-  }, [open, userId]);
+  }, [tbaId]);
 
   const truncateText = (text) => {
     const maxLength = 16;
@@ -44,8 +48,8 @@ function TbaModal({ open, handleClose, userId }) {
 
   const truncateAddress = (address) => {
     const maxLength = 42;
-    if (address.length > maxLength) {
-      return address.slice(0, maxLength) + "...";
+    if (address?.length > maxLength) {
+      return address?.slice(0, maxLength) + "...";
     }
     return address;
   };
@@ -196,11 +200,10 @@ function TbaModal({ open, handleClose, userId }) {
             maxHeight: "160px",
           }}
         >
-          {Array(3)
-            .fill(null)
-            .map((_, index) => (
+          {tbaItemData &&
+            tbaItemData.map((item) => (
               <div
-                key={index}
+                key={item._id}
                 className="nftsmallbox"
                 style={{
                   width: "200px",
@@ -239,7 +242,7 @@ function TbaModal({ open, handleClose, userId }) {
                     left: "0",
                   }}
                 >
-                  {truncateText(userData.text1, 20)}
+                  {truncateText(item?.address, 20)}
                 </span>
 
                 <span
@@ -250,7 +253,7 @@ function TbaModal({ open, handleClose, userId }) {
                     marginLeft: "53px",
                   }}
                 >
-                  {truncateText(userData.text2, 20)}
+                  {truncateText(item?.tokenId, 20)}
                 </span>
               </div>
             ))}
@@ -298,7 +301,7 @@ function TbaModal({ open, handleClose, userId }) {
                 marginLeft: "20px",
               }}
             >
-              {userData.name}
+              {tbaData?.owner}
             </Typography>
           </div>
         </div>
@@ -354,7 +357,7 @@ function TbaModal({ open, handleClose, userId }) {
               transform: "translateY(25px)",
             }}
           >
-            {truncateAddress(userData.address)}
+            {truncateAddress(tbaData?.address)}
           </Typography>
         </div>
 
