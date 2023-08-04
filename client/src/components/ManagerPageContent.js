@@ -599,7 +599,7 @@ export default function ManagerPageContent({ web3Auth }) {
                         borderRadius: "10px",
                       }}
                     >
-                      {data.tokenSymbol}
+                      {data.tokenSymbol?.substring(0, 6)}
                     </li>
                   );
                 })}
@@ -670,7 +670,7 @@ export default function ManagerPageContent({ web3Auth }) {
                         borderRadius: "10px",
                       }}
                     >
-                      {data.tokenAmount?.substring(0, 6)}
+                      {data.tokenAmount?.substring(0, 6) || "0"}
                     </li>
                   );
                 })}
