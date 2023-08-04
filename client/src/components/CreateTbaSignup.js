@@ -133,7 +133,8 @@ export default function Login() {
           fontSize: "45px",
           my: 2,
           position: "relative",
-          marginLeft: "80px",
+          top: "10px",
+          marginLeft: "81px",
         }}
       >
         <img

@@ -135,6 +135,33 @@ const COMMUNITY_LIST = [
   },
 ];
 
+const DASHBOARD_NFT_LIST = [
+  {
+    image: "/Dashboarddummy1.png",
+    name: "Pixel1",
+    price: "$123",
+    itemno: "#8754",
+  },
+  {
+    image: "/Dashboarddummy2.png",
+    name: "Pixel2",
+    price: "$211.5",
+    itemno: "#8755",
+  },
+  {
+    image: "/Dashboarddummy3.png",
+    name: "Pixel3",
+    price: "$939",
+    itemno: "#8756",
+  },
+  {
+    image: "/Dashboarddummy4.png",
+    name: "Pixel4",
+    price: "$587.2",
+    itemno: "#8757",
+  },
+];
+
 const ADMIN_TOKEN_LIST = [
   {
     token: "ETH",
@@ -235,6 +262,7 @@ export {
   TBA_GROUP,
   CONTRACTS,
   ADMIN_NFT_LIST,
+  DASHBOARD_NFT_LIST,
   COMMUNITY_LIST,
   ADMIN_TOKEN_LIST,
   ADMIN_INFO,
