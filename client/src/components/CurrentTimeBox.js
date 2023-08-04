@@ -71,7 +71,7 @@ function CurrentTimeBox() {
       borderColor="#fff"
       style={{
         marginTop: "20px",
-        marginRight: "32px",
+        marginRight: "30px",
         userSelect: "none",
         position: "absolute",
         right: 0,
