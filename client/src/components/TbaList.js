@@ -224,6 +224,7 @@ function TbaList({ data = [] }) {
   const [selectedItems, setSelectedItems] = useState([]);
   const [openTbaModal, setOpenTbaModal] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
+  const [tbaId, setTbaId] = useState("");
 
   useEffect(() => {
     document.addEventListener("copy", preventCopy);
@@ -244,8 +245,9 @@ function TbaList({ data = [] }) {
     initTbaData();
   }, []);
 
-  const handleOpenTbaModal = (e) => {
+  const handleOpenTbaModal = (e, userId) => {
     if (e.target.tagName === "INPUT" || e.target.tagName === "P") return;
+    setTbaId(userId);
     setOpenTbaModal(true);
   };
 
@@ -331,7 +333,11 @@ function TbaList({ data = [] }) {
 
   return (
     <StyledBox onCopy={preventCopy} /* overflow="auto" */>
-      <TbaModal open={openTbaModal} handleClose={handleCloseTbaModal} />
+      <TbaModal
+        open={openTbaModal}
+        handleClose={handleCloseTbaModal}
+        tbaId={tbaId}
+      />
       <TbaFilterButton onFilter={handleFilter} />
 
       <SortContainer>
@@ -377,7 +383,7 @@ function TbaList({ data = [] }) {
       {sortedData.map((user) => (
         <StyledPaper elevation={2} key={user._id}>
           <List>
-            <StyledListItem onClick={(e) => handleOpenTbaModal(e)}>
+            <StyledListItem onClick={(e) => handleOpenTbaModal(e, user._id)}>
               <ListItemAvatar>
                 <Avatar src={user.tokenURI} />
               </ListItemAvatar>

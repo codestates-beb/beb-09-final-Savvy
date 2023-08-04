@@ -575,10 +575,21 @@ export default function ManagerPageContent({ web3Auth }) {
                   borderRadius: "5px",
                 }}
               >
-                {ADMIN_TOKEN_LIST.map((data) => {
+                <li
+                  style={{
+                    marginBottom: "0.5rem",
+                    marginTop: "0.8rem",
+                    width: "100px",
+                    boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
+                    borderRadius: "10px",
+                  }}
+                >
+                  {`ETH`}
+                </li>
+                {managerData?.items?.tokens?.map((data) => {
                   return (
                     <li
-                      key={data.token}
+                      key={data.tokenName}
                       style={{
                         marginBottom: "0.5rem",
                         marginTop: "0.8rem",
@@ -587,7 +598,7 @@ export default function ManagerPageContent({ web3Auth }) {
                         borderRadius: "10px",
                       }}
                     >
-                      {data.token}
+                      {data.tokenSymbol}
                     </li>
                   );
                 })}
@@ -635,10 +646,21 @@ export default function ManagerPageContent({ web3Auth }) {
                   userSelect: "none",
                 }}
               >
-                {ADMIN_TOKEN_LIST.map((data) => {
+                <li
+                  style={{
+                    marginBottom: "0.5rem",
+                    marginTop: "0.8rem",
+                    width: "100px",
+                    boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
+                    borderRadius: "10px",
+                  }}
+                >
+                  {managerData?.admin?.ethBalance?.substring(0, 6)}
+                </li>
+                {managerData?.items?.tokens?.map((data) => {
                   return (
                     <li
-                      key={data.token}
+                      key={data.tokenName}
                       style={{
                         marginBottom: "0.5rem",
                         marginTop: "0.8rem",
@@ -647,7 +669,7 @@ export default function ManagerPageContent({ web3Auth }) {
                         borderRadius: "10px",
                       }}
                     >
-                      {data.amount}
+                      {data.tokenAmount?.substring(0, 6)}
                     </li>
                   );
                 })}
@@ -1395,7 +1417,7 @@ export default function ManagerPageContent({ web3Auth }) {
                   marginTop: "0.5rem",
                 }}
               >
-                Image
+                Collection
               </div>
               <div
                 className="nft-category"
@@ -1408,7 +1430,7 @@ export default function ManagerPageContent({ web3Auth }) {
                   marginTop: "0.5rem",
                 }}
               >
-                Name
+                ID
               </div>
               <div
                 className="nft-category"
@@ -1438,11 +1460,11 @@ export default function ManagerPageContent({ web3Auth }) {
               </div>
             </div>
             <div style={{ overflow: "auto", height: "14.3rem" }}>
-              {ADMIN_NFT_LIST.map((data) => {
+              {managerData?.items?.nfts?.map((data) => {
                 return (
                   <div
                     className="nft-list"
-                    key={data.name}
+                    key={data.tokenURI}
                     style={{
                       bgcolor: "transparent",
                       color: "#272727",
@@ -1455,17 +1477,18 @@ export default function ManagerPageContent({ web3Auth }) {
                       marginBottom: "0.6rem",
                     }}
                   >
-                    <div>
-                      <img
+                    <div style={{ color: "#666" }}>
+                      {/* <img
                         style={{
                           width: "3rem",
                           height: "3rem",
                           borderRadius: "0.5rem",
                         }}
-                        src={data.image}
-                      ></img>
+                        src={data.tokenURI}
+                      ></img> */}
+                      {data.name}
                     </div>
-                    <div style={{ color: "#666" }}>{data.name}</div>
+                    <div style={{ color: "#666" }}>{data.tokenId}</div>
                     <div
                       style={{
                         color: "#fff",
@@ -1475,7 +1498,7 @@ export default function ManagerPageContent({ web3Auth }) {
                         width: "4rem",
                         height: "20px",
                         textAlign: "center",
-                        marginTop: "23px",
+                        margin: "23px 0",
                       }}
                     >
                       {data.type}
