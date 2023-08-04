@@ -1,7 +1,8 @@
-const mongoose = require('mongoose');
+const jose = require('jose');
 
 const Contract = require('../models/contract.model');
 const Community = require('../models/community.model');
+const Admin = require('../models/admin.model');
 
 require('dotenv').config();
 
@@ -89,8 +90,24 @@ module.exports = {
     }
   },
   getContract: async (req, res) => {
+    const idToken = req.headers.authorization?.split(' ')[1];
+    const jwks = jose.createRemoteJWKSet(new URL('https://api.openlogin.com/jwks'));
+
     try {
-      const contracts = await Contract.find({});
+      const jwtDecoded = await jose.jwtVerify(idToken, jwks, {
+        algorithms: ['ES256'],
+      });
+
+      const adminEmail = jwtDecoded.payload.email;
+      const admins = await Admin.findOne({ email: adminEmail });
+
+      const community = await Community.find({ admin_id: admins._id });
+      //console.log(community);
+      const contracts = [];
+      for (let i = 0; i < community.length; i++) {
+        const contract = await Contract.find({ community_id: community[i]._id });
+        contracts.push(...contract);
+      }
       //console.log(contracts);
 
       res.status(200).json({
@@ -99,9 +116,7 @@ module.exports = {
       });
     } catch (error) {
       console.log(error);
-      res.status(500).json({
-        error: 'Internal Server Error',
-      });
+      return res.status(500).json({ error: 'Internal Server Error' });
     }
   },
   getContractByAddress: async (req, res) => {

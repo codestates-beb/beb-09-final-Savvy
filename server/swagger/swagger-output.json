@@ -249,6 +249,9 @@
               "schema": {
                 "type": "object",
                 "properties": {
+                  "communityAddress": {
+                    "example": "any"
+                  },
                   "groupName": {
                     "example": "any"
                   },
@@ -298,12 +301,25 @@
         }
       }
     },
-    "/tbaAdmin/group/allGroups": {
+    "/tbaAdmin/group/allGroups/{communityAddress}": {
       "get": {
         "description": "",
+        "parameters": [
+          {
+            "name": "communityAddress",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
           },
           "404": {
             "description": "Not Found"
@@ -409,6 +425,15 @@
     "/contract/": {
       "get": {
         "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -530,6 +555,12 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "402": {
+            "description": "Payment Required"
           },
           "404": {
             "description": "Not Found"
@@ -661,6 +692,42 @@
           },
           "500": {
             "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/plan/": {
+      "put": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "402": {
+            "description": "Payment Required"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "adminEmail": {
+                    "example": "any"
+                  },
+                  "plan": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
           }
         }
       }
