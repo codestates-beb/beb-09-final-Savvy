@@ -1,6 +1,9 @@
 import { ethers } from "ethers";
 import { TorusWalletConnectorPlugin } from "@web3auth/torus-wallet-connector-plugin";
 
+require("dotenv").config();
+const apiUrl = process.env.REACT_APP_API_ENDPOINT;
+
 // 1. 관리자가 에어드랍하려는 컨트랙트 approve 받기
 // 2. 에어드랍 컨트랙트 실행
 // 3. 결과 db에 저장

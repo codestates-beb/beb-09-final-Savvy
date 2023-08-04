@@ -1,5 +1,8 @@
 import axios from "axios";
 
+require("dotenv").config();
+const apiUrl = process.env.REACT_APP_API_ENDPOINT;
+
 export const postLogin = async (
   address,
   balance,
@@ -12,7 +15,7 @@ export const postLogin = async (
   try {
     const response = await axios({
       method: "post",
-      url: "http://localhost:8080/admin/login",
+      url: `${apiUrl}/admin/login`,
       data: {
         address,
         balance,

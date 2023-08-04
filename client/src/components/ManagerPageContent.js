@@ -124,6 +124,7 @@ const styles = {
 
 export default function ManagerPageContent({ web3Auth }) {
   const managerData = useSelector((state) => state.manager.managerData);
+  console.log(managerData);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const videoRef = useRef(null);

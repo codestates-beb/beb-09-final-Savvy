@@ -216,7 +216,7 @@ function TbaList({ data = [] }) {
   const tbaData = useSelector((state) => state.tba.tbaData);
   let tbaDataDup = tbaData ? [...tbaData] : [];
 
-  console.log(tbaData);
+  // console.log(tbaData);
   const [filterOption, setFilterOption] = useState(null);
   const [sortBy, setSortBy] = useState("owner");
   const [sortDirection, setSortDirection] = useState("asc");
@@ -293,7 +293,7 @@ function TbaList({ data = [] }) {
     ? tbaDataDup.filter((user) => user[sortBy] === filterOption)
     : tbaDataDup;
 
-  console.log(filteredData);
+  // console.log(filteredData);
 
   const sortedData = filteredData.sort((a, b) => {
     const aValue = String(a[sortBy]);
@@ -399,10 +399,10 @@ function TbaList({ data = [] }) {
                     className="truncate"
                     primary={
                       <BoldTypography sx={{ fontSize: "13px" }}>
-                        {`${user.owner.substring(
+                        {`${user.owner?.substring(
                           0,
                           4
-                        )}...${user.owner.substring(37)}`}
+                        )}...${user.owner?.substring(37)}`}
                       </BoldTypography>
                     }
                   />
