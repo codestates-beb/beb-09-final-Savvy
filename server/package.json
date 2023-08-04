@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node app.js",
     "start:dev": "nodemon --ignore swagger/ app.js",
+    "start:client": "nodemon client.js",
     "start:aws": "pm2 start app.js",
     "start:daemon": "pm2 start daemon.js --watch",
     "start:swagger": "node ./swagger/swagger.js",
