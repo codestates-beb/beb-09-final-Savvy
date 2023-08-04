@@ -124,6 +124,7 @@ const styles = {
 
 export default function ManagerPageContent({ web3Auth }) {
   const managerData = useSelector((state) => state.manager.managerData);
+  console.log(managerData);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const videoRef = useRef(null);
@@ -598,7 +599,7 @@ export default function ManagerPageContent({ web3Auth }) {
                         borderRadius: "10px",
                       }}
                     >
-                      {data.tokenSymbol}
+                      {data.tokenSymbol?.substring(0, 6)}
                     </li>
                   );
                 })}
@@ -669,7 +670,7 @@ export default function ManagerPageContent({ web3Auth }) {
                         borderRadius: "10px",
                       }}
                     >
-                      {data.tokenAmount?.substring(0, 6)}
+                      {data.tokenAmount?.substring(0, 6) || "0"}
                     </li>
                   );
                 })}

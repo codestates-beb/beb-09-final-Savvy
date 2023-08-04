@@ -1,34 +1,37 @@
 /* global BigInt */
-import axios from 'axios';
-import { ethers } from 'ethers';
+import axios from "axios";
+import { ethers } from "ethers";
+
+require("dotenv").config();
+const apiUrl = process.env.REACT_APP_API_ENDPOINT;
 
 // Savvy Token address
-const svyTokenAddress = '0x2F3dB557bFb47b763a4F60814030Df1438135ebe';
+const svyTokenAddress = "0x2F3dB557bFb47b763a4F60814030Df1438135ebe";
 // Server Wallet address
-const serverWalletAddress = '0x16c348c6309460080e1614ffFE54cab666d0a93A';
+const serverWalletAddress = "0x16c348c6309460080e1614ffFE54cab666d0a93A";
 
 const SUBCRIBE_PERIOD = 12;
 
 export const updatePlan = async (web3Auth, adminEmail, plan) => {
   let approveAmount = BigInt(10 ** 18);
 
-  if (plan === 'basic') {
+  if (plan === "basic") {
     // send approve response to server
     const response = await axios({
-      method: 'put',
-      url: 'http://localhost:8080/plan',
+      method: "put",
+      url: `${apiUrl}/plan`,
       data: {
         adminEmail,
         plan,
       },
       headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
     return response.data;
-  } else if (plan === 'plus') {
+  } else if (plan === "plus") {
     approveAmount = BigInt(10 * SUBCRIBE_PERIOD * 10 ** 18);
-  } else if (plan === 'business') {
+  } else if (plan === "business") {
     approveAmount = BigInt(100 * SUBCRIBE_PERIOD * 10 ** 18);
   }
 
@@ -40,13 +43,19 @@ export const updatePlan = async (web3Auth, adminEmail, plan) => {
     const signer = provider.getSigner();
     const svyToken = new ethers.Contract(
       svyTokenAddress,
-      ['function approve(address spender, uint256 amount) public returns (bool)'],
+      [
+        "function approve(address spender, uint256 amount) public returns (bool)",
+      ],
       signer
     );
 
-    const approveTx = await svyToken.approve(serverWalletAddress, approveAmount, {
-      gasLimit: 50000,
-    });
+    const approveTx = await svyToken.approve(
+      serverWalletAddress,
+      approveAmount,
+      {
+        gasLimit: 50000,
+      }
+    );
     const txReceipt = await approveTx.wait();
     console.log(txReceipt);
     if (txReceipt.status !== 1) {
@@ -54,14 +63,14 @@ export const updatePlan = async (web3Auth, adminEmail, plan) => {
     } else {
       // send approve response to server
       const response = await axios({
-        method: 'put',
-        url: 'http://localhost:8080/plan',
+        method: "put",
+        url: `${apiUrl}/plan`,
         data: {
           adminEmail,
           plan,
         },
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
       return response.data;

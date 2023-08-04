@@ -6,6 +6,8 @@ import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import detectEthereumProvider from "@metamask/detect-provider";
 
+require("dotenv").config();
+
 const MainHeader = () => {
   const initialState = { accounts: [], chainId: "", ethBalance: "" };
   const [wallet, setWallet] = useState(initialState);
@@ -210,7 +212,7 @@ const MainHeader = () => {
             </Button>
           </Grid>
           <Grid item>
-            <a href="http://localhost:3000/authentication">
+            <a href={`${process.env.REACT_APP_ENDPOINT}/authentication`}>
               <Button
                 variant="contained"
                 color="primary"

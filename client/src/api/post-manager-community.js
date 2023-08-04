@@ -1,10 +1,13 @@
 import axios from "axios";
 
+require("dotenv").config();
+const apiUrl = process.env.REACT_APP_API_ENDPOINT;
+
 export const createCommunity = async (address, type, communityName) => {
   try {
     const response = await axios({
       method: "post",
-      url: "http://localhost:8080/manager/community/create",
+      url: `${apiUrl}/manager/community/create`,
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
