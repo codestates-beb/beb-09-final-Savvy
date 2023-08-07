@@ -11,7 +11,7 @@ module.exports = {
 
       //const tx = await provider.getTransaction(txHash);
       const receipt = await provider.waitForTransaction(txHash);
-      console.log(receipt);
+      //console.log(receipt);
 
       if (receipt && receipt.status == 1) {
         res.status(200).json({
@@ -19,7 +19,7 @@ module.exports = {
         });
       } else {
         res.status(400).json({
-          message: 'Failed to create TBA',
+          error: 'Failed to create TBA',
         });
       }
     } catch (error) {
