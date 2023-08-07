@@ -41,9 +41,12 @@ module.exports = {
         const response = await pinata.pinJSONToIPFS(JSON.parse(metaData(0)), {
           pinataMetadata: { name: eventName },
         });
-        return res
-          .status(200)
-          .json({ message: "Upload to IPFS success", hash: response.IpfsHash });
+        return res.status(200).json({
+          message: "Upload to IPFS success",
+          hash: response.IpfsHash,
+          numberOfTickets: numberOfTickets,
+          eventName: eventName,
+        });
       } catch (e) {
         console.log(e);
         return res.status(400).json({ error: "Failed to upload to IPFS" });

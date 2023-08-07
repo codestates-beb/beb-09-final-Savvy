@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import { useParams } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { setContractData } from "../reducers/contractReducer";
 import axios from "axios";
 import { Button, TextField } from "@mui/material";
 
@@ -31,6 +34,9 @@ const styles = {
 };
 
 export default function MintingPageContent({ web3Auth }) {
+  const dispatch = useDispatch();
+  const contractData = useSelector((state) => state.contract.contractData);
+
   const [QR, setQR] = useState(null);
   const [file, setFile] = useState(null);
   const [previewURL, setPreviewURL] = useState(null);
@@ -41,6 +47,8 @@ export default function MintingPageContent({ web3Auth }) {
     location: "",
     siteUrl: "",
   });
+
+  const communityAddress = window.location.pathname.split("/")[2];
 
   const handleImage = (e) => {
     const imageFile = e.target.files[0];
@@ -75,9 +83,12 @@ export default function MintingPageContent({ web3Auth }) {
     formData.append("siteUrl", ticketInfo.siteUrl);
     formData.append("QR", QR);
 
-    const response = await createTicket(formData, web3Auth);
-    const { address, txHash } = response;
-    console.log(address, txHash);
+    const response = await createTicket(formData, web3Auth, communityAddress);
+    if (!response) return;
+    const { address, deployTxHashtxHash, mintTxHash, contractData } = response;
+    console.log(response);
+    dispatch(setContractData([contractData]));
+    console.log(contractData);
   };
 
   return (
