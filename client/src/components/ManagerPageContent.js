@@ -1461,11 +1461,11 @@ export default function ManagerPageContent({ web3Auth }) {
               </div>
             </div>
             <div style={{ overflow: "auto", height: "14.3rem" }}>
-              {managerData?.items?.nfts?.map((data) => {
+              {managerData?.items?.nfts?.map((data, idx) => {
                 return (
                   <div
                     className="nft-list"
-                    key={data.tokenURI}
+                    key={idx}
                     style={{
                       bgcolor: "transparent",
                       color: "#272727",

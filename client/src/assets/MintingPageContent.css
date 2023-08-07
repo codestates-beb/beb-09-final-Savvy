@@ -8,6 +8,7 @@
   border-radius: 1rem;
   display: flex;
   flex-direction: column;
+  text-align: center;
 }
 
 .ticket-box-title {
@@ -26,9 +27,36 @@
 }
 
 .ticket-box-file {
-  margin: 1rem;
+  margin-top: 0.8rem;
   text-align: center;
-  height: 4rem;
+  height: 8rem;
+  box-sizing: border-box;
+}
+
+.file-box {
+  margin: 0 auto;
+  width: 8rem;
+  height: 8rem;
+  background-color: white;
+  outline: 2px dashed black;
+  outline-offset: -10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 1rem;
+  background-color: #b9b4b4;
+  opacity: 0.5;
+}
+
+.ticket-box-img {
+  margin: 0 auto;
+  width: 8rem;
+  height: 8rem;
+  border-radius: 1rem;
+  background-color: #b9b4b4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .ticket-box-form {
@@ -43,4 +71,99 @@
 .ticket-box-btn {
   text-align: center;
   margin: 1rem;
+}
+
+.preview-content {
+  display: grid;
+  grid-template-rows: 2fr 1fr 2fr;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 1.5rem;
+  border: 2px solid #f5f5f5;
+  border-radius: 1rem;
+  height: 31rem;
+  width: 80%;
+  align-self: center;
+}
+
+.preview-content-logo {
+  margin: 1rem;
+}
+
+.preview-content-logo > img {
+  margin: 0 auto;
+  width: 10rem;
+  height: 10rem;
+  border-radius: 2rem;
+  background-color: #b9b4b4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.preview-content-info {
+  text-align: center;
+}
+
+.preview-content-info-header {
+  margin: 1rem;
+  font-family: tektur, sans-serif;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #576ff6;
+  background-color: #fff;
+  padding-bottom: 0.5rem;
+  border-image: linear-gradient(100deg, #f8f8f8, #576ff6, #f8f8f8);
+  border-image-slice: 1;
+  text-align: center;
+  margin: 0 auto;
+  user-select: none;
+}
+
+.preview-content-info-sub {
+  display: flex;
+  font-family: tektur, sans-serif;
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: #8a8b96;
+  justify-content: center;
+}
+
+.preview-content-info-sub-span {
+  padding: 0.3rem;
+}
+
+.preview-content-qr {
+  margin: 1rem;
+}
+
+.preview-logo {
+  width: 10rem;
+  height: 10rem;
+  border-radius: 2rem;
+  background-color: #b9b4b4;
+  opacity: 0.5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.preview-qr {
+  display: flex;
+  width: 150px;
+  height: 150px;
+  border-radius: 2rem;
+  background-color: #b9b4b4;
+  opacity: 0.5;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.form-error-message {
+  color: red;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin: -0.7rem 0 -0.2rem 0;
 }

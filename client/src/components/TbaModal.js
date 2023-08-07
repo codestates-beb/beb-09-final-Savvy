@@ -62,7 +62,8 @@ function TbaModal({ open, handleClose, userId, tbaId }) {
     e.preventDefault();
   };
 
-  const imageUrl = `https://i.pravatar.cc/300?u=${userId}`;
+  // const imageUrl = `https://i.pravatar.cc/300?u=${userId}`;
+  const imageUrl = `/Dashboarddummy3.png`;
 
   const slideUp = keyframes`
     from {

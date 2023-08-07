@@ -3,10 +3,9 @@ import axios from "axios";
 require("dotenv").config();
 const apiUrl = process.env.REACT_APP_API_ENDPOINT;
 
-const communityAddress = window.location.pathname.split("/")[2];
-console.log(communityAddress);
-
 export const getDashboard = async () => {
+  const communityAddress = window.location.pathname.split("/")[2];
+  console.log(communityAddress);
   try {
     const response = await axios({
       method: "get",
