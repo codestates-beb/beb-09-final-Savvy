@@ -281,13 +281,15 @@ export default function SideNav() {
                     style={managericonStyles}
                   />
                 }
-                component={<Link to={`/mint`} />}
+                component={<Link to={`/mint/${addressCurrent}`} />}
                 style={
-                  location.pathname === `/mint` ? activeStyle : inactiveStyle
+                  location.pathname === `/mint/${addressCurrent}`
+                    ? activeStyle
+                    : inactiveStyle
                 }
               >
                 Ticket
-                {location.pathname === `/mint` && (
+                {location.pathname === `/mint/${addressCurrent}` && (
                   <div style={rectangleStyle}></div>
                 )}
               </MenuItem>

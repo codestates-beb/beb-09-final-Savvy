@@ -489,7 +489,7 @@ const ticketContractAbiRemix = [
   },
 ];
 
-export const createTicket = async (formData, web3Auth) => {
+export const createTicket = async (formData, web3Auth, communityAddress) => {
   try {
     const response = await axios({
       method: "post",
@@ -501,6 +501,8 @@ export const createTicket = async (formData, web3Auth) => {
       },
     });
     const hash = response.data.hash;
+    const numberOfTickets = response.data.numberOfTickets;
+    const eventName = response.data.eventName;
     const ipfsUrl = `https://ipfs.io/ipfs/${hash}`;
 
     // init singer
@@ -514,15 +516,47 @@ export const createTicket = async (formData, web3Auth) => {
       contractCreationBytecode,
       signer
     );
-    const contract = await factory.deploy(ipfsUrl, "Ticket", "TICKET", {
+    const contract = await factory.deploy(ipfsUrl, eventName, "SNFT", {
       gasLimit: 5000000,
     });
     const receipt = await contract.deployTransaction.wait();
     console.log("contract deployed");
     console.log(receipt);
+
+    // mint ticket to admin
+    const ticketContract = new ethers.Contract(
+      receipt.contractAddress,
+      ticketContractAbiRemix,
+      signer
+    );
+    const mintTx = await ticketContract.mint(numberOfTickets, {
+      gasLimit: 5000000,
+    });
+    const mintReceipt = await mintTx.wait();
+    console.log("ticket minted");
+    console.log(mintReceipt);
+
+    // add ticket contract to db
+    const response2 = await axios({
+      method: "post",
+      url: `${apiUrl}/contract/create`,
+      data: {
+        communityAddress: communityAddress,
+        ercType: "ERC721",
+        contractAddress: receipt.contractAddress,
+        contractName: eventName,
+      },
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+    console.log(response2.data);
+
     return {
       address: receipt.contractAddress,
-      txHash: receipt.transactionHash,
+      deployTxHash: receipt.transactionHash,
+      mintTxHash: mintReceipt.transactionHash,
+      contractData: response2.data.ContractData,
     };
   } catch (error) {
     console.log(error);

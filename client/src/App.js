@@ -83,7 +83,12 @@ function App() {
             path="/setting"
             element={<SettingPage web3Auth={web3Auth} />}
           />
-          <Route path="/mint" element={<Mintingpage web3Auth={web3Auth} />} />
+          <Route path="/mint/" element={<Mintingpage web3Auth={web3Auth} />}>
+            <Route
+              path="/mint/:address"
+              element={<Mintingpage web3Auth={web3Auth} />}
+            />
+          </Route>
           <Route path="*" element={<ErrorPage />} />
         </Routes>
       </Router>
