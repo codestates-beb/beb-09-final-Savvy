@@ -385,7 +385,7 @@ function TbaList({ data = [] }) {
           <List>
             <StyledListItem onClick={(e) => handleOpenTbaModal(e, user._id)}>
               <ListItemAvatar>
-                <Avatar src={user.tokenURI} />
+                <Avatar src={"/Dashboarddummy3.png"} />
               </ListItemAvatar>
               <div
                 style={{

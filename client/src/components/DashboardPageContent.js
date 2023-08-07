@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { setDashboardData } from "../reducers/dashboardReducer";
 import { Box } from "@mui/material";
 import { DASHBOARD_NFT_LIST } from "../assets/DUMMY_DATA";
 import { ResponsiveLine } from "@nivo/line";
@@ -15,6 +17,9 @@ import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import CloseIcon from "@mui/icons-material/Close";
 import Draggable from "react-draggable";
+
+// api
+import { getDashboard } from "../api/get-dashboard";
 
 const data = [
   {
@@ -114,11 +119,10 @@ const boxStyle = {
   borderRadius: "1rem",
   padding: "1rem",
   minWidth: "20rem",
-  height: "24rem",
+  height: "15rem",
   marginLeft: "0.5rem",
-  marginTop: "3rem",
+  marginTop: "1.5rem",
   boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
-  overflowY: "auto",
   zIndex: "1",
 };
 
@@ -127,7 +131,7 @@ const grephStyle = {
   borderRadius: "1rem",
   padding: "1rem",
   minWidth: "20rem",
-  height: "30rem",
+  height: "20rem",
   marginLeft: "0.5rem",
   boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
   userSelect: "none",
@@ -172,10 +176,29 @@ const styles = {
 };
 
 export default function DashboardPageContent({ onSearch }) {
+  const dispatch = useDispatch();
+  const dashboardData = useSelector((state) => state.dashboard.dashboardData);
   const [query, setQuery] = useState("");
   const [showInputTool, setShowInputTool] = useState(false);
   const [language, setLanguage] = useState("EN");
   const [shiftActive, setShiftActive] = useState(false);
+
+  useEffect(() => {
+    const fetchDashboard = async () => {
+      const response = await getDashboard();
+      if (
+        response !== 401 ||
+        response !== 404 ||
+        response !== 422 ||
+        response !== 500
+      ) {
+        const { TBAs, community, items } = response;
+        dispatch(setDashboardData({ TBAs, community, items }));
+      }
+    };
+    fetchDashboard();
+    console.log("dashboardData:", dashboardData);
+  }, []);
 
   const englishShiftMap = {
     Q: "q",
@@ -393,10 +416,10 @@ export default function DashboardPageContent({ onSearch }) {
         alignItems="center"
         justifyContent="center"
         width="100%"
-        marginTop={4}
+        marginTop={3}
         marginLeft={0.8}
         marginRight={0}
-        marginBottom={5.5}
+        marginBottom={3}
       >
         <Box flex="1">
           <TextField
@@ -806,7 +829,7 @@ export default function DashboardPageContent({ onSearch }) {
                   marginTop: "0.5rem",
                 }}
               >
-                Name
+                Address
               </div>
               <div
                 className="nft-category"
@@ -819,7 +842,7 @@ export default function DashboardPageContent({ onSearch }) {
                   marginTop: "0.5rem",
                 }}
               >
-                Item no
+                Updated At
               </div>
               <div
                 className="nft-category"
@@ -832,15 +855,15 @@ export default function DashboardPageContent({ onSearch }) {
                   marginTop: "0.5rem",
                 }}
               >
-                Price
+                Level
               </div>
             </div>
-            <div style={{ overflow: "auto", height: "19rem" }}>
-              {DASHBOARD_NFT_LIST.map((data) => {
+            <div style={{ overflow: "auto", height: "11rem" }}>
+              {dashboardData?.TBAs?.map((data) => {
                 return (
                   <div
                     className="nft-list"
-                    key={data.name}
+                    key={data?._id}
                     style={{
                       bgcolor: "transparent",
                       color: "#272727",
@@ -860,11 +883,16 @@ export default function DashboardPageContent({ onSearch }) {
                           height: "3rem",
                           borderRadius: "0.5rem",
                         }}
-                        src={data.image}
+                        src={"/Dashboarddummy3.png"}
                       ></img>
                     </div>
-                    <div style={{ color: "#666" }}>{data.name}</div>
-                    <div style={{ color: "#666" }}>{data.itemno}</div>
+                    <div style={{ color: "#666" }}>{`${data?.address?.substring(
+                      0,
+                      4
+                    )}...${data?.address?.substring(37)}`}</div>
+                    <div style={{ color: "#666" }}>
+                      {data?.updatedAt?.substring(0, 10)}
+                    </div>
                     <div
                       style={{
                         color: "#fff",
@@ -877,7 +905,7 @@ export default function DashboardPageContent({ onSearch }) {
                         marginTop: "23px",
                       }}
                     >
-                      {data.price}
+                      {data?.level}
                     </div>
                   </div>
                 );
@@ -920,7 +948,7 @@ export default function DashboardPageContent({ onSearch }) {
                   marginTop: "0.5rem",
                 }}
               >
-                Name
+                Address
               </div>
               <div
                 className="nft-category"
@@ -933,7 +961,7 @@ export default function DashboardPageContent({ onSearch }) {
                   marginTop: "0.5rem",
                 }}
               >
-                Item no
+                Updated At
               </div>
               <div
                 className="nft-category"
@@ -946,15 +974,15 @@ export default function DashboardPageContent({ onSearch }) {
                   marginTop: "0.5rem",
                 }}
               >
-                Price
+                Level
               </div>
             </div>
-            <div style={{ overflow: "auto", height: "19rem" }}>
-              {DASHBOARD_NFT_LIST.map((data) => {
+            <div style={{ overflow: "auto", height: "11rem" }}>
+              {dashboardData?.TBAs?.map((data) => {
                 return (
                   <div
                     className="nft-list"
-                    key={data.name}
+                    key={data?._id}
                     style={{
                       bgcolor: "transparent",
                       color: "#272727",
@@ -974,11 +1002,16 @@ export default function DashboardPageContent({ onSearch }) {
                           height: "3rem",
                           borderRadius: "0.5rem",
                         }}
-                        src={data.image}
+                        src={"/Dashboarddummy3.png"}
                       ></img>
                     </div>
-                    <div style={{ color: "#666" }}>{data.name}</div>
-                    <div style={{ color: "#666" }}>{data.itemno}</div>
+                    <div style={{ color: "#666" }}>{`${data?.address?.substring(
+                      0,
+                      4
+                    )}...${data?.address?.substring(37)}`}</div>
+                    <div style={{ color: "#666" }}>
+                      {data?.updatedAt?.substring(0, 10)}
+                    </div>
                     <div
                       style={{
                         color: "#fff",
@@ -991,7 +1024,7 @@ export default function DashboardPageContent({ onSearch }) {
                         marginTop: "23px",
                       }}
                     >
-                      {data.price}
+                      {data?.level}
                     </div>
                   </div>
                 );

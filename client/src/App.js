@@ -16,6 +16,7 @@ import AirdropPage from "./pages/AirdropPage";
 import ManagerPage from "./pages/ManagerPage";
 import ErrorPage from "./components/ErrorPage";
 import SettingPage from "./pages/SettingPage";
+import Mintingpage from "./pages/MintingPage";
 
 function App() {
   const [web3Auth, setWeb3Auth] = useState(null);
@@ -82,6 +83,7 @@ function App() {
             path="/setting"
             element={<SettingPage web3Auth={web3Auth} />}
           />
+          <Route path="/mint" element={<Mintingpage web3Auth={web3Auth} />} />
           <Route path="*" element={<ErrorPage />} />
         </Routes>
       </Router>

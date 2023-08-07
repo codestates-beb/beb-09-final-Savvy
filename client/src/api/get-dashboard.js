@@ -4,6 +4,7 @@ require("dotenv").config();
 const apiUrl = process.env.REACT_APP_API_ENDPOINT;
 
 const communityAddress = window.location.pathname.split("/")[2];
+console.log(communityAddress);
 
 export const getDashboard = async () => {
   try {
@@ -17,6 +18,6 @@ export const getDashboard = async () => {
     return response.data;
   } catch (error) {
     console.log(error);
-    return;
+    return error.response.status;
   }
 };

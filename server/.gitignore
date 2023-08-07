@@ -4,3 +4,4 @@ package-lock.json
 .history
 .DS_Store
 uploads/
+metadata/
