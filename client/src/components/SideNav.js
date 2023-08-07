@@ -276,6 +276,25 @@ export default function SideNav() {
                 onClick={() => setCollapsed((prev) => !prev)}
                 icon={
                   <img
+                    src={process.env.PUBLIC_URL + "/ManagerIcon.png"}
+                    alt="Custom Icon"
+                    style={managericonStyles}
+                  />
+                }
+                component={<Link to={`/mint`} />}
+                style={
+                  location.pathname === `/mint` ? activeStyle : inactiveStyle
+                }
+              >
+                Ticket
+                {location.pathname === `/mint` && (
+                  <div style={rectangleStyle}></div>
+                )}
+              </MenuItem>
+              <MenuItem
+                onClick={() => setCollapsed((prev) => !prev)}
+                icon={
+                  <img
                     src={process.env.PUBLIC_URL + "/settingIcon.png"}
                     alt="Custom Icon"
                     style={settingiconStyles}
