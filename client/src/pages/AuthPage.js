@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { setCommunityData } from "../reducers/communityReducer.js";
 import { setDashboardData } from "../reducers/dashboardReducer.js";
+import { setManagerData } from "../reducers/managerReducer.js";
 import { Web3Auth } from "@web3auth/modal";
 import Login from "../components/Login.js";
 import ethersRPC from "../ethersRPC.js";
@@ -12,6 +13,7 @@ import { getPublicCompressed } from "@toruslabs/eccrypto";
 import { postLogin } from "../api/post-login.js";
 import { getAdminCommunity } from "../api/get-admin-community.js";
 import { getDashboard } from "../api/get-dashboard";
+import { getManagerData } from "../api/get-manager-data.js";
 
 export default function AuthPage({ web3Auth, setWeb3Auth }) {
   const dispatch = useDispatch();
@@ -89,7 +91,23 @@ export default function AuthPage({ web3Auth, setWeb3Auth }) {
             }
           };
 
-          initCommunity().then(() => initDashboard());
+          // get manager data
+          const initManager = async () => {
+            const manager = await getManagerData();
+            const { admin, communities, items } = manager;
+            dispatch(
+              setManagerData({
+                admin: admin,
+                communities: communities,
+                items: items,
+              })
+            );
+          };
+
+          initCommunity().then(() => {
+            initDashboard();
+            initManager();
+          });
         }
       }
     };
