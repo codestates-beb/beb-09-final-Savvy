@@ -69,7 +69,7 @@ export default function ContractPageContent() {
       })
     : [];
 
-  const { address } = useParams();
+  const address = window.location.pathname.split("/")[2];
 
   useEffect(() => {
     const initContract = async () => {

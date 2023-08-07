@@ -327,10 +327,10 @@ export default function AirdropPageContent({ web3Auth }) {
                     >
                       <ListItemButton>
                         <ListItemText
-                          primary={`${tba.address.substring(
+                          primary={`${tba.address?.substring(
                             0,
                             5
-                          )}...${tba.address.substring(38)}`}
+                          )}...${tba.address?.substring(38)}`}
                           sx={{ ...listItemTextStyle }}
                         />
                         <ListItemText
@@ -482,10 +482,10 @@ export default function AirdropPageContent({ web3Auth }) {
                           margin: "0.3rem",
                         }}
                       >
-                        {`${option.alias}(${option.address.substring(
+                        {`${option.alias}(${option.address?.substring(
                           0,
                           5
-                        )}...${option.address.substring(38)})`}
+                        )}...${option.address?.substring(38)})`}
                       </div>
                     </MenuItem>
                   ))
