@@ -20,15 +20,53 @@ router.post(
   async (req, res) => {
     //	#swagger.description = 'create ticket'
     //	#swagger.tags = ['Ticket']
-    /*  #swagger.parameters[''] = {
-
-		} */
-    /* #swagger.security = [{
-				}] */
+    /* #swagger.requestBody = {
+      required: true,
+      content: {
+        'multipart/form-data': {
+          schema: {
+            type: 'object',
+            properties: {
+              file: {
+                type: 'string',
+                format: 'binary'
+              },
+              eventName: {
+                type: 'string',
+                example: 'Savvy Event'
+              },
+              date: {
+                type: 'string',
+                example: '2023-08-12'
+              },
+              numberOfTickets: {
+                type: 'string',
+                example: '3'
+              },
+              location: {
+                type: 'string',
+                example: 'Seoul'
+              },
+              siteUrl: {
+                type: 'string',
+                example: 'https://sendbee.co.kr/event/detail/347'
+              },
+              QR: {
+                type: 'string',
+                example: 'null'
+              }
+            }
+          }
+        }
+      }
+    } */
     /*  #swagger.responses[200] = {
 						description: 'Upload to IPFS success',
 						schema: {
-								message: 'Upload to IPFS success'
+								message: 'Upload to IPFS success',
+								"hash": "QmSUfYseq69BDffGN5H8WVFm981nj2xYw6VaWsgvdMmeur",
+								"numberOfTickets": "3",
+								"eventName": "Savvy Event"
 						}
 			} */
     /*  #swagger.responses[400] = {

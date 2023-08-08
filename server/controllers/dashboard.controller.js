@@ -1,10 +1,10 @@
-const ethers = require("ethers");
+const ethers = require('ethers');
 
-const Community = require("../models/community.model");
-const Tba = require("../models/tba.model");
-const Item = require("../models/item.model");
+const Community = require('../models/community.model');
+const Tba = require('../models/tba.model');
+const Item = require('../models/item.model');
 
-require("dotenv").config();
+require('dotenv').config();
 
 const provider = new ethers.providers.JsonRpcProvider(process.env.INFURA_URL);
 
@@ -16,25 +16,22 @@ module.exports = {
       const community = await Community.findOne({ address: communityAddress });
 
       if (!community) {
-        return res
-          .status(400)
-          .json({ error: "No community found for this community" });
+        return res.status(400).json({ error: 'No community found for this community' });
       }
 
       const TBAs = await Tba.find({ community_id: community._id });
       //console.log(TBAs);
 
       if (TBAs.length === 0) {
-        return res
-          .status(404)
-          .json({ error: "No TBAs found for this community" });
+        return res.status(404).json({ error: 'No TBAs found for this community' });
       }
 
       const items = await Item.find({ Tba_id: TBAs._id });
+      console.log(items);
 
       if (items.length === 0) {
         return res.status(200).json({
-          message: "Successfully fetched TBAs",
+          message: 'Successfully fetched TBAs',
           community: community,
           TBAs: TBAs,
           items: [],
@@ -42,7 +39,7 @@ module.exports = {
       }
 
       return res.status(200).json({
-        message: "Successfully fetched TBAs",
+        message: 'Successfully fetched TBAs',
         community: community,
         TBAs: TBAs,
         items: items,
@@ -50,7 +47,7 @@ module.exports = {
     } catch (error) {
       console.log(error);
       res.status(500).json({
-        error: "Internal Server Error",
+        error: 'Internal Server Error',
       });
     }
   },
