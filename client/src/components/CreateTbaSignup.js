@@ -92,6 +92,7 @@ export default function Login() {
         justifyContent: "flex-start",
         height: "auto",
         marginTop: "11vh",
+        userSelect: "none",
       }}
     >
       <Dialog
@@ -141,18 +142,16 @@ export default function Login() {
           src="/logo.png"
           alt="logo"
           style={{
-            width: "70%",
+            width: "60%",
             boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.2)",
-            marginLeft: "-10px",
           }}
         />
       </Box>
       <Typography
         sx={{
-          ...caprasimoFont,
           color: "#9a9ab5",
           fontWeight: "bold",
-          fontSize: "15px",
+          fontSize: "13px",
           marginTop: "20px",
           marginBottom: "-10px",
         }}
@@ -193,10 +192,9 @@ export default function Login() {
       </Box>
       <Typography
         sx={{
-          ...caprasimoFont,
           color: "#9a9ab5",
           fontWeight: "bold",
-          fontSize: "15px",
+          fontSize: "13px",
           marginTop: "20px",
           marginBottom: "-10px",
         }}

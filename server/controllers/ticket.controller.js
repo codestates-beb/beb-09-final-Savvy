@@ -1,36 +1,35 @@
-const jose = require("jose");
-const fs = require("fs").promises;
-const createReadStream = require("fs").createReadStream;
-const path = require("path");
-const pinataSDK = require("@pinata/sdk");
+const jose = require('jose');
+const fs = require('fs').promises;
+const createReadStream = require('fs').createReadStream;
+const path = require('path');
+const pinataSDK = require('@pinata/sdk');
 const pinata = new pinataSDK({
   pinataJWTKey: process.env.PINATA_JWT,
 });
-const { ethers } = require("ethers");
+const { ethers } = require('ethers');
 
 module.exports = {
   createTicket: async (req, res) => {
     try {
-      // console.log(req.body);
-      // console.log(req.file);
-      const { eventName, date, numberOfTickets, location, siteUrl, QR } =
-        req.body;
+      //console.log(req.body);
+      //console.log(req.file);
+      const { eventName, date, numberOfTickets, location, siteUrl, QR } = req.body;
       const { file } = req.file;
 
       const metaData = (i) => {
         return JSON.stringify({
           name: `${eventName}`,
-          description: "Event Ticket powered by Savvy",
+          description: 'Event Ticket powered by Savvy',
           image: QR,
           external_url: siteUrl,
           attributes: [
             {
-              display_type: "date",
-              trait_type: "Date",
+              display_type: 'date',
+              trait_type: 'Date',
               value: date,
             },
             {
-              trait_type: "Location",
+              trait_type: 'Location',
               value: location,
             },
           ],
@@ -42,14 +41,14 @@ module.exports = {
           pinataMetadata: { name: eventName },
         });
         return res.status(200).json({
-          message: "Upload to IPFS success",
+          message: 'Upload to IPFS success',
           hash: response.IpfsHash,
           numberOfTickets: numberOfTickets,
           eventName: eventName,
         });
       } catch (e) {
         console.log(e);
-        return res.status(400).json({ error: "Failed to upload to IPFS" });
+        return res.status(400).json({ error: 'Failed to upload to IPFS' });
       }
 
       //   // 폴더 생성, 파일 생성, ipfs pinning 시도
@@ -107,7 +106,7 @@ module.exports = {
       //     });
     } catch (e) {
       console.log(e);
-      return res.status(500).json({ error: "internal server error" });
+      return res.status(500).json({ error: 'internal server error' });
     }
   },
 };

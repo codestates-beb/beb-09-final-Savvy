@@ -15,10 +15,10 @@ const ticket = require('./ticket.route');
 
 router.use('/admin', admin);
 router.use('/createTba', createTba);
-router.use('/dashboard', dashboard);
-router.use('/tbaAdmin', tbaAdmin);
-router.use('/contract', contract);
 router.use('/manager', manager);
+router.use('/dashboard', dashboard);
+router.use('/contract', contract);
+router.use('/tbaAdmin', tbaAdmin);
 router.use('/plan', plan);
 router.use('/ticket', ticket);
 

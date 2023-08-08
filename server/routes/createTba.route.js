@@ -5,17 +5,21 @@ const controller = require('../controllers/createTba.controller');
 router.post('/', controller.createTba, async (req, res) => {
   //  #swagger.description = 'create tba'
   //  #swagger.tags = ['CreateTba']
-  /* #swagger.parameters['txHash'] = {
-        in: 'body',
-        required: true,
-        description: 'Transaction hash',
-        schema: {
-            $ref: '#/definitions/TxHash'
+  /* #swagger.requestBody = {
+      content: {
+        'application/json': {
+          schema: {
+            type: 'object',
+            properties: {
+              txHash: {
+                type: 'string',
+                example: '0x7a5885c2fa86646155f81d77300c02077a332f8ec59a86bbf9a55bb0e5a736c6'
+              },
+            }
+          }
         }
+      }
     } */
-  /* #swagger.security = [{
-       "bearerAuth": []
-   }]
   /*  #swagger.responses[200] = {
 					description: 'Successfully created TBA',
 					schema: {

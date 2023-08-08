@@ -25,57 +25,41 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "address": {
-                  "type": "string",
-                  "example": "0xf05Fc7E8b21bE1133c0Ccae63eb6ebCdDF4e5F78"
-                },
-                "balance": {
-                  "type": "object",
-                  "properties": {
-                    "type": {
-                      "type": "string",
-                      "example": "BigNumber"
-                    },
-                    "hex": {
-                      "type": "string",
-                      "example": "0x06eff3c47bdda1dc"
-                    }
-                  }
-                },
-                "chainId": {
-                  "type": "string",
-                  "example": "11155111"
-                },
-                "email": {
-                  "type": "string",
-                  "example": "sjlee80@gmail.com"
-                },
-                "name": {
-                  "type": "string",
-                  "example": "이상준"
-                },
-                "profileImage": {
-                  "type": "string",
-                  "example": "https://lh3.googleusercontent.com/a/AAcHTteUzkPkbNWjxw4M6EzVs72GHuq7LWGFQyJL6iWT0gH5=s96-c"
-                },
-                "appPubKey": {
-                  "type": "string",
-                  "example": "03757c7b4796e8f42b02796607b5ee2ad23c6beb9a28e951777ac4349915b95aa2"
-                }
-              }
-            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Verification successful and user exists",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Verification successful. Welcome, new user!"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Verification successful. Welcome, new user!"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              }
+            }
           },
           "201": {
             "description": "Verification successful. Welcome, new user",
@@ -188,26 +172,33 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "appPubKey": {
-                    "example": "any"
-                  },
-                  "email": {
-                    "example": "any"
-                  },
                   "address": {
-                    "example": "any"
+                    "type": "string",
+                    "example": "0xf05Fc7E8b21bE1133c0Ccae63eb6ebCdDF4e5F78"
                   },
                   "balance": {
-                    "example": "any"
+                    "type": "string",
+                    "example": "0x00"
                   },
                   "chainId": {
-                    "example": "any"
+                    "type": "string",
+                    "example": "11155111"
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": "sjlee80@gmail.com"
                   },
                   "name": {
-                    "example": "any"
+                    "type": "string",
+                    "example": "이상준"
                   },
                   "profileImage": {
-                    "example": "any"
+                    "type": "string",
+                    "example": "https://lh3.googleusercontent.com/a/AAcHTteUzkPkbNWjxw4M6EzVs72GHuq7LWGFQyJL6iWT0gH5=s96-c"
+                  },
+                  "appPubKey": {
+                    "type": "string",
+                    "example": "03757c7b4796e8f42b02796607b5ee2ad23c6beb9a28e951777ac4349915b95aa2"
                   }
                 }
               }
@@ -229,13 +220,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -249,6 +233,48 @@
                     "message": {
                       "type": "string",
                       "example": "get community data"
+                    },
+                    "community": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "object"
+                        },
+                        "properties": {
+                          "type": "object",
+                          "properties": {
+                            "_id": {
+                              "type": "string",
+                              "example": "64cb5b86d25c4e600dccea92"
+                            },
+                            "address": {
+                              "type": "string",
+                              "example": "0x7c01Eaa85063Aa3a310E49D6b80aC02a1532d16F"
+                            },
+                            "type": {
+                              "type": "string",
+                              "example": "main"
+                            },
+                            "alias": {
+                              "type": "string",
+                              "example": "test 1"
+                            },
+                            "admin_id": {
+                              "type": "string",
+                              "example": "64cb5a7bd25c4e600dccea5c"
+                            },
+                            "createdAt": {
+                              "type": "string",
+                              "example": "2023-08-03T07:47:18.056Z"
+                            },
+                            "_somethingElse": {
+                              "type": "number",
+                              "example": 0
+                            }
+                          }
+                        }
+                      }
                     }
                   },
                   "xml": {
@@ -263,6 +289,48 @@
                     "message": {
                       "type": "string",
                       "example": "get community data"
+                    },
+                    "community": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "object"
+                        },
+                        "properties": {
+                          "type": "object",
+                          "properties": {
+                            "_id": {
+                              "type": "string",
+                              "example": "64cb5b86d25c4e600dccea92"
+                            },
+                            "address": {
+                              "type": "string",
+                              "example": "0x7c01Eaa85063Aa3a310E49D6b80aC02a1532d16F"
+                            },
+                            "type": {
+                              "type": "string",
+                              "example": "main"
+                            },
+                            "alias": {
+                              "type": "string",
+                              "example": "test 1"
+                            },
+                            "admin_id": {
+                              "type": "string",
+                              "example": "64cb5a7bd25c4e600dccea5c"
+                            },
+                            "createdAt": {
+                              "type": "string",
+                              "example": "2023-08-03T07:47:18.056Z"
+                            },
+                            "_somethingElse": {
+                              "type": "number",
+                              "example": 0
+                            }
+                          }
+                        }
+                      }
                     }
                   },
                   "xml": {
@@ -340,7 +408,9 @@
           }
         },
         "security": [
-          {}
+          {
+            "bearerAuth": []
+          }
         ]
       }
     },
@@ -350,17 +420,6 @@
           "CreateTba"
         ],
         "description": "create tba",
-        "parameters": [
-          {
-            "name": "txHash",
-            "in": "body",
-            "required": true,
-            "description": "Transaction hash",
-            "schema": {
-              "$ref": "#/components/schemas/TxHash"
-            }
-          }
-        ],
         "responses": {
           "200": {
             "description": "Successfully created TBA",
@@ -462,6 +521,255 @@
             }
           }
         },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "txHash": {
+                    "type": "string",
+                    "example": "0x7a5885c2fa86646155f81d77300c02077a332f8ec59a86bbf9a55bb0e5a736c6"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/manager/community/create": {
+      "post": {
+        "tags": [
+          "Manager"
+        ],
+        "description": "create community",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "created new community data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "created new community data"
+                    },
+                    "CommunityData": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "example": "64d196dfd8e0c2201ff9faab"
+                        },
+                        "type": {
+                          "type": "string",
+                          "example": "main"
+                        },
+                        "communityAddress": {
+                          "type": "string",
+                          "example": "0xADD22a3efa6f22dd60DF65CDfE096da0366eE002"
+                        },
+                        "communityName": {
+                          "type": "string",
+                          "example": "Savvy 2nd community"
+                        },
+                        "createAt": {
+                          "type": "string",
+                          "example": "2023-08-03T07:47:18.056Z"
+                        }
+                      }
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "created new community data"
+                    },
+                    "CommunityData": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "example": "64d196dfd8e0c2201ff9faab"
+                        },
+                        "type": {
+                          "type": "string",
+                          "example": "main"
+                        },
+                        "communityAddress": {
+                          "type": "string",
+                          "example": "0xADD22a3efa6f22dd60DF65CDfE096da0366eE002"
+                        },
+                        "communityName": {
+                          "type": "string",
+                          "example": "Savvy 2nd community"
+                        },
+                        "createAt": {
+                          "type": "string",
+                          "example": "2023-08-03T07:47:18.056Z"
+                        }
+                      }
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "You can create only one community in basic plan",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "You can create only one community in basic plan"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "You can create only one community in basic plan"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "You can create only three communities in plus plan",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "You can create only three communities in plus plan"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "You can create only three communities in plus plan"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Community already exists",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Community already exists"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Community already exists"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Internal Server Error"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Internal Server Error"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              }
+            }
+          }
+        },
         "security": [
           {
             "bearerAuth": []
@@ -473,14 +781,975 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "txHash": {
-                    "example": "any"
+                  "address": {
+                    "type": "string",
+                    "example": "0xADD22a3efa6f22dd60DF65CDfE096da0366eE002"
+                  },
+                  "type": {
+                    "type": "string",
+                    "example": "main"
+                  },
+                  "communityName": {
+                    "type": "string",
+                    "example": "Savvy 2nd community"
                   }
                 }
               }
             }
           }
         }
+      }
+    },
+    "/manager/community/update": {
+      "put": {
+        "tags": [
+          "Manager"
+        ],
+        "description": "update community",
+        "responses": {
+          "200": {
+            "description": "updated contract data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "updated contract data"
+                    },
+                    "CommunityData": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "example": "64d196dfd8e0c2201ff9faab"
+                        },
+                        "type": {
+                          "type": "string",
+                          "example": "sub"
+                        },
+                        "communityAddress": {
+                          "type": "string",
+                          "example": "0xADD22a3efa6f22dd60DF65CDfE096da0366eE002"
+                        },
+                        "communityName": {
+                          "type": "string",
+                          "example": "Savvy 2nd community"
+                        },
+                        "createAt": {
+                          "type": "string",
+                          "example": "2023-08-03T07:47:18.056Z"
+                        }
+                      }
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "updated contract data"
+                    },
+                    "CommunityData": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "example": "64d196dfd8e0c2201ff9faab"
+                        },
+                        "type": {
+                          "type": "string",
+                          "example": "sub"
+                        },
+                        "communityAddress": {
+                          "type": "string",
+                          "example": "0xADD22a3efa6f22dd60DF65CDfE096da0366eE002"
+                        },
+                        "communityName": {
+                          "type": "string",
+                          "example": "Savvy 2nd community"
+                        },
+                        "createAt": {
+                          "type": "string",
+                          "example": "2023-08-03T07:47:18.056Z"
+                        }
+                      }
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Contract does not exist",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Contract does not exist"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Contract does not exist"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Internal Server Error"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Internal Server Error"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "example": "64d196dfd8e0c2201ff9faab"
+                  },
+                  "type": {
+                    "type": "string",
+                    "example": "sub"
+                  },
+                  "communityName": {
+                    "type": "string",
+                    "example": "Savvy 2nd community"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/manager/": {
+      "get": {
+        "tags": [
+          "Manager"
+        ],
+        "description": "get manager",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "get manager data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "get manager data"
+                    },
+                    "admin": {
+                      "type": "object",
+                      "properties": {
+                        "_id": {
+                          "type": "string",
+                          "example": "64cb5a7bd25c4e600dccea5c"
+                        },
+                        "address": {
+                          "type": "string",
+                          "example": "0xf05Fc7E8b21bE1133c0Ccae63eb6ebCdDF4e5F78"
+                        },
+                        "ethBalance": {
+                          "type": "string",
+                          "example": "0.491076968235128108"
+                        },
+                        "chainId": {
+                          "type": "number",
+                          "example": 11155111
+                        },
+                        "email": {
+                          "type": "string",
+                          "example": "sjlee80@gmail.com"
+                        },
+                        "name": {
+                          "type": "string",
+                          "example": "이상준"
+                        },
+                        "profileImage": {
+                          "type": "string",
+                          "example": "https://lh3.googleusercontent.com/a/AAcHTteUzkPkbNWjxw4M6EzVs72GHuq7LWGFQyJL6iWT0gH5=s96-c"
+                        },
+                        "appPubKey": {
+                          "type": "string",
+                          "example": "03757c7b4796e8f42b02796607b5ee2ad23c6beb9a28e951777ac4349915b95aa2"
+                        },
+                        "plan": {
+                          "type": "string",
+                          "example": "plus"
+                        },
+                        "createdAt": {
+                          "type": "string",
+                          "example": "2023-08-03T07:42:51.127Z"
+                        },
+                        "_somethingElse": {
+                          "type": "number",
+                          "example": 0
+                        }
+                      }
+                    },
+                    "communities": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string",
+                            "example": "64cb5b86d25c4e600dccea92"
+                          },
+                          "address": {
+                            "type": "string",
+                            "example": "0x7c01Eaa85063Aa3a310E49D6b80aC02a1532d16F"
+                          },
+                          "type": {
+                            "type": "string",
+                            "example": "main"
+                          },
+                          "alias": {
+                            "type": "string",
+                            "example": "Savvy 2nd community"
+                          },
+                          "admin_id": {
+                            "type": "string",
+                            "example": "64cb5a7bd25c4e600dccea5c"
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "example": "2023-08-03T07:47:18.056Z"
+                          },
+                          "_somethingElse": {
+                            "type": "number",
+                            "example": 0
+                          }
+                        }
+                      }
+                    },
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "nfts": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "example": "ERC721"
+                              },
+                              "address": {
+                                "type": "string",
+                                "example": "0x082f1e6b323fdad28cdbbdd192c3cb3eac89d0b8"
+                              },
+                              "name": {
+                                "type": "string",
+                                "example": "Savvy NFT"
+                              },
+                              "symbol": {
+                                "type": "string",
+                                "example": "SFT"
+                              },
+                              "tokenId": {
+                                "type": "string",
+                                "example": "13"
+                              },
+                              "tokenURI": {
+                                "type": "string",
+                                "example": "'test'"
+                              },
+                              "contractAddress": {
+                                "type": "string",
+                                "example": "0x082f1e6b323fdad28cdbbdd192c3cb3eac89d0b8"
+                              }
+                            }
+                          }
+                        },
+                        "tokens": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "example": "ERC20"
+                              },
+                              "address": {
+                                "type": "string",
+                                "example": "0x2f3db557bfb47b763a4f60814030df1438135ebe"
+                              },
+                              "tokenName": {
+                                "type": "string",
+                                "example": "Savvy"
+                              },
+                              "tokenSymbol": {
+                                "type": "string",
+                                "example": "SVY"
+                              },
+                              "tokenAmount": {
+                                "type": "string",
+                                "example": "10000.00000000000000998"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "get manager data"
+                    },
+                    "admin": {
+                      "type": "object",
+                      "properties": {
+                        "_id": {
+                          "type": "string",
+                          "example": "64cb5a7bd25c4e600dccea5c"
+                        },
+                        "address": {
+                          "type": "string",
+                          "example": "0xf05Fc7E8b21bE1133c0Ccae63eb6ebCdDF4e5F78"
+                        },
+                        "ethBalance": {
+                          "type": "string",
+                          "example": "0.491076968235128108"
+                        },
+                        "chainId": {
+                          "type": "number",
+                          "example": 11155111
+                        },
+                        "email": {
+                          "type": "string",
+                          "example": "sjlee80@gmail.com"
+                        },
+                        "name": {
+                          "type": "string",
+                          "example": "이상준"
+                        },
+                        "profileImage": {
+                          "type": "string",
+                          "example": "https://lh3.googleusercontent.com/a/AAcHTteUzkPkbNWjxw4M6EzVs72GHuq7LWGFQyJL6iWT0gH5=s96-c"
+                        },
+                        "appPubKey": {
+                          "type": "string",
+                          "example": "03757c7b4796e8f42b02796607b5ee2ad23c6beb9a28e951777ac4349915b95aa2"
+                        },
+                        "plan": {
+                          "type": "string",
+                          "example": "plus"
+                        },
+                        "createdAt": {
+                          "type": "string",
+                          "example": "2023-08-03T07:42:51.127Z"
+                        },
+                        "_somethingElse": {
+                          "type": "number",
+                          "example": 0
+                        }
+                      }
+                    },
+                    "communities": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string",
+                            "example": "64cb5b86d25c4e600dccea92"
+                          },
+                          "address": {
+                            "type": "string",
+                            "example": "0x7c01Eaa85063Aa3a310E49D6b80aC02a1532d16F"
+                          },
+                          "type": {
+                            "type": "string",
+                            "example": "main"
+                          },
+                          "alias": {
+                            "type": "string",
+                            "example": "Savvy 2nd community"
+                          },
+                          "admin_id": {
+                            "type": "string",
+                            "example": "64cb5a7bd25c4e600dccea5c"
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "example": "2023-08-03T07:47:18.056Z"
+                          },
+                          "_somethingElse": {
+                            "type": "number",
+                            "example": 0
+                          }
+                        }
+                      }
+                    },
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "nfts": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "example": "ERC721"
+                              },
+                              "address": {
+                                "type": "string",
+                                "example": "0x082f1e6b323fdad28cdbbdd192c3cb3eac89d0b8"
+                              },
+                              "name": {
+                                "type": "string",
+                                "example": "Savvy NFT"
+                              },
+                              "symbol": {
+                                "type": "string",
+                                "example": "SFT"
+                              },
+                              "tokenId": {
+                                "type": "string",
+                                "example": "13"
+                              },
+                              "tokenURI": {
+                                "type": "string",
+                                "example": "'test'"
+                              },
+                              "contractAddress": {
+                                "type": "string",
+                                "example": "0x082f1e6b323fdad28cdbbdd192c3cb3eac89d0b8"
+                              }
+                            }
+                          }
+                        },
+                        "tokens": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "example": "ERC20"
+                              },
+                              "address": {
+                                "type": "string",
+                                "example": "0x2f3db557bfb47b763a4f60814030df1438135ebe"
+                              },
+                              "tokenName": {
+                                "type": "string",
+                                "example": "Savvy"
+                              },
+                              "tokenSymbol": {
+                                "type": "string",
+                                "example": "SVY"
+                              },
+                              "tokenAmount": {
+                                "type": "string",
+                                "example": "10000.00000000000000998"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Internal Server Error"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Internal Server Error"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/manager/{communityAddress}": {
+      "get": {
+        "tags": [
+          "Manager"
+        ],
+        "description": "get community data",
+        "parameters": [
+          {
+            "name": "communityAddress",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "0xADD22a3efa6f22dd60DF65CDfE096da0366eE002"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "get community data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "get community data"
+                    },
+                    "community": {
+                      "type": "object",
+                      "properties": {
+                        "_id": {
+                          "type": "string",
+                          "example": "64d19dce3525696bff82bb95"
+                        },
+                        "address": {
+                          "type": "string",
+                          "example": "0xADD22a3efa6f22dd60DF65CDfE096da0366eE002"
+                        },
+                        "type": {
+                          "type": "string",
+                          "example": "main"
+                        },
+                        "alias": {
+                          "type": "string",
+                          "example": "Savvy 2nd community"
+                        },
+                        "admin_id": {
+                          "type": "string",
+                          "example": "64cb5a7bd25c4e600dccea5c"
+                        },
+                        "createdAt": {
+                          "type": "string",
+                          "example": "2023-08-08T01:43:42.252Z"
+                        },
+                        "_somethingElse": {
+                          "type": "number",
+                          "example": 0
+                        }
+                      }
+                    },
+                    "tba": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string",
+                            "example": "64d19dd63525696bff82bb97"
+                          },
+                          "address": {
+                            "type": "string",
+                            "example": "0x0b864380E5e907f32a188760216f789f8a13562f"
+                          },
+                          "owner": {
+                            "type": "string",
+                            "example": "0x79EF3DA763754387F06022Cf66c2668854B3389B"
+                          },
+                          "level": {
+                            "type": "string",
+                            "example": "0"
+                          },
+                          "ethBalance": {
+                            "type": "string",
+                            "example": "0.0"
+                          },
+                          "tokenURI": {
+                            "type": "string",
+                            "example": "https://api.metacat.world/api/v1/get_bip_info/140"
+                          },
+                          "community_id": {
+                            "type": "string",
+                            "example": "64d19dce3525696bff82bb95"
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "example": "2023-08-08T01:43:50.782Z"
+                          },
+                          "updatedAt": {
+                            "type": "string",
+                            "example": "2023-08-08T01:43:50.782Z"
+                          },
+                          "__v": {
+                            "type": "number",
+                            "example": 0
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "get community data"
+                    },
+                    "community": {
+                      "type": "object",
+                      "properties": {
+                        "_id": {
+                          "type": "string",
+                          "example": "64d19dce3525696bff82bb95"
+                        },
+                        "address": {
+                          "type": "string",
+                          "example": "0xADD22a3efa6f22dd60DF65CDfE096da0366eE002"
+                        },
+                        "type": {
+                          "type": "string",
+                          "example": "main"
+                        },
+                        "alias": {
+                          "type": "string",
+                          "example": "Savvy 2nd community"
+                        },
+                        "admin_id": {
+                          "type": "string",
+                          "example": "64cb5a7bd25c4e600dccea5c"
+                        },
+                        "createdAt": {
+                          "type": "string",
+                          "example": "2023-08-08T01:43:42.252Z"
+                        },
+                        "_somethingElse": {
+                          "type": "number",
+                          "example": 0
+                        }
+                      }
+                    },
+                    "tba": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string",
+                            "example": "64d19dd63525696bff82bb97"
+                          },
+                          "address": {
+                            "type": "string",
+                            "example": "0x0b864380E5e907f32a188760216f789f8a13562f"
+                          },
+                          "owner": {
+                            "type": "string",
+                            "example": "0x79EF3DA763754387F06022Cf66c2668854B3389B"
+                          },
+                          "level": {
+                            "type": "string",
+                            "example": "0"
+                          },
+                          "ethBalance": {
+                            "type": "string",
+                            "example": "0.0"
+                          },
+                          "tokenURI": {
+                            "type": "string",
+                            "example": "https://api.metacat.world/api/v1/get_bip_info/140"
+                          },
+                          "community_id": {
+                            "type": "string",
+                            "example": "64d19dce3525696bff82bb95"
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "example": "2023-08-08T01:43:50.782Z"
+                          },
+                          "updatedAt": {
+                            "type": "string",
+                            "example": "2023-08-08T01:43:50.782Z"
+                          },
+                          "__v": {
+                            "type": "number",
+                            "example": 0
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Internal Server Error"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Internal Server Error"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Manager"
+        ],
+        "description": "delete community",
+        "parameters": [
+          {
+            "name": "communityAddress",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "0xADD22a3efa6f22dd60DF65CDfE096da0366eE002"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully deleted Community and tba, tba_group, and Items",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully deleted Community and tba, tba_group, and Items"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully deleted Community and tba, tba_group, and Items"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Community not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Community not found"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Community not found"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Internal Server Error"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Internal Server Error"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     },
     "/dashboard/{communityAddress}": {
@@ -496,14 +1765,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
-          },
-          {
-            "name": "",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
+            },
+            "example": "0xADD22a3efa6f22dd60DF65CDfE096da0366eE002"
           }
         ],
         "responses": {
@@ -517,6 +1780,123 @@
                     "message": {
                       "type": "string",
                       "example": "Successfully fetched TBAs"
+                    },
+                    "community": {
+                      "type": "object",
+                      "properties": {
+                        "_id": {
+                          "type": "string",
+                          "example": "64d19dce3525696bff82bb95"
+                        },
+                        "address": {
+                          "type": "string",
+                          "example": "0xADD22a3efa6f22dd60DF65CDfE096da0366eE002"
+                        },
+                        "type": {
+                          "type": "string",
+                          "example": "main"
+                        },
+                        "alias": {
+                          "type": "string",
+                          "example": "Savvy 2nd community"
+                        },
+                        "admin_id": {
+                          "type": "string",
+                          "example": "64cb5a7bd25c4e600dccea5c"
+                        },
+                        "createdAt": {
+                          "type": "string",
+                          "example": "2023-08-08T01:43:42.252Z"
+                        },
+                        "_somethingElse": {
+                          "type": "number",
+                          "example": 0
+                        }
+                      }
+                    },
+                    "tba": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string",
+                            "example": "64d19dd63525696bff82bb97"
+                          },
+                          "address": {
+                            "type": "string",
+                            "example": "0x0b864380E5e907f32a188760216f789f8a13562f"
+                          },
+                          "owner": {
+                            "type": "string",
+                            "example": "0x79EF3DA763754387F06022Cf66c2668854B3389B"
+                          },
+                          "level": {
+                            "type": "string",
+                            "example": "0"
+                          },
+                          "ethBalance": {
+                            "type": "string",
+                            "example": "0.0"
+                          },
+                          "tokenURI": {
+                            "type": "string",
+                            "example": "https://api.metacat.world/api/v1/get_bip_info/140"
+                          },
+                          "community_id": {
+                            "type": "string",
+                            "example": "64d19dce3525696bff82bb95"
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "example": "2023-08-08T01:43:50.782Z"
+                          },
+                          "updatedAt": {
+                            "type": "string",
+                            "example": "2023-08-08T01:43:50.782Z"
+                          },
+                          "__v": {
+                            "type": "number",
+                            "example": 0
+                          }
+                        }
+                      }
+                    },
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string",
+                            "example": "64c1b1217d24bcbd7faa5390"
+                          },
+                          "type": {
+                            "type": "string",
+                            "example": "ERC721"
+                          },
+                          "address": {
+                            "type": "string",
+                            "example": "0xADD22a3efa6f22dd60DF65CDfE096da0366eE002"
+                          },
+                          "tokenId": {
+                            "type": "string",
+                            "example": "56"
+                          },
+                          "tokenAmount": {
+                            "type": "string",
+                            "example": ""
+                          },
+                          "Tba_id": {
+                            "type": "string",
+                            "example": "64c1b1217d24bcbd7faa537a"
+                          },
+                          "_somethingElse": {
+                            "type": "number",
+                            "example": 0
+                          }
+                        }
+                      }
                     }
                   },
                   "xml": {
@@ -531,6 +1911,123 @@
                     "message": {
                       "type": "string",
                       "example": "Successfully fetched TBAs"
+                    },
+                    "community": {
+                      "type": "object",
+                      "properties": {
+                        "_id": {
+                          "type": "string",
+                          "example": "64d19dce3525696bff82bb95"
+                        },
+                        "address": {
+                          "type": "string",
+                          "example": "0xADD22a3efa6f22dd60DF65CDfE096da0366eE002"
+                        },
+                        "type": {
+                          "type": "string",
+                          "example": "main"
+                        },
+                        "alias": {
+                          "type": "string",
+                          "example": "Savvy 2nd community"
+                        },
+                        "admin_id": {
+                          "type": "string",
+                          "example": "64cb5a7bd25c4e600dccea5c"
+                        },
+                        "createdAt": {
+                          "type": "string",
+                          "example": "2023-08-08T01:43:42.252Z"
+                        },
+                        "_somethingElse": {
+                          "type": "number",
+                          "example": 0
+                        }
+                      }
+                    },
+                    "tba": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string",
+                            "example": "64d19dd63525696bff82bb97"
+                          },
+                          "address": {
+                            "type": "string",
+                            "example": "0x0b864380E5e907f32a188760216f789f8a13562f"
+                          },
+                          "owner": {
+                            "type": "string",
+                            "example": "0x79EF3DA763754387F06022Cf66c2668854B3389B"
+                          },
+                          "level": {
+                            "type": "string",
+                            "example": "0"
+                          },
+                          "ethBalance": {
+                            "type": "string",
+                            "example": "0.0"
+                          },
+                          "tokenURI": {
+                            "type": "string",
+                            "example": "https://api.metacat.world/api/v1/get_bip_info/140"
+                          },
+                          "community_id": {
+                            "type": "string",
+                            "example": "64d19dce3525696bff82bb95"
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "example": "2023-08-08T01:43:50.782Z"
+                          },
+                          "updatedAt": {
+                            "type": "string",
+                            "example": "2023-08-08T01:43:50.782Z"
+                          },
+                          "__v": {
+                            "type": "number",
+                            "example": 0
+                          }
+                        }
+                      }
+                    },
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string",
+                            "example": "64c1b1217d24bcbd7faa5390"
+                          },
+                          "type": {
+                            "type": "string",
+                            "example": "ERC721"
+                          },
+                          "address": {
+                            "type": "string",
+                            "example": "0xADD22a3efa6f22dd60DF65CDfE096da0366eE002"
+                          },
+                          "tokenId": {
+                            "type": "string",
+                            "example": "56"
+                          },
+                          "tokenAmount": {
+                            "type": "string",
+                            "example": ""
+                          },
+                          "Tba_id": {
+                            "type": "string",
+                            "example": "64c1b1217d24bcbd7faa537a"
+                          },
+                          "_somethingElse": {
+                            "type": "number",
+                            "example": 0
+                          }
+                        }
+                      }
                     }
                   },
                   "xml": {
@@ -541,7 +2038,37 @@
             }
           },
           "400": {
-            "description": "Bad Request"
+            "description": "No community found for this community",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "No community found for this community"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "No community found for this community"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              }
+            }
           },
           "404": {
             "description": "No TBAs found for this community",
@@ -609,974 +2136,7 @@
               }
             }
           }
-        },
-        "security": [
-          {}
-        ]
-      }
-    },
-    "/tbaAdmin/{communityAddress}": {
-      "get": {
-        "tags": [
-          "TbaAdmin"
-        ],
-        "description": "get tba by address",
-        "parameters": [
-          {
-            "name": "communityAddress",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successfully TBAs of communityAddress",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "example": "Successfully TBAs of communityAddress"
-                    }
-                  },
-                  "xml": {
-                    "name": "main"
-                  }
-                }
-              },
-              "application/xml": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "example": "Successfully TBAs of communityAddress"
-                    }
-                  },
-                  "xml": {
-                    "name": "main"
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "404": {
-            "description": "No TBAs found for this community",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string",
-                      "example": "No TBAs found for this community"
-                    }
-                  },
-                  "xml": {
-                    "name": "main"
-                  }
-                }
-              },
-              "application/xml": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string",
-                      "example": "No TBAs found for this community"
-                    }
-                  },
-                  "xml": {
-                    "name": "main"
-                  }
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string",
-                      "example": "Internal Server Error"
-                    }
-                  },
-                  "xml": {
-                    "name": "main"
-                  }
-                }
-              },
-              "application/xml": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string",
-                      "example": "Internal Server Error"
-                    }
-                  },
-                  "xml": {
-                    "name": "main"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {}
-        ]
-      }
-    },
-    "/tbaAdmin/detail/{tbaId}": {
-      "get": {
-        "tags": [
-          "TbaAdmin"
-        ],
-        "description": "get tba detail",
-        "parameters": [
-          {
-            "name": "tbaId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successfully fetched TBA detail",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "example": "Successfully fetched TBA detail"
-                    }
-                  },
-                  "xml": {
-                    "name": "main"
-                  }
-                }
-              },
-              "application/xml": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "example": "Successfully fetched TBA detail"
-                    }
-                  },
-                  "xml": {
-                    "name": "main"
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "No TBA",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string",
-                      "example": "No TBA"
-                    }
-                  },
-                  "xml": {
-                    "name": "main"
-                  }
-                }
-              },
-              "application/xml": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string",
-                      "example": "No TBA"
-                    }
-                  },
-                  "xml": {
-                    "name": "main"
-                  }
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string",
-                      "example": "Internal Server Error"
-                    }
-                  },
-                  "xml": {
-                    "name": "main"
-                  }
-                }
-              },
-              "application/xml": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string",
-                      "example": "Internal Server Error"
-                    }
-                  },
-                  "xml": {
-                    "name": "main"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {}
-        ]
-      }
-    },
-    "/tbaAdmin/createGroup": {
-      "post": {
-        "tags": [
-          "TbaAdmin"
-        ],
-        "description": "create group",
-        "parameters": [
-          {
-            "name": "",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successfully created TBA groups",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "example": "Successfully created TBA groups"
-                    }
-                  },
-                  "xml": {
-                    "name": "main"
-                  }
-                }
-              },
-              "application/xml": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "example": "Successfully created TBA groups"
-                    }
-                  },
-                  "xml": {
-                    "name": "main"
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Group name already exists",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string",
-                      "example": "Group name already exists"
-                    }
-                  },
-                  "xml": {
-                    "name": "main"
-                  }
-                }
-              },
-              "application/xml": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string",
-                      "example": "Group name already exists"
-                    }
-                  },
-                  "xml": {
-                    "name": "main"
-                  }
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string",
-                      "example": "Internal Server Error"
-                    }
-                  },
-                  "xml": {
-                    "name": "main"
-                  }
-                }
-              },
-              "application/xml": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string",
-                      "example": "Internal Server Error"
-                    }
-                  },
-                  "xml": {
-                    "name": "main"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {}
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "communityAddress": {
-                    "example": "any"
-                  },
-                  "groupName": {
-                    "example": "any"
-                  },
-                  "tbaIds": {
-                    "example": "any"
-                  }
-                }
-              }
-            }
-          }
         }
-      }
-    },
-    "/tbaAdmin/updateGroup": {
-      "put": {
-        "tags": [
-          "TbaAdmin"
-        ],
-        "description": "update group",
-        "parameters": [
-          {
-            "name": "",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successfully updated TBA groups",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "example": "Successfully updated TBA groups"
-                    }
-                  },
-                  "xml": {
-                    "name": "main"
-                  }
-                }
-              },
-              "application/xml": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "example": "Successfully updated TBA groups"
-                    }
-                  },
-                  "xml": {
-                    "name": "main"
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Group does not exist",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string",
-                      "example": "Group does not exist"
-                    }
-                  },
-                  "xml": {
-                    "name": "main"
-                  }
-                }
-              },
-              "application/xml": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string",
-                      "example": "Group does not exist"
-                    }
-                  },
-                  "xml": {
-                    "name": "main"
-                  }
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string",
-                      "example": "Internal Server Error"
-                    }
-                  },
-                  "xml": {
-                    "name": "main"
-                  }
-                }
-              },
-              "application/xml": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string",
-                      "example": "Internal Server Error"
-                    }
-                  },
-                  "xml": {
-                    "name": "main"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {}
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "id": {
-                    "example": "any"
-                  },
-                  "groupName": {
-                    "example": "any"
-                  },
-                  "tbaIds": {
-                    "example": "any"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/tbaAdmin/group/allGroups/{communityAddress}": {
-      "get": {
-        "tags": [
-          "TbaAdmin"
-        ],
-        "description": "get all groups",
-        "parameters": [
-          {
-            "name": "communityAddress",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successfully fetched all groups",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "example": "Successfully fetched all groups"
-                    }
-                  },
-                  "xml": {
-                    "name": "main"
-                  }
-                }
-              },
-              "application/xml": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "example": "Successfully fetched all groups"
-                    }
-                  },
-                  "xml": {
-                    "name": "main"
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "404": {
-            "description": "No groups found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string",
-                      "example": "No groups found"
-                    }
-                  },
-                  "xml": {
-                    "name": "main"
-                  }
-                }
-              },
-              "application/xml": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string",
-                      "example": "No groups found"
-                    }
-                  },
-                  "xml": {
-                    "name": "main"
-                  }
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string",
-                      "example": "Internal Server Error"
-                    }
-                  },
-                  "xml": {
-                    "name": "main"
-                  }
-                }
-              },
-              "application/xml": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string",
-                      "example": "Internal Server Error"
-                    }
-                  },
-                  "xml": {
-                    "name": "main"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {}
-        ]
-      }
-    },
-    "/tbaAdmin/group/{groupId}": {
-      "get": {
-        "tags": [
-          "TbaAdmin"
-        ],
-        "description": "get group tba",
-        "parameters": [
-          {
-            "name": "groupId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successfully fetched group tba",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "example": "Successfully fetched group tba"
-                    }
-                  },
-                  "xml": {
-                    "name": "main"
-                  }
-                }
-              },
-              "application/xml": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "example": "Successfully fetched group tba"
-                    }
-                  },
-                  "xml": {
-                    "name": "main"
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "No community found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string",
-                      "example": "No community found"
-                    }
-                  },
-                  "xml": {
-                    "name": "main"
-                  }
-                }
-              },
-              "application/xml": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string",
-                      "example": "No community found"
-                    }
-                  },
-                  "xml": {
-                    "name": "main"
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "No group tba found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string",
-                      "example": "No group tba found"
-                    }
-                  },
-                  "xml": {
-                    "name": "main"
-                  }
-                }
-              },
-              "application/xml": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string",
-                      "example": "No group tba found"
-                    }
-                  },
-                  "xml": {
-                    "name": "main"
-                  }
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string",
-                      "example": "Internal Server Error"
-                    }
-                  },
-                  "xml": {
-                    "name": "main"
-                  }
-                }
-              },
-              "application/xml": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string",
-                      "example": "Internal Server Error"
-                    }
-                  },
-                  "xml": {
-                    "name": "main"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {}
-        ]
-      },
-      "delete": {
-        "tags": [
-          "TbaAdmin"
-        ],
-        "description": "delete group",
-        "parameters": [
-          {
-            "name": "groupId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successfully deleted group",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "example": "Successfully deleted group"
-                    }
-                  },
-                  "xml": {
-                    "name": "main"
-                  }
-                }
-              },
-              "application/xml": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "example": "Successfully deleted group"
-                    }
-                  },
-                  "xml": {
-                    "name": "main"
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "No group found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string",
-                      "example": "No group found"
-                    }
-                  },
-                  "xml": {
-                    "name": "main"
-                  }
-                }
-              },
-              "application/xml": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string",
-                      "example": "No group found"
-                    }
-                  },
-                  "xml": {
-                    "name": "main"
-                  }
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string",
-                      "example": "Internal Server Error"
-                    }
-                  },
-                  "xml": {
-                    "name": "main"
-                  }
-                }
-              },
-              "application/xml": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string",
-                      "example": "Internal Server Error"
-                    }
-                  },
-                  "xml": {
-                    "name": "main"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {}
-        ]
       }
     },
     "/contract/create": {
@@ -1585,15 +2145,6 @@
           "Contract"
         ],
         "description": "create contract",
-        "parameters": [
-          {
-            "name": "",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
         "responses": {
           "200": {
             "description": "created new contract data",
@@ -1605,6 +2156,31 @@
                     "message": {
                       "type": "string",
                       "example": "created new contract data"
+                    },
+                    "ContractData": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "example": "64d1a3d7a24845dcd8d2ad14"
+                        },
+                        "ercType": {
+                          "type": "string",
+                          "example": "ERC721"
+                        },
+                        "contractAddress": {
+                          "type": "string",
+                          "example": "0x79c59Cf4fd46669145D7DBaB35f4DDC18BED72C0"
+                        },
+                        "contractName": {
+                          "type": "string",
+                          "example": "Event"
+                        },
+                        "community_id": {
+                          "type": "string",
+                          "example": "64d1a067c37a2d8603bb4588"
+                        }
+                      }
                     }
                   },
                   "xml": {
@@ -1619,6 +2195,31 @@
                     "message": {
                       "type": "string",
                       "example": "created new contract data"
+                    },
+                    "ContractData": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "example": "64d1a3d7a24845dcd8d2ad14"
+                        },
+                        "ercType": {
+                          "type": "string",
+                          "example": "ERC721"
+                        },
+                        "contractAddress": {
+                          "type": "string",
+                          "example": "0x79c59Cf4fd46669145D7DBaB35f4DDC18BED72C0"
+                        },
+                        "contractName": {
+                          "type": "string",
+                          "example": "Event"
+                        },
+                        "community_id": {
+                          "type": "string",
+                          "example": "64d1a067c37a2d8603bb4588"
+                        }
+                      }
                     }
                   },
                   "xml": {
@@ -1728,26 +2329,201 @@
             }
           }
         },
-        "security": [
-          {}
-        ],
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
                 "type": "object",
                 "properties": {
-                  "contractAddress": {
-                    "example": "any"
-                  },
                   "communityAddress": {
-                    "example": "any"
+                    "type": "string",
+                    "example": "0xADD22a3efa6f22dd60DF65CDfE096da0366eE002"
                   },
                   "ercType": {
-                    "example": "any"
+                    "type": "string",
+                    "example": "ERC721"
+                  },
+                  "contractAddress": {
+                    "type": "string",
+                    "example": "0x79c59Cf4fd46669145D7DBaB35f4DDC18BED72C0"
                   },
                   "contractName": {
-                    "example": "any"
+                    "type": "string",
+                    "example": "Event"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/contract/update": {
+      "put": {
+        "tags": [
+          "Contract"
+        ],
+        "description": "update contract",
+        "responses": {
+          "200": {
+            "description": "updated contract data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "updated contract data"
+                    },
+                    "ContractData": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "example": "64d1a3d7a24845dcd8d2ad14"
+                        },
+                        "ercType": {
+                          "type": "string",
+                          "example": "ERC721"
+                        },
+                        "contractAddress": {
+                          "type": "string",
+                          "example": "0x79c59Cf4fd46669145D7DBaB35f4DDC18BED72C0"
+                        },
+                        "contractName": {
+                          "type": "string",
+                          "example": "Event 2nd"
+                        }
+                      }
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "updated contract data"
+                    },
+                    "ContractData": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "example": "64d1a3d7a24845dcd8d2ad14"
+                        },
+                        "ercType": {
+                          "type": "string",
+                          "example": "ERC721"
+                        },
+                        "contractAddress": {
+                          "type": "string",
+                          "example": "0x79c59Cf4fd46669145D7DBaB35f4DDC18BED72C0"
+                        },
+                        "contractName": {
+                          "type": "string",
+                          "example": "Event 2nd"
+                        }
+                      }
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Contract does not exist",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Contract does not exist"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Contract does not exist"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Internal Server Error"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Internal Server Error"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "example": "64d1a44880b3bac1c539f9ef"
+                  },
+                  "ercType": {
+                    "type": "string",
+                    "example": "ERC721"
+                  },
+                  "contractName": {
+                    "type": "string",
+                    "example": "Event 2nd"
                   }
                 }
               }
@@ -1769,13 +2545,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -1789,6 +2558,38 @@
                     "message": {
                       "type": "string",
                       "example": "get contract"
+                    },
+                    "ContractData": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string",
+                            "example": "64d1a44880b3bac1c539f9ef"
+                          },
+                          "address": {
+                            "type": "string",
+                            "example": "0x79c59Cf4fd46669145D7DBaB35f4DDC18BED72C0"
+                          },
+                          "type": {
+                            "type": "string",
+                            "example": "ERC721"
+                          },
+                          "alias": {
+                            "type": "string",
+                            "example": "Event 2nd"
+                          },
+                          "community_id": {
+                            "type": "string",
+                            "example": "64d1a067c37a2d8603bb4588"
+                          },
+                          "_somethingElse": {
+                            "type": "number",
+                            "example": 0
+                          }
+                        }
+                      }
                     }
                   },
                   "xml": {
@@ -1803,6 +2604,38 @@
                     "message": {
                       "type": "string",
                       "example": "get contract"
+                    },
+                    "ContractData": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string",
+                            "example": "64d1a44880b3bac1c539f9ef"
+                          },
+                          "address": {
+                            "type": "string",
+                            "example": "0x79c59Cf4fd46669145D7DBaB35f4DDC18BED72C0"
+                          },
+                          "type": {
+                            "type": "string",
+                            "example": "ERC721"
+                          },
+                          "alias": {
+                            "type": "string",
+                            "example": "Event 2nd"
+                          },
+                          "community_id": {
+                            "type": "string",
+                            "example": "64d1a067c37a2d8603bb4588"
+                          },
+                          "_somethingElse": {
+                            "type": "number",
+                            "example": 0
+                          }
+                        }
+                      }
                     }
                   },
                   "xml": {
@@ -1847,7 +2680,9 @@
           }
         },
         "security": [
-          {}
+          {
+            "bearerAuth": []
+          }
         ]
       }
     },
@@ -1864,14 +2699,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
-          },
-          {
-            "name": "",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
+            },
+            "example": "0x79c59Cf4fd46669145D7DBaB35f4DDC18BED72C0"
           }
         ],
         "responses": {
@@ -1885,6 +2714,35 @@
                     "message": {
                       "type": "string",
                       "example": "get contract by address"
+                    },
+                    "ContractData": {
+                      "type": "object",
+                      "properties": {
+                        "_id": {
+                          "type": "string",
+                          "example": "64d1a44880b3bac1c539f9ef"
+                        },
+                        "address": {
+                          "type": "string",
+                          "example": "0x79c59Cf4fd46669145D7DBaB35f4DDC18BED72C0"
+                        },
+                        "type": {
+                          "type": "string",
+                          "example": "ERC721"
+                        },
+                        "alias": {
+                          "type": "string",
+                          "example": "Event 2nd"
+                        },
+                        "community_id": {
+                          "type": "string",
+                          "example": "64d1a067c37a2d8603bb4588"
+                        },
+                        "_somethingElse": {
+                          "type": "number",
+                          "example": 0
+                        }
+                      }
                     }
                   },
                   "xml": {
@@ -1899,6 +2757,35 @@
                     "message": {
                       "type": "string",
                       "example": "get contract by address"
+                    },
+                    "ContractData": {
+                      "type": "object",
+                      "properties": {
+                        "_id": {
+                          "type": "string",
+                          "example": "64d1a44880b3bac1c539f9ef"
+                        },
+                        "address": {
+                          "type": "string",
+                          "example": "0x79c59Cf4fd46669145D7DBaB35f4DDC18BED72C0"
+                        },
+                        "type": {
+                          "type": "string",
+                          "example": "ERC721"
+                        },
+                        "alias": {
+                          "type": "string",
+                          "example": "Event 2nd"
+                        },
+                        "community_id": {
+                          "type": "string",
+                          "example": "64d1a067c37a2d8603bb4588"
+                        },
+                        "_somethingElse": {
+                          "type": "number",
+                          "example": 0
+                        }
+                      }
                     }
                   },
                   "xml": {
@@ -1917,7 +2804,7 @@
                   "properties": {
                     "error": {
                       "type": "string",
-                      "example": "No contracts foundt"
+                      "example": "No contracts found"
                     }
                   },
                   "xml": {
@@ -1931,7 +2818,7 @@
                   "properties": {
                     "error": {
                       "type": "string",
-                      "example": "No contracts foundt"
+                      "example": "No contracts found"
                     }
                   },
                   "xml": {
@@ -1974,16 +2861,13 @@
               }
             }
           }
-        },
-        "security": [
-          {}
-        ]
+        }
       },
       "delete": {
         "tags": [
           "Contract"
         ],
-        "description": "delete contrac",
+        "description": "delete contract",
         "parameters": [
           {
             "name": "contractAddress",
@@ -1991,14 +2875,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
-          },
-          {
-            "name": "",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
+            },
+            "example": "0x79c59Cf4fd46669145D7DBaB35f4DDC18BED72C0"
           }
         ],
         "responses": {
@@ -2101,30 +2979,18 @@
               }
             }
           }
-        },
-        "security": [
-          {}
-        ]
+        }
       }
     },
-    "/contract/update": {
-      "put": {
+    "/tbaAdmin/createGroup": {
+      "post": {
         "tags": [
-          "Contract"
+          "TbaAdmin"
         ],
-        "description": "update contract",
-        "parameters": [
-          {
-            "name": "",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "description": "create group",
         "responses": {
           "200": {
-            "description": "updated contract data",
+            "description": "Successfully created TBA groups",
             "content": {
               "application/json": {
                 "schema": {
@@ -2132,7 +2998,26 @@
                   "properties": {
                     "message": {
                       "type": "string",
-                      "example": "updated contract data"
+                      "example": "Successfully created TBA groups"
+                    },
+                    "id": {
+                      "type": "string",
+                      "example": "64d1bfc191ccbfb961830a57"
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "test1"
+                    },
+                    "tbaIds": {
+                      "type": "array",
+                      "example": [
+                        "64d1a06fc37a2d8603bb458a",
+                        "64d1a06fc37a2d8603bb458e",
+                        "64d1a06fc37a2d8603bb458c"
+                      ],
+                      "items": {
+                        "type": "string"
+                      }
                     }
                   },
                   "xml": {
@@ -2146,7 +3031,26 @@
                   "properties": {
                     "message": {
                       "type": "string",
-                      "example": "updated contract data"
+                      "example": "Successfully created TBA groups"
+                    },
+                    "id": {
+                      "type": "string",
+                      "example": "64d1bfc191ccbfb961830a57"
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "test1"
+                    },
+                    "tbaIds": {
+                      "type": "array",
+                      "example": [
+                        "64d1a06fc37a2d8603bb458a",
+                        "64d1a06fc37a2d8603bb458e",
+                        "64d1a06fc37a2d8603bb458c"
+                      ],
+                      "items": {
+                        "type": "string"
+                      }
                     }
                   },
                   "xml": {
@@ -2156,8 +3060,8 @@
               }
             }
           },
-          "404": {
-            "description": "Contract does not exist",
+          "400": {
+            "description": "Group name already exists",
             "content": {
               "application/json": {
                 "schema": {
@@ -2165,7 +3069,7 @@
                   "properties": {
                     "error": {
                       "type": "string",
-                      "example": "Contract does not exist"
+                      "example": "Group name already exists"
                     }
                   },
                   "xml": {
@@ -2179,7 +3083,7 @@
                   "properties": {
                     "error": {
                       "type": "string",
-                      "example": "Contract does not exist"
+                      "example": "Group name already exists"
                     }
                   },
                   "xml": {
@@ -2223,23 +3127,27 @@
             }
           }
         },
-        "security": [
-          {}
-        ],
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
                 "type": "object",
                 "properties": {
-                  "id": {
-                    "example": "any"
+                  "communityAddress": {
+                    "type": "string",
+                    "example": "0xADD22a3efa6f22dd60DF65CDfE096da0366eE002"
                   },
-                  "ercType": {
-                    "example": "any"
+                  "groupName": {
+                    "type": "string",
+                    "example": "test1"
                   },
-                  "contractName": {
-                    "example": "any"
+                  "tbaIds": {
+                    "type": "array",
+                    "example": [
+                      "64d1a06fc37a2d8603bb458a",
+                      "64d1a06fc37a2d8603bb458e",
+                      "64d1a06fc37a2d8603bb458c"
+                    ]
                   }
                 }
               }
@@ -2248,154 +3156,372 @@
         }
       }
     },
-    "/manager/community/create": {
-      "post": {
+    "/tbaAdmin/updateGroup": {
+      "put": {
         "tags": [
-          "Manager"
+          "TbaAdmin"
         ],
-        "description": "create community",
-        "parameters": [
-          {
-            "name": "",
-            "in": "query",
-            "schema": {
-              "type": "string"
+        "description": "update group",
+        "responses": {
+          "200": {
+            "description": "Successfully updated TBA groups",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully updated TBA groups"
+                    },
+                    "id": {
+                      "type": "string",
+                      "example": "64d1c041490a29427d1d9732"
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "test2"
+                    },
+                    "tbaIds": {
+                      "type": "array",
+                      "example": [
+                        "64d1a06fc37a2d8603bb458a",
+                        "64d1a06fc37a2d8603bb458e",
+                        "64d1a06fc37a2d8603bb458c"
+                      ],
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully updated TBA groups"
+                    },
+                    "id": {
+                      "type": "string",
+                      "example": "64d1c041490a29427d1d9732"
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "test2"
+                    },
+                    "tbaIds": {
+                      "type": "array",
+                      "example": [
+                        "64d1a06fc37a2d8603bb458a",
+                        "64d1a06fc37a2d8603bb458e",
+                        "64d1a06fc37a2d8603bb458c"
+                      ],
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              }
             }
           },
+          "400": {
+            "description": "Group does not exist",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Group does not exist"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Group does not exist"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Internal Server Error"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Internal Server Error"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "example": "64d1c36f501a3e0190f8d4d1"
+                  },
+                  "groupName": {
+                    "type": "string",
+                    "example": "test2"
+                  },
+                  "tbaIds": {
+                    "type": "array",
+                    "example": [
+                      "64d1a06fc37a2d8603bb458a",
+                      "64d1a06fc37a2d8603bb458e",
+                      "64d1a06fc37a2d8603bb458c"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tbaAdmin/group/allGroups/{communityAddress}": {
+      "get": {
+        "tags": [
+          "TbaAdmin"
+        ],
+        "description": "get all groups by community address",
+        "parameters": [
           {
-            "name": "authorization",
-            "in": "header",
+            "name": "communityAddress",
+            "in": "path",
+            "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "example": "0xADD22a3efa6f22dd60DF65CDfE096da0366eE002"
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Successfully fetched all groups",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully fetched all groups"
+                    },
+                    "groups": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "example": "64d1c36f501a3e0190f8d4d1"
+                          },
+                          "name": {
+                            "type": "string",
+                            "example": "test2"
+                          },
+                          "TBAs": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "_id": {
+                                  "type": "string",
+                                  "example": "64d1a06fc37a2d8603bb458a"
+                                },
+                                "address": {
+                                  "type": "string",
+                                  "example": "0xFA4BbB1dfBFf505443B3e620eb5B132C2130fc05"
+                                },
+                                "owner": {
+                                  "type": "string",
+                                  "example": "0x79EF3DA763754387F06022Cf66c2668854B3389B"
+                                },
+                                "level": {
+                                  "type": "string",
+                                  "example": "0"
+                                },
+                                "ethBalance": {
+                                  "type": "string",
+                                  "example": "0.0"
+                                },
+                                "tokenURI": {
+                                  "type": "string",
+                                  "example": "https://api.metacat.world/api/v1/get_bip_info/141"
+                                },
+                                "community_id": {
+                                  "type": "string",
+                                  "example": "64d1a067c37a2d8603bb4588"
+                                },
+                                "createdAt": {
+                                  "type": "string",
+                                  "example": "2023-08-08T01:54:55.635Z"
+                                },
+                                "updatedAt": {
+                                  "type": "string",
+                                  "example": "2023-08-08T01:54:55.635Z"
+                                },
+                                "__v": {
+                                  "type": "number",
+                                  "example": 0
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully fetched all groups"
+                    },
+                    "groups": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "example": "64d1c36f501a3e0190f8d4d1"
+                          },
+                          "name": {
+                            "type": "string",
+                            "example": "test2"
+                          },
+                          "TBAs": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "_id": {
+                                  "type": "string",
+                                  "example": "64d1a06fc37a2d8603bb458a"
+                                },
+                                "address": {
+                                  "type": "string",
+                                  "example": "0xFA4BbB1dfBFf505443B3e620eb5B132C2130fc05"
+                                },
+                                "owner": {
+                                  "type": "string",
+                                  "example": "0x79EF3DA763754387F06022Cf66c2668854B3389B"
+                                },
+                                "level": {
+                                  "type": "string",
+                                  "example": "0"
+                                },
+                                "ethBalance": {
+                                  "type": "string",
+                                  "example": "0.0"
+                                },
+                                "tokenURI": {
+                                  "type": "string",
+                                  "example": "https://api.metacat.world/api/v1/get_bip_info/141"
+                                },
+                                "community_id": {
+                                  "type": "string",
+                                  "example": "64d1a067c37a2d8603bb4588"
+                                },
+                                "createdAt": {
+                                  "type": "string",
+                                  "example": "2023-08-08T01:54:55.635Z"
+                                },
+                                "updatedAt": {
+                                  "type": "string",
+                                  "example": "2023-08-08T01:54:55.635Z"
+                                },
+                                "__v": {
+                                  "type": "number",
+                                  "example": 0
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              }
+            }
           },
           "400": {
             "description": "Bad Request"
           },
-          "402": {
-            "description": "Payment Required"
-          },
           "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        },
-        "security": [
-          {}
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "address": {
-                    "example": "any"
-                  },
-                  "type": {
-                    "example": "any"
-                  },
-                  "communityName": {
-                    "example": "any"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/manager/community/update": {
-      "put": {
-        "tags": [
-          "Manager"
-        ],
-        "description": "update community",
-        "parameters": [
-          {
-            "name": "",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        },
-        "security": [
-          {}
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "id": {
-                    "example": "any"
-                  },
-                  "type": {
-                    "example": "any"
-                  },
-                  "communityName": {
-                    "example": "any"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/manager/": {
-      "get": {
-        "tags": [
-          "Manager"
-        ],
-        "description": "get manager",
-        "parameters": [
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "get manager data",
+            "description": "No groups found",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "message": {
+                    "error": {
                       "type": "string",
-                      "example": "get manager data"
+                      "example": "No groups found"
                     }
                   },
                   "xml": {
@@ -2407,9 +3533,9 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "message": {
+                    "error": {
                       "type": "string",
-                      "example": "get manager data"
+                      "example": "No groups found"
                     }
                   },
                   "xml": {
@@ -2452,38 +3578,29 @@
               }
             }
           }
-        },
-        "security": [
-          {}
-        ]
+        }
       }
     },
-    "/manager/{communityAddress}": {
+    "/tbaAdmin/group/{groupId}": {
       "get": {
         "tags": [
-          "Manager"
+          "TbaAdmin"
         ],
-        "description": "get community",
+        "description": "get group tba",
         "parameters": [
           {
-            "name": "communityAddress",
+            "name": "groupId",
             "in": "path",
             "required": true,
             "schema": {
               "type": "string"
-            }
-          },
-          {
-            "name": "",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
+            },
+            "example": "64d1c36f501a3e0190f8d4d1"
           }
         ],
         "responses": {
           "200": {
-            "description": "get community data",
+            "description": "Successfully fetched group tba",
             "content": {
               "application/json": {
                 "schema": {
@@ -2491,7 +3608,71 @@
                   "properties": {
                     "message": {
                       "type": "string",
-                      "example": "get community data"
+                      "example": "Successfully fetched group tba"
+                    },
+                    "groups": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "example": "64d1c36f501a3e0190f8d4d1"
+                          },
+                          "name": {
+                            "type": "string",
+                            "example": "test2"
+                          },
+                          "TBAs": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "_id": {
+                                  "type": "string",
+                                  "example": "64d1a06fc37a2d8603bb458a"
+                                },
+                                "address": {
+                                  "type": "string",
+                                  "example": "0xFA4BbB1dfBFf505443B3e620eb5B132C2130fc05"
+                                },
+                                "owner": {
+                                  "type": "string",
+                                  "example": "0x79EF3DA763754387F06022Cf66c2668854B3389B"
+                                },
+                                "level": {
+                                  "type": "string",
+                                  "example": "0"
+                                },
+                                "ethBalance": {
+                                  "type": "string",
+                                  "example": "0.0"
+                                },
+                                "tokenURI": {
+                                  "type": "string",
+                                  "example": "https://api.metacat.world/api/v1/get_bip_info/141"
+                                },
+                                "community_id": {
+                                  "type": "string",
+                                  "example": "64d1a067c37a2d8603bb4588"
+                                },
+                                "createdAt": {
+                                  "type": "string",
+                                  "example": "2023-08-08T01:54:55.635Z"
+                                },
+                                "updatedAt": {
+                                  "type": "string",
+                                  "example": "2023-08-08T01:54:55.635Z"
+                                },
+                                "__v": {
+                                  "type": "number",
+                                  "example": 0
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
                     }
                   },
                   "xml": {
@@ -2505,7 +3686,137 @@
                   "properties": {
                     "message": {
                       "type": "string",
-                      "example": "get community data"
+                      "example": "Successfully fetched group tba"
+                    },
+                    "groups": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "example": "64d1c36f501a3e0190f8d4d1"
+                          },
+                          "name": {
+                            "type": "string",
+                            "example": "test2"
+                          },
+                          "TBAs": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "_id": {
+                                  "type": "string",
+                                  "example": "64d1a06fc37a2d8603bb458a"
+                                },
+                                "address": {
+                                  "type": "string",
+                                  "example": "0xFA4BbB1dfBFf505443B3e620eb5B132C2130fc05"
+                                },
+                                "owner": {
+                                  "type": "string",
+                                  "example": "0x79EF3DA763754387F06022Cf66c2668854B3389B"
+                                },
+                                "level": {
+                                  "type": "string",
+                                  "example": "0"
+                                },
+                                "ethBalance": {
+                                  "type": "string",
+                                  "example": "0.0"
+                                },
+                                "tokenURI": {
+                                  "type": "string",
+                                  "example": "https://api.metacat.world/api/v1/get_bip_info/141"
+                                },
+                                "community_id": {
+                                  "type": "string",
+                                  "example": "64d1a067c37a2d8603bb4588"
+                                },
+                                "createdAt": {
+                                  "type": "string",
+                                  "example": "2023-08-08T01:54:55.635Z"
+                                },
+                                "updatedAt": {
+                                  "type": "string",
+                                  "example": "2023-08-08T01:54:55.635Z"
+                                },
+                                "__v": {
+                                  "type": "number",
+                                  "example": 0
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "No community found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "No community found"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "No community found"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No group tba found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "No group tba found"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "No group tba found"
                     }
                   },
                   "xml": {
@@ -2548,36 +3859,27 @@
               }
             }
           }
-        },
-        "security": [
-          {}
-        ]
+        }
       },
       "delete": {
         "tags": [
-          "Manager"
+          "TbaAdmin"
         ],
-        "description": "delete community",
+        "description": "delete group",
         "parameters": [
           {
-            "name": "communityAddress",
+            "name": "groupId",
             "in": "path",
             "required": true,
             "schema": {
               "type": "string"
-            }
-          },
-          {
-            "name": "",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
+            },
+            "example": "64d1c36f501a3e0190f8d4d1"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successfully deleted Community and tba, tba_group, and Items",
+            "description": "Successfully deleted group",
             "content": {
               "application/json": {
                 "schema": {
@@ -2585,7 +3887,7 @@
                   "properties": {
                     "message": {
                       "type": "string",
-                      "example": "Successfully deleted Community and tba, tba_group, and Items"
+                      "example": "Successfully deleted group"
                     }
                   },
                   "xml": {
@@ -2599,7 +3901,7 @@
                   "properties": {
                     "message": {
                       "type": "string",
-                      "example": "Successfully deleted Community and tba, tba_group, and Items"
+                      "example": "Successfully deleted group"
                     }
                   },
                   "xml": {
@@ -2610,7 +3912,7 @@
             }
           },
           "404": {
-            "description": "Community not found",
+            "description": "No group found",
             "content": {
               "application/json": {
                 "schema": {
@@ -2618,7 +3920,7 @@
                   "properties": {
                     "error": {
                       "type": "string",
-                      "example": "Community not found"
+                      "example": "No group found"
                     }
                   },
                   "xml": {
@@ -2632,7 +3934,7 @@
                   "properties": {
                     "error": {
                       "type": "string",
-                      "example": "Community not found"
+                      "example": "No group found"
                     }
                   },
                   "xml": {
@@ -2675,10 +3977,508 @@
               }
             }
           }
-        },
-        "security": [
-          {}
-        ]
+        }
+      }
+    },
+    "/tbaAdmin/{communityAddress}": {
+      "get": {
+        "tags": [
+          "TbaAdmin"
+        ],
+        "description": "get tba by address",
+        "parameters": [
+          {
+            "name": "communityAddress",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "0xADD22a3efa6f22dd60DF65CDfE096da0366eE002"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully TBAs of communityAddress",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully TBAs of communityAddress"
+                    },
+                    "TBAs": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string",
+                            "example": "64d1a06fc37a2d8603bb458a"
+                          },
+                          "address": {
+                            "type": "string",
+                            "example": "0xFA4BbB1dfBFf505443B3e620eb5B132C2130fc05"
+                          },
+                          "owner": {
+                            "type": "string",
+                            "example": "0x79EF3DA763754387F06022Cf66c2668854B3389B"
+                          },
+                          "level": {
+                            "type": "string",
+                            "example": "0"
+                          },
+                          "ethBalance": {
+                            "type": "string",
+                            "example": "0.0"
+                          },
+                          "tokenURI": {
+                            "type": "string",
+                            "example": "https://api.metacat.world/api/v1/get_bip_info/141"
+                          },
+                          "community_id": {
+                            "type": "string",
+                            "example": "64d1a067c37a2d8603bb4588"
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "example": "2023-08-08T01:54:55.635Z"
+                          },
+                          "updatedAt": {
+                            "type": "string",
+                            "example": "2023-08-08T01:54:55.635Z"
+                          },
+                          "__v": {
+                            "type": "number",
+                            "example": 0
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully TBAs of communityAddress"
+                    },
+                    "TBAs": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string",
+                            "example": "64d1a06fc37a2d8603bb458a"
+                          },
+                          "address": {
+                            "type": "string",
+                            "example": "0xFA4BbB1dfBFf505443B3e620eb5B132C2130fc05"
+                          },
+                          "owner": {
+                            "type": "string",
+                            "example": "0x79EF3DA763754387F06022Cf66c2668854B3389B"
+                          },
+                          "level": {
+                            "type": "string",
+                            "example": "0"
+                          },
+                          "ethBalance": {
+                            "type": "string",
+                            "example": "0.0"
+                          },
+                          "tokenURI": {
+                            "type": "string",
+                            "example": "https://api.metacat.world/api/v1/get_bip_info/141"
+                          },
+                          "community_id": {
+                            "type": "string",
+                            "example": "64d1a067c37a2d8603bb4588"
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "example": "2023-08-08T01:54:55.635Z"
+                          },
+                          "updatedAt": {
+                            "type": "string",
+                            "example": "2023-08-08T01:54:55.635Z"
+                          },
+                          "__v": {
+                            "type": "number",
+                            "example": 0
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "No TBAs found for this community",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "No TBAs found for this community"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "No TBAs found for this community"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Internal Server Error"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Internal Server Error"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tbaAdmin/detail/{tbaId}": {
+      "get": {
+        "tags": [
+          "TbaAdmin"
+        ],
+        "description": "get tba detail",
+        "parameters": [
+          {
+            "name": "tbaId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "64d1a06fc37a2d8603bb458a"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully fetched TBA detail",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully fetched TBA detail"
+                    },
+                    "TBA": {
+                      "type": "object",
+                      "properties": {
+                        "_id": {
+                          "type": "string",
+                          "example": "64d1a06fc37a2d8603bb458a"
+                        },
+                        "address": {
+                          "type": "string",
+                          "example": "0xFA4BbB1dfBFf505443B3e620eb5B132C2130fc05"
+                        },
+                        "owner": {
+                          "type": "string",
+                          "example": "0x79EF3DA763754387F06022Cf66c2668854B3389B"
+                        },
+                        "level": {
+                          "type": "string",
+                          "example": "0"
+                        },
+                        "ethBalance": {
+                          "type": "string",
+                          "example": "0.0"
+                        },
+                        "tokenURI": {
+                          "type": "string",
+                          "example": "https://api.metacat.world/api/v1/get_bip_info/141"
+                        },
+                        "community_id": {
+                          "type": "string",
+                          "example": "64d1a067c37a2d8603bb4588"
+                        },
+                        "createdAt": {
+                          "type": "string",
+                          "example": "2023-08-08T01:54:55.635Z"
+                        },
+                        "updatedAt": {
+                          "type": "string",
+                          "example": "2023-08-08T01:54:55.635Z"
+                        },
+                        "__v": {
+                          "type": "number",
+                          "example": 0
+                        }
+                      }
+                    },
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string",
+                            "example": "64c1b8e37ce0f68e78a006ab"
+                          },
+                          "type": {
+                            "type": "string",
+                            "example": "ERC721"
+                          },
+                          "address": {
+                            "type": "string",
+                            "example": "0xADD22a3efa6f22dd60DF65CDfE096da0366eE002"
+                          },
+                          "tokenId": {
+                            "type": "string",
+                            "example": "88"
+                          },
+                          "tokenAmount": {
+                            "type": "string",
+                            "example": ""
+                          },
+                          "Tba_id": {
+                            "type": "string",
+                            "example": "64c1b8e37ce0f68e78a0069e"
+                          },
+                          "_somethingElse": {
+                            "type": "number",
+                            "example": 0
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully fetched TBA detail"
+                    },
+                    "TBA": {
+                      "type": "object",
+                      "properties": {
+                        "_id": {
+                          "type": "string",
+                          "example": "64d1a06fc37a2d8603bb458a"
+                        },
+                        "address": {
+                          "type": "string",
+                          "example": "0xFA4BbB1dfBFf505443B3e620eb5B132C2130fc05"
+                        },
+                        "owner": {
+                          "type": "string",
+                          "example": "0x79EF3DA763754387F06022Cf66c2668854B3389B"
+                        },
+                        "level": {
+                          "type": "string",
+                          "example": "0"
+                        },
+                        "ethBalance": {
+                          "type": "string",
+                          "example": "0.0"
+                        },
+                        "tokenURI": {
+                          "type": "string",
+                          "example": "https://api.metacat.world/api/v1/get_bip_info/141"
+                        },
+                        "community_id": {
+                          "type": "string",
+                          "example": "64d1a067c37a2d8603bb4588"
+                        },
+                        "createdAt": {
+                          "type": "string",
+                          "example": "2023-08-08T01:54:55.635Z"
+                        },
+                        "updatedAt": {
+                          "type": "string",
+                          "example": "2023-08-08T01:54:55.635Z"
+                        },
+                        "__v": {
+                          "type": "number",
+                          "example": 0
+                        }
+                      }
+                    },
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string",
+                            "example": "64c1b8e37ce0f68e78a006ab"
+                          },
+                          "type": {
+                            "type": "string",
+                            "example": "ERC721"
+                          },
+                          "address": {
+                            "type": "string",
+                            "example": "0xADD22a3efa6f22dd60DF65CDfE096da0366eE002"
+                          },
+                          "tokenId": {
+                            "type": "string",
+                            "example": "88"
+                          },
+                          "tokenAmount": {
+                            "type": "string",
+                            "example": ""
+                          },
+                          "Tba_id": {
+                            "type": "string",
+                            "example": "64c1b8e37ce0f68e78a0069e"
+                          },
+                          "_somethingElse": {
+                            "type": "number",
+                            "example": 0
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No TBA",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "No TBA"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "No TBA"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Internal Server Error"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Internal Server Error"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/plan/": {
@@ -2687,32 +4487,140 @@
           "Plan"
         ],
         "description": "update plan",
-        "parameters": [
-          {
-            "name": "",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Successfully updated plan",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully updated plan"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully updated plan"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              }
+            }
           },
           "400": {
-            "description": "Bad Request"
+            "description": "No admin found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "No admin found"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "No admin found"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              }
+            }
           },
           "402": {
-            "description": "Payment Required"
+            "description": "Same plan",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Same plan"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Same plan"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              }
+            }
           },
           "500": {
-            "description": "Internal Server Error"
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Internal server error"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Internal server error"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              }
+            }
           }
         },
-        "security": [
-          {}
-        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -2720,10 +4628,12 @@
                 "type": "object",
                 "properties": {
                   "adminEmail": {
-                    "example": "any"
+                    "type": "string",
+                    "example": "sjlee80@gmail.com"
                   },
                   "plan": {
-                    "example": "any"
+                    "type": "string",
+                    "example": "plus"
                   }
                 }
               }
@@ -2738,15 +4648,6 @@
           "Ticket"
         ],
         "description": "create ticket",
-        "parameters": [
-          {
-            "name": "",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
         "responses": {
           "200": {
             "description": "Upload to IPFS success",
@@ -2758,6 +4659,18 @@
                     "message": {
                       "type": "string",
                       "example": "Upload to IPFS success"
+                    },
+                    "hash": {
+                      "type": "string",
+                      "example": "QmSUfYseq69BDffGN5H8WVFm981nj2xYw6VaWsgvdMmeur"
+                    },
+                    "numberOfTickets": {
+                      "type": "string",
+                      "example": "3"
+                    },
+                    "eventName": {
+                      "type": "string",
+                      "example": "Savvy Event"
                     }
                   },
                   "xml": {
@@ -2772,6 +4685,18 @@
                     "message": {
                       "type": "string",
                       "example": "Upload to IPFS success"
+                    },
+                    "hash": {
+                      "type": "string",
+                      "example": "QmSUfYseq69BDffGN5H8WVFm981nj2xYw6VaWsgvdMmeur"
+                    },
+                    "numberOfTickets": {
+                      "type": "string",
+                      "example": "3"
+                    },
+                    "eventName": {
+                      "type": "string",
+                      "example": "Savvy Event"
                     }
                   },
                   "xml": {
@@ -2848,32 +4773,40 @@
             }
           }
         },
-        "security": [
-          {}
-        ],
         "requestBody": {
+          "required": true,
           "content": {
-            "application/json": {
+            "multipart/form-data": {
               "schema": {
                 "type": "object",
                 "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  },
                   "eventName": {
-                    "example": "any"
+                    "type": "string",
+                    "example": "Savvy Event"
                   },
                   "date": {
-                    "example": "any"
+                    "type": "string",
+                    "example": "2023-08-12"
                   },
                   "numberOfTickets": {
-                    "example": "any"
+                    "type": "string",
+                    "example": "3"
                   },
                   "location": {
-                    "example": "any"
+                    "type": "string",
+                    "example": "Seoul"
                   },
                   "siteUrl": {
-                    "example": "any"
+                    "type": "string",
+                    "example": "https://sendbee.co.kr/event/detail/347"
                   },
                   "QR": {
-                    "example": "any"
+                    "type": "string",
+                    "example": "null"
                   }
                 }
               }
