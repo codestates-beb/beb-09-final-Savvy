@@ -200,6 +200,10 @@ export default function DashboardPageContent({ onSearch }) {
     console.log("dashboardData:", dashboardData);
   }, []);
 
+  const levelDescTba = dashboardData?.TBAs?.toSorted((a, b) => {
+    return Number(b.level) - Number(a.level);
+  });
+
   const englishShiftMap = {
     Q: "q",
     W: "w",
@@ -859,7 +863,7 @@ export default function DashboardPageContent({ onSearch }) {
               </div>
             </div>
             <div style={{ overflow: "auto", height: "11rem" }}>
-              {dashboardData?.TBAs?.map((data) => {
+              {dashboardData?.TBAs?.toReversed().map((data) => {
                 return (
                   <div
                     className="nft-list"
@@ -914,7 +918,7 @@ export default function DashboardPageContent({ onSearch }) {
           </div>
         </Box>
         <Box sx={boxStyle}>
-          <div style={textStyle}>Top item holding TBA</div>
+          <div style={textStyle}>Top level TBA</div>
           <div>
             <div
               style={{
