@@ -704,7 +704,7 @@ export default function ManagerPageContent({ web3Auth }) {
                   </button>
                   <button
                     style={{
-                      backgroundColor: "#576ff6",
+                      backgroundColor: "#f88181",
                       color: "#fff",
                       borderRadius: "0.5rem",
                       width: "4rem",

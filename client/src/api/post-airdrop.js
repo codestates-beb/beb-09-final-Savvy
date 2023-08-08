@@ -103,6 +103,7 @@ export const airdrop = async (
       signer
     );
 
+    let approveTxReceipt;
     // approve
     if (type === "ERC20") {
       const approve = await erc20Contract.approve(
@@ -111,6 +112,7 @@ export const airdrop = async (
       );
       const txReceipt = await approve.wait();
       console.log(txReceipt);
+      approveTxReceipt = txReceipt;
     } else if (type === "ERC721") {
       const approve = await erc721Contract.setApprovalForAll(
         bulkAirdropAddress,
@@ -118,6 +120,7 @@ export const airdrop = async (
       );
       const txReceipt = await approve.wait();
       console.log(txReceipt);
+      approveTxReceipt = txReceipt;
     } else if (type === "ERC1155") {
       const approve = await erc1155Contract.setApprovalForAll(
         bulkAirdropAddress,
@@ -125,8 +128,10 @@ export const airdrop = async (
       );
       const txReceipt = await approve.wait();
       console.log(txReceipt);
+      approveTxReceipt = txReceipt;
     }
 
+    let airdropTxReceipt;
     // airdrop
     if (type === "ERC20") {
       const airdrop = await bulkAirdropContract.bulkAirdropERC20(
@@ -137,6 +142,7 @@ export const airdrop = async (
       );
       const txReceipt = await airdrop.wait();
       console.log(txReceipt);
+      airdropTxReceipt = txReceipt;
     } else if (type === "ERC721") {
       const airdrop = await bulkAirdropContract.bulkAirdropERC721(
         contractAddress,
@@ -146,6 +152,7 @@ export const airdrop = async (
       );
       const txReceipt = await airdrop.wait();
       console.log(txReceipt);
+      airdropTxReceipt = txReceipt;
     } else if (type === "ERC1155") {
       const airdrop = await bulkAirdropContract.bulkAirdropERC1155(
         contractAddress,
@@ -156,9 +163,20 @@ export const airdrop = async (
       );
       const txReceipt = await airdrop.wait();
       console.log(txReceipt);
+      airdropTxReceipt = txReceipt;
     }
 
-    return true;
+    return {
+      approveTxHash: approveTxReceipt.transactionHash,
+      airdropResult: {
+        airdropTxHash: airdropTxReceipt.transactionHash,
+        airdropLogs: airdropTxReceipt.logs.map((log) => {
+          return {
+            to: `0x${log.topics[2].substring(26)}`,
+          };
+        }),
+      },
+    };
   } catch (error) {
     console.log(error);
     return;
