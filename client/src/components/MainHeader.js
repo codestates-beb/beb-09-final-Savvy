@@ -91,6 +91,14 @@ const MainHeader = () => {
     }
   };
 
+  const preventCopy = (e) => {
+    e.preventDefault();
+  };
+
+  const preventRightClick = (e) => {
+    e.preventDefault();
+  };
+
   const connectWalletStyles = {
     fontFamily: "'tektur', sans-serif",
     fontSize: "10px",
@@ -136,7 +144,7 @@ const MainHeader = () => {
     <AppBar
       position={getAppBarPosition()}
       sx={{
-        backgroundColor: "rgba(0, 0, 0, 0.15)",
+        background: "linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.01))",
         boxShadow: "none",
         height: "85px",
       }}
@@ -152,7 +160,11 @@ const MainHeader = () => {
               marginTop: "25px",
               marginLeft: "5px",
               cursor: "pointer",
+              userSelect: "none",
             }}
+            onDragStart={preventCopy}
+            onMouseDown={preventCopy}
+            onContextMenu={preventRightClick}
           />
         </Link>
         <Grid container justifyContent="flex-end">
