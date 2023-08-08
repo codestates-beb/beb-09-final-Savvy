@@ -124,7 +124,7 @@ module.exports = {
     //console.log(contractAddress);
     try {
       const contract = await Contract.findOne({ address: contractAddress });
-      console.log(contract);
+      //console.log(contract);
 
       if (contract) {
         res.status(200).json({
