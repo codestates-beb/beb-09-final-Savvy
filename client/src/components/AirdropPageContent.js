@@ -18,6 +18,13 @@ import {
   InputLabel,
   Select,
   MenuItem,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
+  Snackbar,
+  Alert,
 } from "@mui/material";
 import { TBA_GROUP } from "../assets/DUMMY_DATA";
 import AirdropProgressModal from "./AirdropProgressModal";
@@ -26,6 +33,7 @@ import AirdropProgressModal from "./AirdropProgressModal";
 import { airdrop } from "../api/post-airdrop";
 import { getAllTbaGroup } from "../api/get-all-tba-group";
 import { getContract } from "../api/get-contract";
+import { deleteTbaGroup } from "../api/delete-tba-group";
 
 const boxStyle1 = {
   backgroundColor: "#fff",
@@ -104,6 +112,10 @@ export default function AirdropPageContent({ web3Auth }) {
   const contractData = useSelector((state) => state.contract.contractData);
   const dispatch = useDispatch();
 
+  const [airdropOutput, setAirdropOutput] = useState(null);
+  const [error, setError] = useState("");
+  const [openExecute, setOpenExecute] = useState(false);
+  const [openDelete, setOpenDelete] = useState(false);
   const [tbaGroupData, setTbaGroupData] = useState([]);
   const [openProgress, setOpenProgress] = useState(false);
   const [selectedGroup, setSelectedGroup] = useState([]);
@@ -167,7 +179,7 @@ export default function AirdropPageContent({ web3Auth }) {
       }
     };
     initTbaGroup();
-  }, []);
+  }, [openDelete]);
 
   const handleGroup = (e) => {
     if (e.target.checked) {
@@ -194,7 +206,73 @@ export default function AirdropPageContent({ web3Auth }) {
       tokenIds,
       selectedTbaAddress
     );
-    console.log("response:", response);
+    if (response) {
+      setAirdropOutput(response);
+      console.log("airdropOutput:", airdropOutput);
+      console.log("response:", response);
+    } else {
+      setAirdropOutput({
+        approveTxHash: "0x",
+        airdropResult: null,
+      });
+    }
+    setOpenExecute(false);
+  };
+
+  const validateExecute = () => {
+    if (contract.type === "ERC20") {
+      if (amounts === "") {
+        setError("Please input amount");
+      } else if (selectedTbaAddress[0]?.length === 0) {
+        setError("Please select TBA group");
+      } else if (
+        selectedTbaAddress[0]?.length !== amounts?.split(", ")?.length
+      ) {
+        setError("The number of selected TBA group and amount must be same");
+      } else {
+        setError("");
+        setOpenExecute(true);
+      }
+    } else if (contract.type === "ERC721") {
+      if (tokenIds === "") {
+        setError("Please input token ID");
+      } else if (selectedTbaAddress[0]?.length === 0) {
+        setError("Please select TBA group");
+      } else if (
+        selectedTbaAddress[0]?.length !== tokenIds?.split(", ")?.length
+      ) {
+        setError("The number of selected TBA group and token ID must be same");
+      } else {
+        setError("");
+        setOpenExecute(true);
+      }
+    } else if (contract.type === "ERC1155") {
+      if (tokenIds === "") {
+        setError("Please input token ID");
+      } else if (amounts === "") {
+        setError("Please input amount");
+      } else if (selectedTbaAddress[0]?.length === 0) {
+        setError("Please select TBA group");
+      } else if (
+        selectedTbaAddress[0]?.length !== tokenIds?.split(", ")?.length ||
+        selectedTbaAddress[0]?.length !== amounts?.split(", ")?.length
+      ) {
+        setError(
+          "The number of selected TBA group, token ID and amount must be same"
+        );
+      } else {
+        setError("");
+        setOpenExecute(true);
+      }
+    }
+  };
+
+  const handleDeleteGroup = async () => {
+    selectedGroup.forEach(async (group) => {
+      const response = await deleteTbaGroup(tbaGroupData[group].id);
+    });
+    setOpenDelete(false);
+    setSelectedGroup([]);
   };
 
   return (
@@ -205,9 +283,129 @@ export default function AirdropPageContent({ web3Auth }) {
       <div className="content">
         <Box sx={boxStyle1}>
           {/* Customized TBA group */}
-          <div className="subtitle" style={textStyle1}>
-            Customized TBA group
+          <div
+            style={{ display: "flex", backgroundColor: "#fff" }}
+            className="subtitle"
+          >
+            <div style={textStyle1}>Customized TBA group</div>
+            {selectedGroup?.length > 0 ? (
+              <button
+                style={{
+                  backgroundColor: "#f88181",
+                  color: "#fff",
+                  borderRadius: "0.5rem",
+                  width: "4rem",
+                  height: "2rem",
+                  border: "none",
+                  cursor: "pointer",
+                  userSelect: "none",
+                  fontSize: "13px",
+                  fontWeight: "bold",
+                  marginLeft: "0.5rem",
+                  boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
+                }}
+                onClick={() => setOpenDelete(true)}
+              >
+                Delete
+              </button>
+            ) : null}
           </div>
+
+          {/* Delete Modal */}
+          <Dialog
+            open={openDelete}
+            sx={{
+              "& .MuiDialog-paper": {
+                width: "360px",
+                height: "180px",
+                borderRadius: "15px",
+                boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
+              },
+            }}
+          >
+            <DialogTitle
+              sx={{
+                color: "#272727",
+                fontSize: "16px",
+                fontWeight: "600",
+                marginTop: "8px",
+                marginLeft: "68px",
+                userSelect: "none",
+                whiteSpace: "nowrap",
+              }}
+            >
+              <img
+                src={process.env.PUBLIC_URL + "/managerdeleteModal.png"}
+                alt="icon"
+                style={{
+                  width: "24px",
+                  verticalAlign: "middle",
+                  marginRight: "10px",
+                }}
+              />
+              Delete Group
+            </DialogTitle>
+            <DialogContent>
+              <DialogContentText
+                sx={{
+                  color: "#838383",
+                  fontSize: "14px",
+                  fontWeight: "400",
+                  marginTop: "5px",
+                  marginLeft: "13.7px",
+                  userSelect: "none",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                Are you sure you want to delete{" "}
+                <span style={{ color: "#576ff6", fontWeight: "600" }}>
+                  Group?
+                </span>
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button
+                sx={{
+                  backgroundColor: "#f88181",
+                  color: "#fff",
+                  width: "43%",
+                  height: "40px",
+                  fontSize: "12px",
+                  fontWeight: "600",
+                  marginBottom: "5px",
+                  marginRight: "10px",
+                  borderRadius: "10px",
+                  "&:hover": {
+                    backgroundColor: "#eb6363",
+                  },
+                }}
+                onClick={() => setOpenDelete(false)}
+              >
+                Cancel
+              </Button>
+              <Button
+                variant="contained"
+                sx={{
+                  backgroundColor: "#576ff6",
+                  color: "#fff",
+                  width: "43%",
+                  height: "40px",
+                  fontSize: "12px",
+                  fontWeight: "600",
+                  marginRight: "14px",
+                  marginBottom: "5px",
+                  borderRadius: "10px",
+                  "&:hover": {
+                    backgroundColor: "#3351e2",
+                  },
+                }}
+                onClick={handleDeleteGroup}
+              >
+                Delete
+              </Button>
+            </DialogActions>
+          </Dialog>
+
           <List>
             {/* Mapping TBA groups */}
             {tbaGroupData?.map((group, idx) => {
@@ -251,7 +449,7 @@ export default function AirdropPageContent({ web3Auth }) {
                                 fontWeight: "700",
                                 boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
                               }}
-                              label={`total: ${group.TBAs.length}`}
+                              label={`total: ${group.TBAs?.length}`}
                             />
                           </div>
                         }
@@ -714,7 +912,7 @@ export default function AirdropPageContent({ web3Auth }) {
               },
               transition: "background-color 0.5s ease",
             }}
-            onClick={handleExecute}
+            onClick={validateExecute}
             variant="contained"
           >
             Execute
@@ -722,10 +920,117 @@ export default function AirdropPageContent({ web3Auth }) {
         </div>
       </div>
 
+      {/* Execute Modal */}
+      <Dialog
+        open={openExecute}
+        sx={{
+          "& .MuiDialog-paper": {
+            width: "360px",
+            height: "180px",
+            borderRadius: "15px",
+            boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
+          },
+        }}
+      >
+        <DialogTitle
+          sx={{
+            color: "#272727",
+            fontSize: "16px",
+            fontWeight: "600",
+            marginTop: "8px",
+            marginLeft: "30px",
+            userSelect: "none",
+            whiteSpace: "nowrap",
+          }}
+        >
+          <img
+            src={process.env.PUBLIC_URL + "/managerdeleteModal.png"}
+            alt="icon"
+            style={{
+              width: "24px",
+              verticalAlign: "middle",
+              marginRight: "10px",
+            }}
+          />
+          Confirm Airdrop Execute
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText
+            sx={{
+              color: "#838383",
+              fontSize: "14px",
+              fontWeight: "400",
+              marginTop: "5px",
+              marginLeft: "13.7px",
+              userSelect: "none",
+              whiteSpace: "nowrap",
+            }}
+          >
+            Are you sure you want to execute{" "}
+            <span style={{ color: "#576ff6", fontWeight: "600" }}>
+              Airdrop?
+            </span>
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button
+            sx={{
+              backgroundColor: "#f88181",
+              color: "#fff",
+              width: "43%",
+              height: "40px",
+              fontSize: "12px",
+              fontWeight: "600",
+              marginBottom: "5px",
+              marginRight: "10px",
+              borderRadius: "10px",
+              "&:hover": {
+                backgroundColor: "#eb6363",
+              },
+            }}
+            onClick={() => setOpenExecute(false)}
+          >
+            Cancel
+          </Button>
+          <Button
+            variant="contained"
+            sx={{
+              backgroundColor: "#576ff6",
+              color: "#fff",
+              width: "43%",
+              height: "40px",
+              fontSize: "12px",
+              fontWeight: "600",
+              marginRight: "14px",
+              marginBottom: "5px",
+              borderRadius: "10px",
+              "&:hover": {
+                backgroundColor: "#3351e2",
+              },
+            }}
+            onClick={handleExecute}
+          >
+            Confirm
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      <Snackbar
+        open={error !== ""}
+        autoHideDuration={3000}
+        onClose={() => setError("")}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      >
+        <Alert severity="error" sx={{ width: "100%" }}>
+          {error}
+        </Alert>
+      </Snackbar>
+
       {/* progress dialog */}
       <AirdropProgressModal
         open={openProgress}
         onClose={() => setOpenProgress(false)}
+        airdropOutput={airdropOutput}
       />
     </div>
   );
