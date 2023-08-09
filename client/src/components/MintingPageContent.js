@@ -14,7 +14,6 @@ import {
   DialogTitle,
   CircularProgress,
 } from "@mui/material";
-import UploadFileOutlinedIcon from "@mui/icons-material/UploadFileOutlined";
 
 import "../assets/MintingPageContent.css";
 import { createTicket } from "../api/post-create-ticket";
@@ -174,7 +173,16 @@ export default function MintingPageContent({ web3Auth }) {
                 onClick={() => fileInput.current.click()}
                 className="file-box"
               >
-                <UploadFileOutlinedIcon />
+                <img
+                  src={`${process.env.PUBLIC_URL}/upload.png`}
+                  alt="Upload"
+                  style={{
+                    width: "32px",
+                    height: "32px",
+                    userSelect: "none",
+                    pointerEvents: "none",
+                  }}
+                />
               </div>
             )}
 
@@ -188,6 +196,34 @@ export default function MintingPageContent({ web3Auth }) {
           <div className="ticket-box-form">
             <div className="ticket-box-input">
               <TextField
+                sx={{
+                  width: "95%",
+                  height: "50px",
+                  whiteSpace: "nowrap",
+                  backgroundColor: "#fff",
+                  boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
+                  borderRadius: "10px",
+                  marginTop: "5px",
+                  userSelect: "none",
+                  "& .MuiOutlinedInput-root": {
+                    "& fieldset": {
+                      borderColor: "transparent",
+                    },
+                    "&:hover fieldset": {
+                      borderColor: "transparent",
+                    },
+                    "&.Mui-focused fieldset": {
+                      borderColor: "transparent",
+                    },
+                  },
+                  "& .MuiInputLabel-root": {
+                    color: "#a6a4a4",
+                    fontSize: "12px",
+                    fontWeight: "bold",
+                  },
+                }}
+                autoFocus
+                margin="dense"
                 id="outlined-basic"
                 label="Event Name"
                 variant="outlined"
@@ -199,11 +235,40 @@ export default function MintingPageContent({ web3Auth }) {
             </div>
             <div className="ticket-box-input">
               <TextField
+                sx={{
+                  width: "95%",
+                  height: "50px",
+                  whiteSpace: "nowrap",
+                  backgroundColor: "#fff",
+                  boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
+                  borderRadius: "10px",
+                  marginTop: "5px",
+                  userSelect: "none",
+                  "& .MuiOutlinedInput-root": {
+                    "& fieldset": {
+                      borderColor: "transparent",
+                    },
+                    "&:hover fieldset": {
+                      borderColor: "transparent",
+                    },
+                    "&.Mui-focused fieldset": {
+                      borderColor: "transparent",
+                    },
+                  },
+                  "& .MuiInputLabel-root": {
+                    color: "#a6a4a4",
+                    fontSize: "12px",
+                    fontWeight: "bold",
+                  },
+                }}
+                autoFocus
+                margin="dense"
                 id="outlined-basic"
                 label="Date"
                 variant="outlined"
                 type="date"
                 InputLabelProps={{ shrink: true }}
+                InputProps={{ placeholder: "YYYY-MM-DD" }}
                 value={ticketInfo.date}
                 onChange={(e) =>
                   setTicketInfo({ ...ticketInfo, date: e.target.value })
@@ -214,6 +279,34 @@ export default function MintingPageContent({ web3Auth }) {
           <div className="ticket-box-form">
             <div className="ticket-box-input">
               <TextField
+                sx={{
+                  width: "97.5%",
+                  height: "50px",
+                  whiteSpace: "nowrap",
+                  backgroundColor: "#fff",
+                  boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
+                  borderRadius: "10px",
+                  marginTop: "5px",
+                  userSelect: "none",
+                  "& .MuiOutlinedInput-root": {
+                    "& fieldset": {
+                      borderColor: "transparent",
+                    },
+                    "&:hover fieldset": {
+                      borderColor: "transparent",
+                    },
+                    "&.Mui-focused fieldset": {
+                      borderColor: "transparent",
+                    },
+                  },
+                  "& .MuiInputLabel-root": {
+                    color: "#a6a4a4",
+                    fontSize: "12px",
+                    fontWeight: "bold",
+                  },
+                }}
+                autoFocus
+                margin="dense"
                 id="outlined-basic"
                 label="Number of Tickets"
                 variant="outlined"
@@ -232,6 +325,32 @@ export default function MintingPageContent({ web3Auth }) {
           <div className="ticket-box-form">
             <div className="ticket-box-input">
               <TextField
+                sx={{
+                  width: "97.5%",
+                  height: "50px",
+                  whiteSpace: "nowrap",
+                  backgroundColor: "#fff",
+                  boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
+                  borderRadius: "10px",
+                  marginTop: "5px",
+                  userSelect: "none",
+                  "& .MuiOutlinedInput-root": {
+                    "& fieldset": {
+                      borderColor: "transparent",
+                    },
+                    "&:hover fieldset": {
+                      borderColor: "transparent",
+                    },
+                    "&.Mui-focused fieldset": {
+                      borderColor: "transparent",
+                    },
+                  },
+                  "& .MuiInputLabel-root": {
+                    color: "#a6a4a4",
+                    fontSize: "12px",
+                    fontWeight: "bold",
+                  },
+                }}
                 id="outlined-basic"
                 label="Location"
                 variant="outlined"
@@ -246,6 +365,32 @@ export default function MintingPageContent({ web3Auth }) {
           <div className="ticket-box-form">
             <div className="ticket-box-input">
               <TextField
+                sx={{
+                  width: "97.5%",
+                  height: "50px",
+                  whiteSpace: "nowrap",
+                  backgroundColor: "#fff",
+                  boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
+                  borderRadius: "10px",
+                  marginTop: "5px",
+                  userSelect: "none",
+                  "& .MuiOutlinedInput-root": {
+                    "& fieldset": {
+                      borderColor: "transparent",
+                    },
+                    "&:hover fieldset": {
+                      borderColor: "transparent",
+                    },
+                    "&.Mui-focused fieldset": {
+                      borderColor: "transparent",
+                    },
+                  },
+                  "& .MuiInputLabel-root": {
+                    color: "#a6a4a4",
+                    fontSize: "12px",
+                    fontWeight: "bold",
+                  },
+                }}
                 id="outlined-basic"
                 label="Site URL"
                 variant="outlined"
@@ -268,14 +413,51 @@ export default function MintingPageContent({ web3Auth }) {
           <div className="ticket-box-btn">
             <Button
               variant="outlined"
-              style={{ color: "#576ff6" }}
+              sx={{
+                color: "#fff",
+                width: "45%",
+                height: "45px",
+                fontSize: "12px",
+                fontWeight: "bold",
+                alignSelf: "center",
+                marginTop: "20px",
+                marginRight: "15px",
+                boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
+                borderRadius: "15px",
+                border: "none",
+                userSelect: "none",
+                background:
+                  "linear-gradient(to right, #30aed6, #7f4df0, #e198c3)",
+                "&:hover": {
+                  background:
+                    "linear-gradient(to right, #239dc3, #6836da, #d075aa)",
+                  border: "none",
+                },
+                transition: "background-color 0.5s ease",
+              }}
               onClick={handlePreview}
             >
               Preview
             </Button>
             <Button
               variant="contained"
-              style={{ backgroundColor: "#576ff6" }}
+              sx={{
+                width: "45%",
+                height: "45px",
+                fontSize: "12px",
+                fontWeight: "bold",
+                alignSelf: "center",
+                marginTop: "20px",
+                border: "none",
+                boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
+                borderRadius: "15px",
+                backgroundColor: "#576ff6",
+                userSelect: "none",
+                "&:hover": {
+                  backgroundColor: "#3351e2",
+                },
+                transition: "background-color 0.5s ease",
+              }}
               onClick={() => setIsOpen(true)}
             >
               Create ticket
@@ -290,7 +472,7 @@ export default function MintingPageContent({ web3Auth }) {
             sx={{
               "& .MuiDialog-paper": {
                 width: "415px",
-                height: "190px",
+                height: "210px",
                 borderRadius: "15px",
                 boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
               },
@@ -310,7 +492,7 @@ export default function MintingPageContent({ web3Auth }) {
               id="alert-dialog-title"
             >
               <img
-                src={process.env.PUBLIC_URL + "/managermoveModal.png"}
+                src={process.env.PUBLIC_URL + "/ticketIcon.png"}
                 alt="icon"
                 style={{
                   width: "30px",
@@ -326,10 +508,10 @@ export default function MintingPageContent({ web3Auth }) {
                   color: "#838383",
                   fontSize: "14px",
                   fontWeight: "400",
-
                   userSelect: "none",
                   whiteSpace: "nowrap",
                   textAlign: "center",
+                  marginTop: "9px",
                 }}
                 id="alert-dialog-description"
               >
@@ -413,14 +595,74 @@ export default function MintingPageContent({ web3Auth }) {
               {isPreview ? (
                 <img src={previewURL && previewURL} alt="logo" />
               ) : (
-                <div className="preview-logo">Your Logo will appear here</div>
+                <div className="preview-logo">
+                  <img
+                    src={`${process.env.PUBLIC_URL}/picture.png`}
+                    alt="picture"
+                    style={{
+                      width: "32px",
+                      height: "32px",
+                      userSelect: "none",
+                      pointerEvents: "none",
+                      marginBottom: "0.5rem",
+                    }}
+                  />
+                  <div>Your Logo will appear here</div>
+                </div>
               )}
             </div>
+
+            <div className="preview-content-qr">
+              {isPreview ? (
+                <img src={QR && QR} alt="qr code" />
+              ) : (
+                <div className="preview-qr">
+                  <img
+                    src={`${process.env.PUBLIC_URL}/qrImg.png`}
+                    alt="qrImg"
+                    style={{
+                      width: "32px",
+                      height: "32px",
+                      userSelect: "none",
+                      pointerEvents: "none",
+                      marginBottom: "0.5rem",
+                    }}
+                  />
+                  <div>QR code</div>
+                </div>
+              )}
+            </div>
+
             <div className="preview-content-info">
               <div className="preview-content-info-header">
+                <img
+                  src={`${process.env.PUBLIC_URL}/name.png`}
+                  alt="name Icon"
+                  style={{
+                    width: "30px",
+                    height: "30px",
+                    marginRight: "6px",
+                    userSelect: "none",
+                    pointerEvents: "none",
+                  }}
+                />
                 {isPreview ? ticketInfo.eventName : "Event Name"}
               </div>
+
               <div className="preview-content-info-sub">
+                <img
+                  src={`${process.env.PUBLIC_URL}/sandWatch.png`}
+                  alt="sandWatch Icon"
+                  style={{
+                    width: "24px",
+                    height: "24px",
+                    marginTop: "1.5px",
+                    marginRight: "2px",
+                    marginLeft: "8px",
+                    userSelect: "none",
+                    pointerEvents: "none",
+                  }}
+                />
                 <div className="preview-content-info-sub-span">
                   {isPreview ? ticketInfo.date : "Date"}
                 </div>
@@ -428,13 +670,6 @@ export default function MintingPageContent({ web3Auth }) {
                   {isPreview ? ticketInfo.location : "Location"}
                 </div>
               </div>
-            </div>
-            <div className="preview-content-qr">
-              {isPreview ? (
-                <img src={QR && QR} alt="qr code" />
-              ) : (
-                <div className="preview-qr">QR code</div>
-              )}
             </div>
           </div>
         </div>

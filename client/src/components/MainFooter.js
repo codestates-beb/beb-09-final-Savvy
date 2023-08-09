@@ -17,7 +17,7 @@ const MainFooter = () => {
     textAlign: "center",
     fontFamily: "Dongle",
     color: "#fff",
-    marginTop: "-12px",
+    marginTop: "-20px",
     userSelect: "none",
   };
 

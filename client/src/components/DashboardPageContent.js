@@ -420,7 +420,7 @@ export default function DashboardPageContent({ onSearch }) {
         alignItems="center"
         justifyContent="center"
         width="100%"
-        marginTop={3}
+        marginTop={4.2}
         marginLeft={0.8}
         marginRight={0}
         marginBottom={3}
