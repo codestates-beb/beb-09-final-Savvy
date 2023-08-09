@@ -1,10 +1,18 @@
 const jose = require('jose');
+const { Alchemy, Network } = require('alchemy-sdk');
 
 const Tba = require('../models/tba.model');
 const Community = require('../models/community.model');
 const Admin = require('../models/admin.model');
 const Item = require('../models/item.model');
 const tba_group = require('../models/tba_group.model');
+
+// Item 가져오기 위한 alchemy 설정
+const config = {
+  apiKey: process.env.ALCHEMY_API_KEY,
+  network: Network.ETH_SEPOLIA,
+};
+const alchemy = new Alchemy(config);
 
 module.exports = {
   getTbaByAddress: async (req, res) => {
@@ -39,16 +47,48 @@ module.exports = {
 
     try {
       const tba = await Tba.findOne({ _id: tbaId });
-      //console.log(tba);
 
-      const items = await Item.find({ Tba_id: tbaId });
+      await Item.deleteMany({ Tba_id: tbaId });
+
+      const nfts = await alchemy.nft.getNftsForOwner(tba.address);
+
+      if (nfts.ownedNfts.length > 0) {
+        for (const nft of nfts.ownedNfts) {
+          const newItem = await Item.create({
+            type: nft.tokenType,
+            address: nft.contract.address,
+            tokenId: nft.tokenId,
+            tokenAmount: '',
+            Tba_id: tba._id,
+          });
+          //console.log(newItem);
+        }
+      } else {
+        console.log('No NFTs found for owner');
+      }
+
+      const erc20Tokens = await alchemy.core.getTokensForOwner(tba.address);
+      if (erc20Tokens.tokens.length > 0) {
+        for (const token of erc20Tokens.tokens) {
+          const newItem = await Item.create({
+            type: 'ERC20',
+            address: token.contractAddress,
+            tokenId: '',
+            tokenAmount: token.balance,
+            Tba_id: tba._id,
+          });
+        }
+      } else {
+        console.log('No ERC20 tokens found for owner');
+      }
       //console.log(items);
+      const updatedItems = await Item.find({ Tba_id: tbaId });
 
       if (tba) {
         res.status(200).json({
           message: 'Successfully fetched TBA details',
           TBA: tba,
-          items: items,
+          items: updatedItems,
         });
       } else {
         res.status(404).json({
