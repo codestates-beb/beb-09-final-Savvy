@@ -52,6 +52,7 @@ const MainHeader = () => {
   // Connect Wallet 버튼 클릭 시, MetaMask 연결
   const handleConnectWallet = async () => {
     const provider = await detectEthereumProvider();
+    console.log("provider", provider);
 
     const startApp = async (provider) => {
       if (provider !== window.ethereum) {
@@ -219,7 +220,10 @@ const MainHeader = () => {
               onClick={handleConnectWallet}
             >
               {wallet.accounts.length > 0
-                ? `${wallet.accounts[0].substring(0, 8)}...`
+                ? `${wallet.accounts[0].substring(
+                    0,
+                    4
+                  )}...${wallet.accounts[0].substring(37)}`
                 : "Connect Wallet"}
             </Button>
           </Grid>

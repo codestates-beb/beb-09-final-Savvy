@@ -8,11 +8,19 @@ import Button from "@mui/material/Button";
 import AccountBalanceWalletOutlinedIcon from "@mui/icons-material/AccountBalanceWalletOutlined";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import TbaModalExpBar from "./TbaModalExpBar";
+import { CopyToClipboard } from "react-copy-to-clipboard";
 
 // api
 import { getTbaById } from "../api/get-tba";
 
-function TbaModal({ open, handleClose, userId, tbaId }) {
+function TbaModal({
+  open,
+  handleClose,
+  userId,
+  tbaId,
+  tbaItemData2,
+  setTbaItemData2,
+}) {
   // 더미 데이터
   const [userData, setUserData] = useState({
     name: "Adriene Watson",
@@ -21,8 +29,11 @@ function TbaModal({ open, handleClose, userId, tbaId }) {
     text1: "Pixel Dummy Data 1",
     text2: "Pixel Dummy Data 2",
   });
-  const [tbaItemData, setTbaItemData] = useState([]);
+
   const [tbaData, setTbaData] = useState(null);
+  const [isCopied, setIsCopied] = useState(false);
+
+  console.log(tbaItemData2);
 
   useEffect(() => {
     if (open) {
@@ -30,13 +41,13 @@ function TbaModal({ open, handleClose, userId, tbaId }) {
         const response = await getTbaById(tbaId);
         // console.log(response);
         if (response) {
-          setTbaItemData(response.items);
+          setTbaItemData2(response.items);
           setTbaData(response.TBA);
         }
       };
       fetchTba();
     }
-  }, [tbaId]);
+  }, [open]);
 
   const truncateText = (text) => {
     const maxLength = 16;
@@ -151,113 +162,127 @@ function TbaModal({ open, handleClose, userId, tbaId }) {
           />
         </Typography>
 
-        <div
-          className="profile-image-box"
-          style={{
-            width: "160px",
-            height: "160px",
-            borderRadius: "50%",
-            backgroundColor: "#fff",
-            display: "flex",
-            opacity: 1.5,
-            justifyContent: "center",
-            alignItems: "center",
-            boxShadow: "0px 3px 10px rgba(0, 0, 0, 0.25)",
-            transform: "translateY(10px)",
-            marginTop: "20px",
-            marginRight: "250px",
-            marginBottom: "5px",
-            backgroundImage: `url(${process.env.PUBLIC_URL}/TbaModalImage.gif)`,
-            backgroundSize: "150%",
-            backgroundPosition: "center",
-            zIndex: "1111",
-          }}
-        >
-          <img
-            src={imageUrl}
-            alt="User"
-            style={{ width: "150px", borderRadius: "50%" }}
-            onDragStart={preventImageDrag}
-          />
-        </div>
+        <div style={{ display: "flex" }}>
+          <div
+            className="profile-image-box"
+            style={{
+              width: "160px",
+              height: "160px",
+              borderRadius: "50%",
+              backgroundColor: "#fff",
+              display: "flex",
+              opacity: 1.5,
+              justifyContent: "center",
+              alignItems: "center",
+              boxShadow: "0px 3px 10px rgba(0, 0, 0, 0.25)",
+              transform: "translateY(10px)",
+              // marginTop: "20px",
+              // marginRight: "250px",
+              // marginBottom: "5px",
+              margin: "20px 0 ",
+              backgroundImage: `url(${process.env.PUBLIC_URL}/TbaModalImage.gif)`,
+              backgroundSize: "150%",
+              backgroundPosition: "center",
+              zIndex: "1111",
+            }}
+          >
+            <img
+              src={imageUrl}
+              alt="User"
+              style={{ width: "150px", borderRadius: "50%" }}
+              onDragStart={preventImageDrag}
+            />
+          </div>
 
-        <div
-          className="nftbox"
-          style={{
-            width: "220px",
-            height: "160px",
-            backgroundColor: "#e0e0e0",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            marginTop: "-150px",
-            marginBottom: "5px",
-            marginLeft: "180px",
-            borderRadius: "15px",
-            backgroundColor: "#fff",
-            boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.25)",
-            overflowY: "auto",
-            maxHeight: "160px",
-          }}
-        >
-          {tbaItemData &&
-            tbaItemData.map((item) => (
-              <div
-                key={item._id}
-                className="nftsmallbox"
-                style={{
-                  width: "200px",
-                  height: "40px",
-                  backgroundColor: "white",
-                  borderRadius: "10px",
-                  boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.25)",
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "center",
-                  overflow: "hidden",
-                  marginTop: "5px",
-                  marginBottom: "5px",
-                  pointerEvents: "none",
-                }}
-              >
-                <img
-                  src={userData.image}
-                  alt="NFT Image"
+          <div
+            className="nftbox"
+            style={{
+              width: "220px",
+              height: "160px",
+              backgroundColor: "#e0e0e0",
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "center",
+              alignItems: "center",
+              // marginTop: "-150px",
+              // marginBottom: "5px",
+              // marginLeft: "180px",
+              margin: "30px 0 0 20px",
+              borderRadius: "15px",
+              backgroundColor: "#fff",
+              boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.25)",
+              overflow: "auto",
+              maxHeight: "160px",
+              flexWrap: "wrap",
+            }}
+          >
+            {tbaItemData2?.length !== 0 ? (
+              tbaItemData2.map((item) => (
+                <div
+                  key={item._id}
+                  className="nftsmallbox"
                   style={{
-                    width: "32px",
+                    width: "200px",
+                    height: "40px",
+                    backgroundColor: "white",
                     borderRadius: "10px",
-                    marginLeft: "10px",
-                    marginBottom: "-28px",
-                    left: "0",
-                  }}
-                />
-
-                <span
-                  style={{
-                    color: "#666",
-                    fontSize: "12px",
-                    fontWeight: "bold",
-                    transform: "translateY(-3px)",
-                    marginLeft: "53px",
-                    left: "0",
+                    boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.25)",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    overflow: "hidden",
+                    marginTop: "5px",
+                    marginBottom: "5px",
+                    pointerEvents: "none",
                   }}
                 >
-                  {truncateText(item?.address, 20)}
-                </span>
-
-                <span
-                  style={{
-                    color: "#888",
-                    fontSize: "11px",
-                    transform: "translateY(2px)",
-                    marginLeft: "53px",
-                  }}
-                >
-                  {truncateText(item?.tokenId, 20)}
-                </span>
-              </div>
-            ))}
+                  <img
+                    src={userData.image}
+                    alt="NFT Image"
+                    style={{
+                      width: "32px",
+                      borderRadius: "10px",
+                      marginLeft: "10px",
+                      marginBottom: "-28px",
+                      left: "0",
+                    }}
+                  />
+                  <CopyToClipboard
+                    text={item?.address}
+                    onCopy={(text) => {
+                      console.log(text);
+                      setIsCopied(true);
+                    }}
+                  >
+                    <span
+                      style={{
+                        color: "#666",
+                        fontSize: "12px",
+                        fontWeight: "bold",
+                        transform: "translateY(-3px)",
+                        marginLeft: "53px",
+                        zIndex: "1111",
+                      }}
+                    >
+                      {truncateText(item?.address, 20)}
+                    </span>
+                  </CopyToClipboard>
+                  <span
+                    style={{
+                      color: "#888",
+                      fontSize: "11px",
+                      transform: "translateY(2px)",
+                      marginLeft: "53px",
+                    }}
+                  >
+                    {truncateText(item?.tokenId, 20)}
+                  </span>
+                </div>
+              ))
+            ) : (
+              <div>No NFTs</div>
+            )}
+          </div>
         </div>
 
         <div
