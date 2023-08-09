@@ -599,7 +599,7 @@ export default function HomePageFifth() {
           style={{
             marginTop: "10px",
             borderRadius: "20px",
-            border: "2px solid #666",
+            border: "2px solid #576ff6",
             boxShadow: "5px 10px 120px rgba(87, 111, 246, 0.6)",
             ...styles.imgTransition,
             ...(value === 0 && isImageLoaded && styles.imgVisible),
@@ -618,7 +618,7 @@ export default function HomePageFifth() {
           style={{
             marginTop: "10px",
             borderRadius: "20px",
-            border: "2px solid #666",
+            border: "2px solid #576ff6",
             boxShadow: "5px 10px 120px rgba(87, 111, 246, 0.6)",
             ...styles.imgTransition,
             ...(value === 1 && isImageLoaded && styles.imgVisible),
@@ -635,7 +635,7 @@ export default function HomePageFifth() {
           style={{
             marginTop: "10px",
             borderRadius: "20px",
-            border: "2px solid #666",
+            border: "2px solid #576ff6",
             boxShadow: "5px 10px 120px rgba(87, 111, 246, 0.6)",
             ...styles.imgTransition,
             ...(value === 2 && styles.imgVisible),
@@ -652,7 +652,7 @@ export default function HomePageFifth() {
           style={{
             marginTop: "10px",
             borderRadius: "20px",
-            border: "2px solid #666",
+            border: "2px solid #576ff6",
             boxShadow: "5px 10px 120px rgba(87, 111, 246, 0.6)",
             ...styles.imgTransition,
             ...(value === 3 && styles.imgVisible),
@@ -669,7 +669,7 @@ export default function HomePageFifth() {
           style={{
             marginTop: "10px",
             borderRadius: "20px",
-            border: "2px solid #666",
+            border: "2px solid #576ff6",
             boxShadow: "5px 10px 120px rgba(87, 111, 246, 0.6)",
             ...styles.imgTransition,
             ...(value === 4 && styles.imgVisible),
@@ -686,7 +686,7 @@ export default function HomePageFifth() {
           style={{
             marginTop: "10px",
             borderRadius: "20px",
-            border: "2px solid #666",
+            border: "2px solid #576ff6",
             boxShadow: "5px 10px 120px rgba(87, 111, 246, 0.6)",
             ...styles.imgTransition,
             ...(value === 5 && styles.imgVisible),
@@ -703,7 +703,7 @@ export default function HomePageFifth() {
           style={{
             marginTop: "10px",
             borderRadius: "20px",
-            border: "2px solid #666",
+            border: "2px solid #576ff6",
             boxShadow: "5px 10px 120px rgba(87, 111, 246, 0.6)",
             ...styles.imgTransition,
             ...(value === 6 && styles.imgVisible),
