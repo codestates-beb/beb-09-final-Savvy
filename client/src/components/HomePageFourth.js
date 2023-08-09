@@ -80,7 +80,7 @@ const HomePageFourth = () => {
       sx={{
         background:
           "linear-gradient(0deg, rgba(0,0,0,1) 0%, #0b0b0b 10%, #0b0b0b 80%, rgba(0,0,0,1) 100%)",
-        height: "155vh",
+        height: "145vh",
       }}
     >
       <Container maxWidth="lg">

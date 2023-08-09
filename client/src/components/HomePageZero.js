@@ -130,7 +130,17 @@ const HomePageZero = () => {
             opacity: 0.75,
           }}
         />
-        With<span style={{ marginLeft: "30px" }}></span>ERC-6551 <br />
+        With<span style={{ marginLeft: "30px" }}></span>
+        <span
+          style={{
+            background: "linear-gradient(to right, #576ff6, white)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+          }}
+        >
+          ERC-6551
+        </span>
+        <br />
         The Game-Changing Standard <br />
         <Box>
           <div style={styles.pageContent}>
