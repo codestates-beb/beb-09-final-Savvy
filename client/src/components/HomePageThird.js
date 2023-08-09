@@ -1,11 +1,19 @@
 import React, { useState, useEffect } from "react";
-import Box from "@mui/material/Box";
+import { Box, styled } from "@mui/material";
+
 import Typography from "@mui/material/Typography";
+
+const Wrapper = styled("div")({
+  position: "relative",
+  width: "100%",
+  height: "100%",
+});
 
 const HomePageThird = () => {
   const containerStyle = {
-    height: "700px",
+    height: "68vh",
     background: "#000",
+    paddingBottom: "3rem",
   };
 
   const preventRightClick = (e) => {
@@ -72,6 +80,34 @@ const HomePageThird = () => {
     }
   };
 
+  const ResponsiveCubecolor = styled(Box)(({ theme }) => ({
+    position: "absolute",
+    width: "32px",
+    top: "225px",
+    left: "50%",
+    transform: "translateX(-50%)",
+    zIndex: "0",
+    [theme.breakpoints.up("xs")]: {
+      display: "none",
+    },
+    [theme.breakpoints.up("sm")]: {
+      display: "none",
+    },
+    [theme.breakpoints.up("md")]: {
+      display: "block",
+      top: "237px",
+      width: "28px",
+    },
+    [theme.breakpoints.up("lg")]: {
+      top: "225px",
+      width: "32px",
+    },
+    [theme.breakpoints.up("xl")]: {
+      top: "225px",
+      width: "32px",
+    },
+  }));
+
   useEffect(() => {
     handleResize();
     console.log("Initial marginTopValue:", marginTopValue);
@@ -83,7 +119,7 @@ const HomePageThird = () => {
 
   const styles = {
     pageContent: {
-      position: "absolute",
+      position: "relative",
       color: "#fff",
       fontSize: `${industryFontSize}px`,
       fontWeight: "bold",
@@ -92,7 +128,7 @@ const HomePageThird = () => {
       justifyContent: "center",
       alignItems: "center",
       textAlign: "center",
-      top: "1110px",
+      top: "179px",
     },
     textWithBackground: {
       display: "inline-block",
@@ -104,8 +140,8 @@ const HomePageThird = () => {
   };
 
   const typographyStyle = {
-    position: "absolute",
-    top: "1150px",
+    position: "relative",
+    top: "200px",
     width: "auto",
     color: "#fff",
     fontWeight: "bold",
@@ -125,43 +161,62 @@ const HomePageThird = () => {
       alignItems="center"
       textAlign="center"
     >
-      <Box
-        onDragStart={preventCopy}
-        onMouseDown={preventCopy}
-        onContextMenu={preventRightClick}
-        component="img"
-        src={`${process.env.PUBLIC_URL}/purplebackground.jpg`}
-        alt="purplebackground Image"
-        sx={{
-          position: "absolute",
-          width: "350px",
-          top: "1035px",
-          left: "31%",
-          transform: "translateX(-50%)",
-          opacity: "0.22",
-        }}
-      />
-      <Box
-        onDragStart={preventCopy}
-        onMouseDown={preventCopy}
-        onContextMenu={preventRightClick}
-        component="img"
-        src={`${process.env.PUBLIC_URL}/purplebackground.jpg`}
-        alt="purplebackground Image"
-        sx={{
-          position: "absolute",
-          width: "350px",
-          top: "1300px",
-          left: "62%",
-          transform: "translateX(-50%)",
-          opacity: "0.22",
-        }}
-      />
+      <Wrapper>
+        <ResponsiveCubecolor
+          onDragStart={preventCopy}
+          onMouseDown={preventCopy}
+          onContextMenu={preventRightClick}
+          component="img"
+          src={`${process.env.PUBLIC_URL}/Cubecolor.png`}
+          alt="Cubecolor Image"
+        />
+        <Box
+          onDragStart={preventCopy}
+          onMouseDown={preventCopy}
+          onContextMenu={preventRightClick}
+          component="img"
+          src={`${process.env.PUBLIC_URL}/purplebackground.jpg`}
+          alt="purplebackground Image"
+          sx={{
+            position: "absolute",
+            width: "350px",
+            top: "145px",
+            left: "31%",
+            transform: "translateX(-50%)",
+            opacity: "0.22",
+          }}
+        />
+        <Box
+          onDragStart={preventCopy}
+          onMouseDown={preventCopy}
+          onContextMenu={preventRightClick}
+          component="img"
+          src={`${process.env.PUBLIC_URL}/purplebackground.jpg`}
+          alt="purplebackground Image"
+          sx={{
+            position: "absolute",
+            width: "350px",
+            top: "380px",
+            left: "62%",
+            transform: "translateX(-50%)",
+            opacity: "0.22",
+          }}
+        />
+      </Wrapper>
       <div style={styles.pageContent}>
         <span style={styles.textWithBackground}>LEADING THE INDUSTRY</span>
       </div>
       <Typography variant="h4" style={typographyStyle}>
-        Convenient and Safe NFT Community
+        Convenient and Safe<span style={{ marginLeft: "8px" }}></span>
+        <span
+          style={{
+            background: "linear-gradient(to left, #576ff6, white)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+          }}
+        >
+          NFT Community
+        </span>
       </Typography>
       <Box
         display="flex"

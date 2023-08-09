@@ -118,7 +118,7 @@ Web3auth - google 등 web2 기업 로그인 사용하여 유저 진입장벽 낮
 
 ## 🖥️ 시작 페이지
 
-![시작화면](./client/public/homePage.png)
+![작화면](./client/public/homePage.png)
 
 ## 🖥️ Setting 페이지
 

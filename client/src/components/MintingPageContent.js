@@ -635,21 +635,24 @@ export default function MintingPageContent({ web3Auth }) {
 
             <div className="preview-content-info">
               <div className="preview-content-info-header">
-                <img
+                {/* 
+               <img
                   src={`${process.env.PUBLIC_URL}/name.png`}
                   alt="name Icon"
                   style={{
                     width: "30px",
-                    height: "30px",
+                    height: "30px"
                     marginRight: "6px",
                     userSelect: "none",
                     pointerEvents: "none",
                   }}
                 />
+                */}
                 {isPreview ? ticketInfo.eventName : "Event Name"}
               </div>
 
               <div className="preview-content-info-sub">
+                {/*
                 <img
                   src={`${process.env.PUBLIC_URL}/sandWatch.png`}
                   alt="sandWatch Icon"
@@ -663,6 +666,7 @@ export default function MintingPageContent({ web3Auth }) {
                     pointerEvents: "none",
                   }}
                 />
+                */}
                 <div className="preview-content-info-sub-span">
                   {isPreview ? ticketInfo.date : "Date"}
                 </div>
