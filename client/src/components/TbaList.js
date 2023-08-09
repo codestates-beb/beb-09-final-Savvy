@@ -225,6 +225,7 @@ function TbaList({ data = [] }) {
   const [openTbaModal, setOpenTbaModal] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
   const [tbaId, setTbaId] = useState("");
+  const [tbaItemData2, setTbaItemData2] = useState([]);
 
   useEffect(() => {
     document.addEventListener("copy", preventCopy);
@@ -253,6 +254,7 @@ function TbaList({ data = [] }) {
 
   const handleCloseTbaModal = () => {
     setOpenTbaModal(false);
+    setTbaItemData2([]);
   };
 
   const handleFilter = (option) => {
@@ -337,6 +339,8 @@ function TbaList({ data = [] }) {
         open={openTbaModal}
         handleClose={handleCloseTbaModal}
         tbaId={tbaId}
+        tbaItemData2={tbaItemData2}
+        setTbaItemData2={setTbaItemData2}
       />
       <TbaFilterButton onFilter={handleFilter} />
 
