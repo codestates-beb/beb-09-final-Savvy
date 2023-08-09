@@ -1,6 +1,5 @@
 require("dotenv").config();
 const { ethers } = require("ethers");
-const axios = require("axios");
 const mongoose = require("mongoose");
 const Tba = require('./models/tba.model');
 const Community = require('./models/community.model');
@@ -16,10 +15,6 @@ const erc6551RegistryAddress = "0x02101dfB77FDE026414827Fdc604ddAF224F0921";
 // Ethereum JSON-RPC 프로바이더 생성
 const providerUrl = process.env.INFURA_URL;
 const provider = new ethers.providers.JsonRpcProvider(providerUrl);
-
-// Ethereum 지갑 (개인 키)
-const privateKey = process.env.PRIVATE_KEY;
-
 
 // MongoDB 연결
 mongoose
@@ -46,7 +41,7 @@ const eventFilter = erc6551RegistryContract.filters.AccountCreated();
 
 // 이벤트 리스너에서 감지된 트랜잭션을 처리하는 부분
 erc6551RegistryContract.on(eventFilter, async (account, implementation, chainId, tokenContract, tokenId, salt, event) => {
-    
+
     console.log("tba 생성 감지");
 
     // 토큰 컨트랙트가 Community 컬렉션에 있는 커뮤니티 주소들과 일치하는지 확인하기 위해 모든 커뮤니티 주소를 가져옴
@@ -55,19 +50,9 @@ erc6551RegistryContract.on(eventFilter, async (account, implementation, chainId,
     // tokenContract가 communityAddresses 배열에 포함된 주소들과 일치하는지 확인하여 필터링
     const isMatchingContract = communityAddresses.some(community => community.address === tokenContract);
 
-
-
     // 만약 일치하는 커뮤니티 주소가 있을 때만 계정 정보 추가를 수행
     if (isMatchingContract) {
         console.log("ERC6551 레지스트리에서 새 트랜잭션 생성:", event);
-
-        console.log("계정 주소:", account);
-        console.log("구현 주소:", implementation);
-        console.log("체인 ID:", chainId);
-        console.log("토큰 컨트랙트 주소:", tokenContract);
-        console.log("토큰 ID:", tokenId);
-        console.log("솔트 값:", salt);
-
         // community_id 가져오기
         try {
             const community = await Community.findOne({ address: tokenContract });
@@ -86,45 +71,45 @@ erc6551RegistryContract.on(eventFilter, async (account, implementation, chainId,
                 console.log('Error occurred while getting owner');
             }
 
-            const nftContract = new ethers.Contract(
-                tokenContract,
-                nftContractAbi,
-                provider
-            );
+            // owner가 존재할 때만 계정 정보 추가
+            if (owner) {
+                const nftContract = new ethers.Contract(
+                    tokenContract,
+                    nftContractAbi,
+                    provider
+                );
 
-            let tokenURI = null;
-            try {
-                tokenURI = await nftContract.tokenURI(tokenId);
-            } catch (error) {
-                console.log('Error occurred while getting tokenURI');
+                let tokenURI = null;
+                try {
+                    tokenURI = await nftContract.tokenURI(tokenId);
+                } catch (error) {
+                    console.log('Error occurred while getting tokenURI');
+                }
+                console.log(`token uri: ${tokenURI}`);
+                console.log(`tokenId:${tokenId}`);
+
+                // ethBalance 가져오기 (account의 이더 잔액 조회)
+                const balance = await provider.getBalance(account);
+                const ethBalance = ethers.utils.formatEther(balance);
+
+                // MongoDB에 계정 정보 추가
+                await Tba.create({
+                    address: account,
+                    owner: owner,
+                    level: '',
+                    tokenURI: tokenURI,
+                    ethBalance: ethBalance,
+                    createdAt: new Date(),
+                    updatedAt: new Date(),
+                    community_id: communityId,
+                });
+
+                console.log("계정 업데이트 완료");
             }
-            console.log(`token uri: ${tokenURI}`);
-            console.log(`tokenId:${tokenId}`);
-
-
-            // ethBalance 가져오기 (account의 이더 잔액 조회)
-            const balance = await provider.getBalance(account);
-            const ethBalance = ethers.utils.formatEther(balance);
-
-            // MongoDB에 계정 정보 추가
-            await Tba.create({
-                address: account,
-                owner: owner,
-                level: '',
-                tokenURI: tokenURI,
-                ethBalance: ethBalance,
-                createdAt: new Date(),
-                updatedAt: new Date(),
-                community_id: communityId,
-            });
-
-            console.log("계정 업데이트 완료");
         } catch (error) {
             console.error("DB 업데이트 오류:", error);
         }
         console.log("트랜잭션 처리 완료");
     }
-
-
 });
 
