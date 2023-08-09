@@ -2,6 +2,12 @@ import React, { useState } from "react";
 import { Tabs, Tab, Box, Typography, Button, styled } from "@mui/material";
 import PropTypes from "prop-types";
 
+const Wrapper = styled("div")({
+  position: "relative",
+  width: "100%",
+  height: "100%",
+});
+
 const ResponsiveImage = styled("img")(({ theme }) => ({
   width: "890px",
   [theme.breakpoints.up("xs")]: {
@@ -53,30 +59,30 @@ const ResponsiveText = styled("span")(({ theme }) => ({
 
 const ResponsiveBackground = styled(Box)(({ theme }) => ({
   position: "absolute",
-  top: "3385px",
+  top: "30px",
   width: "360px",
   left: "50%",
   transform: "translateX(-50%)",
   opacity: "0.22",
   zIndex: "0",
   [theme.breakpoints.up("xs")]: {
-    top: "3600px",
+    top: "310px",
     width: "240px",
   },
   [theme.breakpoints.up("sm")]: {
-    top: "3520px",
+    top: "230px",
     width: "270px",
   },
   [theme.breakpoints.up("md")]: {
-    top: "3420px",
+    top: "80px",
     width: "300px",
   },
   [theme.breakpoints.up("lg")]: {
-    top: "3385px",
+    top: "30px",
     width: "360px",
   },
   [theme.breakpoints.up("xl")]: {
-    top: "3385px",
+    top: "30px",
     width: "360px",
   },
 }));
@@ -84,28 +90,28 @@ const ResponsiveBackground = styled(Box)(({ theme }) => ({
 const ResponsiveLogo = styled(Box)(({ theme }) => ({
   position: "absolute",
   width: "22px",
-  top: "3495px",
+  top: "165px",
   left: "50%",
   transform: "translateX(-50%)",
   zIndex: "0",
   [theme.breakpoints.up("xs")]: {
-    top: "3693px",
+    top: "407px",
     width: "16px",
   },
   [theme.breakpoints.up("sm")]: {
-    top: "3635px",
+    top: "351px",
     width: "18px",
   },
   [theme.breakpoints.up("md")]: {
-    top: "3525px",
+    top: "214px",
     width: "20px",
   },
   [theme.breakpoints.up("lg")]: {
-    top: "3495px",
+    top: "165px",
     width: "22px",
   },
   [theme.breakpoints.up("xl")]: {
-    top: "3495px",
+    top: "165px",
     width: "22px",
   },
 }));
@@ -123,7 +129,8 @@ const styles = {
     opacity: 1,
   },
   pageContent: {
-    position: "absolute",
+    position: "relative",
+    marginBottom: "15px",
     color: "#fff",
     fontSize: `16px`,
     fontWeight: "bold",
@@ -132,7 +139,6 @@ const styles = {
     justifyContent: "center",
     alignItems: "center",
     textAlign: "center",
-    top: "3525px",
     zIndex: "1",
   },
   textWithBackground: {
@@ -197,29 +203,24 @@ export default function HomePageFifth() {
         userSelect: "none",
       }}
     >
-      <ResponsiveBackground
-        onDragStart={preventCopy}
-        onMouseDown={preventCopy}
-        onContextMenu={preventRightClick}
-        component="img"
-        src={`${process.env.PUBLIC_URL}/purplebackground.jpg`}
-        alt="purplebackground Image"
-      />
-      <ResponsiveLogo
-        onDragStart={preventCopy}
-        onMouseDown={preventCopy}
-        onContextMenu={preventRightClick}
-        component="img"
-        src={`${process.env.PUBLIC_URL}/logopurple.png`}
-        alt="logopurple Image"
-        sx={{
-          position: "absolute",
-          width: "22px",
-          left: "50%",
-          transform: "translateX(-50%)",
-          zIndex: "0",
-        }}
-      />
+      <Wrapper>
+        <ResponsiveBackground
+          onDragStart={preventCopy}
+          onMouseDown={preventCopy}
+          onContextMenu={preventRightClick}
+          component="img"
+          src={`${process.env.PUBLIC_URL}/purplebackground.jpg`}
+          alt="purplebackground Image"
+        />
+        <ResponsiveLogo
+          onDragStart={preventCopy}
+          onMouseDown={preventCopy}
+          onContextMenu={preventRightClick}
+          component="img"
+          src={`${process.env.PUBLIC_URL}/logopurple.png`}
+          alt="logopurple Image"
+        />
+      </Wrapper>
       <div style={styles.pageContent}>
         <ResponsiveText>All categories and content</ResponsiveText>
       </div>
@@ -249,7 +250,16 @@ export default function HomePageFifth() {
           zIndex: "1",
         }}
       >
-        Various Contents of Savvy
+        Various Contents of<span style={{ marginLeft: "8.5px" }}></span>
+        <span
+          style={{
+            background: "linear-gradient(to left, #576ff6, white)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+          }}
+        >
+          Savvy
+        </span>
       </Typography>
 
       <Tabs
@@ -599,7 +609,7 @@ export default function HomePageFifth() {
           style={{
             marginTop: "10px",
             borderRadius: "20px",
-            border: "2px solid #666",
+            border: "2px solid #576ff6",
             boxShadow: "5px 10px 120px rgba(87, 111, 246, 0.6)",
             ...styles.imgTransition,
             ...(value === 0 && isImageLoaded && styles.imgVisible),
@@ -618,7 +628,7 @@ export default function HomePageFifth() {
           style={{
             marginTop: "10px",
             borderRadius: "20px",
-            border: "2px solid #666",
+            border: "2px solid #576ff6",
             boxShadow: "5px 10px 120px rgba(87, 111, 246, 0.6)",
             ...styles.imgTransition,
             ...(value === 1 && isImageLoaded && styles.imgVisible),
@@ -635,7 +645,7 @@ export default function HomePageFifth() {
           style={{
             marginTop: "10px",
             borderRadius: "20px",
-            border: "2px solid #666",
+            border: "2px solid #576ff6",
             boxShadow: "5px 10px 120px rgba(87, 111, 246, 0.6)",
             ...styles.imgTransition,
             ...(value === 2 && styles.imgVisible),
@@ -652,7 +662,7 @@ export default function HomePageFifth() {
           style={{
             marginTop: "10px",
             borderRadius: "20px",
-            border: "2px solid #666",
+            border: "2px solid #576ff6",
             boxShadow: "5px 10px 120px rgba(87, 111, 246, 0.6)",
             ...styles.imgTransition,
             ...(value === 3 && styles.imgVisible),
@@ -669,7 +679,7 @@ export default function HomePageFifth() {
           style={{
             marginTop: "10px",
             borderRadius: "20px",
-            border: "2px solid #666",
+            border: "2px solid #576ff6",
             boxShadow: "5px 10px 120px rgba(87, 111, 246, 0.6)",
             ...styles.imgTransition,
             ...(value === 4 && styles.imgVisible),
@@ -686,7 +696,7 @@ export default function HomePageFifth() {
           style={{
             marginTop: "10px",
             borderRadius: "20px",
-            border: "2px solid #666",
+            border: "2px solid #576ff6",
             boxShadow: "5px 10px 120px rgba(87, 111, 246, 0.6)",
             ...styles.imgTransition,
             ...(value === 5 && styles.imgVisible),
@@ -703,7 +713,7 @@ export default function HomePageFifth() {
           style={{
             marginTop: "10px",
             borderRadius: "20px",
-            border: "2px solid #666",
+            border: "2px solid #576ff6",
             boxShadow: "5px 10px 120px rgba(87, 111, 246, 0.6)",
             ...styles.imgTransition,
             ...(value === 6 && styles.imgVisible),

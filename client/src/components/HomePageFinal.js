@@ -259,7 +259,16 @@ function HomePageFinal() {
     >
       <StyledHeaderTypography variant="h4">Q&A</StyledHeaderTypography>
       <StyledSubheaderTypography>
-        You can check out Savvy's FAQ
+        You can check out<span style={{ marginLeft: "5px" }}></span>
+        <span
+          style={{
+            background: "linear-gradient(to left, #576ff6, white)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+          }}
+        >
+          Savvy's FAQ
+        </span>
       </StyledSubheaderTypography>
       <div
         style={{
