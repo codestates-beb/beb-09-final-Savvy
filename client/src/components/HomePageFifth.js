@@ -613,7 +613,7 @@ export default function HomePageFifth() {
           onDragStart={preventCopy}
           onMouseDown={preventCopy}
           onContextMenu={preventRightClick}
-          src="/airdroppage.png"
+          src="/TBApage.png"
           alt="Description"
           style={{
             marginTop: "10px",
@@ -630,7 +630,7 @@ export default function HomePageFifth() {
           onDragStart={preventCopy}
           onMouseDown={preventCopy}
           onContextMenu={preventRightClick}
-          src="/contractspage.png"
+          src="/contractpage.png"
           alt="Description"
           style={{
             marginTop: "10px",
@@ -647,7 +647,7 @@ export default function HomePageFifth() {
           onDragStart={preventCopy}
           onMouseDown={preventCopy}
           onContextMenu={preventRightClick}
-          src="/dashboardpage.png"
+          src="/airdroppage.png"
           alt="Description"
           style={{
             marginTop: "10px",
@@ -664,7 +664,7 @@ export default function HomePageFifth() {
           onDragStart={preventCopy}
           onMouseDown={preventCopy}
           onContextMenu={preventRightClick}
-          src="/airdroppage.png"
+          src="/managerpage.png"
           alt="Description"
           style={{
             marginTop: "10px",
@@ -681,7 +681,7 @@ export default function HomePageFifth() {
           onDragStart={preventCopy}
           onMouseDown={preventCopy}
           onContextMenu={preventRightClick}
-          src="/contractspage.png"
+          src="/Ticketpage.png"
           alt="Description"
           style={{
             marginTop: "10px",
@@ -698,7 +698,7 @@ export default function HomePageFifth() {
           onDragStart={preventCopy}
           onMouseDown={preventCopy}
           onContextMenu={preventRightClick}
-          src="/dashboardpage.png"
+          src="/settingpage.png"
           alt="Description"
           style={{
             marginTop: "10px",

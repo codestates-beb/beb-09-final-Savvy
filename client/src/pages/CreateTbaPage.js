@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import MainHeader from "../components/MainHeader";
 import MainFooter from "../components/MainFooter";
 import CreateTbaMain from "../components/CreateTbaMain";
@@ -8,7 +8,7 @@ import { styled } from "@mui/system";
 const Container = styled("div")({
   position: "relative",
   zIndex: 0,
-  backgroundColor: "black",
+  backgroundColor: "#000",
 });
 
 const SignupContainer = styled("div")(({ theme }) => ({
@@ -78,6 +78,14 @@ const HeaderContainer = styled("div")(({ theme }) => ({
 }));
 
 export default function CreateTbaPage() {
+  useEffect(() => {
+    document.body.style.backgroundColor = "#000";
+
+    return () => {
+      document.body.style.backgroundColor = "";
+    };
+  }, []);
+
   return (
     <Container>
       <HeaderContainer>

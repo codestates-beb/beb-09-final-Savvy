@@ -37,17 +37,15 @@ const activeStyle = {
   fontSize: "14px",
   fontWeight: "600",
   marginTop: "15px",
-  fontFamily: "'tektur', sans-serif",
   transition: "transform 0.3s ease, box-shadow 0.3s ease",
   position: "relative",
 };
 
 const inactiveStyle = {
-  color: "#a6a4a4",
+  color: "#383838",
   fontSize: "14px",
-  fontWeight: "500",
+  fontWeight: "600",
   marginTop: "15px",
-  fontFamily: "'tektur', sans-serif",
   transition: "transform 0.3s ease, box-shadow 0.3s ease",
 };
 
@@ -74,6 +72,11 @@ const tbaiconStyles = {
 const contractsiconStyles = {
   width: "28px",
   marginLeft: "3px",
+};
+
+const ticketIconStyles = {
+  width: "32px",
+  marginRight: "1px",
 };
 
 const airdropIconStyles = {
@@ -234,9 +237,9 @@ export default function SideNav() {
                 onClick={() => setCollapsed((prev) => !prev)}
                 icon={
                   <img
-                    src={process.env.PUBLIC_URL + "/ManagerIcon.png"}
+                    src={process.env.PUBLIC_URL + "/ticketIcon.png"}
                     alt="Custom Icon"
-                    style={managericonStyles}
+                    style={ticketIconStyles}
                   />
                 }
                 component={<Link to={`/mint/${addressCurrent}`} />}
