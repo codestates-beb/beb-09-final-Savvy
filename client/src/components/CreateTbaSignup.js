@@ -46,11 +46,14 @@ export default function Login() {
       setNftId("");
       try {
         const result = await postTxHash(txHash);
+        return;
       } catch (e) {
         console.log(e);
+        return;
       }
     } catch (error) {
       console.log(error);
+      return;
     }
   };
 
@@ -170,7 +173,9 @@ export default function Login() {
       >
         <TextField
           value={address}
-          onChange={(event) => setAddress(event.target.value)}
+          onChange={(event) => {
+            setAddress(event.target.value);
+          }}
           margin="normal"
           required
           sx={{
