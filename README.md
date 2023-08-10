@@ -8,7 +8,14 @@
 
 - 박찬우(팀장)
 
-  (프론트엔드, 백엔드, 컨트랙트)
+  프론트엔드, DB, 컨트랙트
+
+  - 프로젝트 기획 및 관리
+  - 데이터베이스 설계
+  - React + Redux를 활용한 프론트엔드 구현
+  - API 연동
+  - IPFS 및 Multer 사용해 API 구현(NFT Ticket Minting)
+  - Foundry 활용하여 스마트 컨트랙트 개발 및 배포
 
 <br>
 
