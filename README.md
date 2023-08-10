@@ -27,6 +27,12 @@
 
   백엔드
 
+  - node.js express framework를 사용하여 server 구현
+  - Mongoose(ODM)를 사영하여 MongoDB 연동
+  - 실시간 Tracking Daemon.js 구현
+  - AWS EC2 서비스를 사용하여 Server 배포
+  - AWS S3 서비스를 사용하여 Client 배포
+
 <br>
 
 - 이상준
