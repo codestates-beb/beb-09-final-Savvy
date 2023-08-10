@@ -1,0 +1,35 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node app.js",
+    "start:dev": "nodemon --ignore swagger/ app.js",
+    "start:client": "nodemon client.js",
+    "start:aws": "pm2 start app.js",
+    "start:daemon": "pm2 start daemon.js --watch",
+    "start:swagger": "node ./swagger/swagger.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@pinata/sdk": "^2.1.0",
+    "@tokenbound/sdk": "^0.3.1",
+    "alchemy-sdk": "^2.9.2",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "ethers": "5.7",
+    "express": "^4.18.2",
+    "jose": "^4.14.4",
+    "mongoose": "^7.3.4",
+    "multer": "^1.4.5-lts.1",
+    "nodemon": "^3.0.1",
+    "pm2": "^5.3.0",
+    "swagger-autogen": "^2.23.5",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.0"
+  }
+}

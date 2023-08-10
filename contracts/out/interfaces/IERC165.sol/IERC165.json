@@ -1,0 +1,51 @@
+{
+  "abi": [],
+  "bytecode": {
+    "object": "0x",
+    "linkReferences": {}
+  },
+  "deployedBytecode": {
+    "object": "0x",
+    "linkReferences": {}
+  },
+  "ast": {
+    "absolutePath": "lib/openzeppelin-contracts/contracts/interfaces/IERC165.sol",
+    "id": 38957,
+    "exportedSymbols": {
+      "IERC165": [
+        40842
+      ]
+    },
+    "nodeType": "SourceUnit",
+    "src": "91:70:15",
+    "nodes": [
+      {
+        "id": 38955,
+        "nodeType": "PragmaDirective",
+        "src": "91:23:15",
+        "nodes": [],
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".0"
+        ]
+      },
+      {
+        "id": 38956,
+        "nodeType": "ImportDirective",
+        "src": "116:44:15",
+        "nodes": [],
+        "absolutePath": "lib/openzeppelin-contracts/contracts/utils/introspection/IERC165.sol",
+        "file": "../utils/introspection/IERC165.sol",
+        "nameLocation": "-1:-1:-1",
+        "scope": 38957,
+        "sourceUnit": 40843,
+        "symbolAliases": [],
+        "unitAlias": ""
+      }
+    ],
+    "license": "MIT"
+  },
+  "id": 15
+}

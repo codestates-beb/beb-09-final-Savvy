@@ -1,0 +1,20 @@
+#sideNav {
+  height: 100vh;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+#admin {
+  bottom: 0;
+}
+
+#sidebar-footer {
+  margin: 1rem auto;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border-radius: 0.5rem;
+  box-Shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+  box-sizing: border-box;
+  width: 85%;
+  padding: 0.5rem;
+}
