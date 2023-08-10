@@ -1,4 +1,4 @@
-# beb-09-final-01
+# beb-09-final-Savvy
 
 ## 팀명
 
