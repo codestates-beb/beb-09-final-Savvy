@@ -115,11 +115,11 @@ $ foundryup
 
 - ## Contracts
 
-<a href="https://github.com/foundry-rs/foundry" target="_blank"><img src="https://img.shields.io/badge/foundry-003366?style=for-the-badge&logoColor=white"></a>
-<img src="https://img.shields.io/badge/solidity-363636?style=for-the-badge&logo=solidity&logoColor=white">
-<img src="https://img.shields.io/badge/openzeppelin-4E5EE4?style=for-the-badge&logo=openzeppelin&logoColor=white">
+  <a href="https://github.com/foundry-rs/foundry" target="_blank"><img src="https://img.shields.io/badge/foundry-003366?style=for-the-badge&logoColor=white"></a>
+  <img src="https://img.shields.io/badge/solidity-363636?style=for-the-badge&logo=solidity&logoColor=white">
+  <img src="https://img.shields.io/badge/openzeppelin-4E5EE4?style=for-the-badge&logo=openzeppelin&logoColor=white">
 
-> 컨트랙트 배포(`forge`) 및 로컬 블록체인 노드 운영(`anvil`)
+  > 컨트랙트 배포(`forge`) 및 로컬 블록체인 노드 운영(`anvil`)
 
 - ## Backend
 
