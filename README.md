@@ -1,5 +1,6 @@
 # Savvy
 
+
 ![Logo](./client/public/teamLogo.png)
 
 ## 프로젝트 소개
