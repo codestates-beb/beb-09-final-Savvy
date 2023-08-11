@@ -2,12 +2,6 @@ import React, { useState } from "react";
 import { Tabs, Tab, Box, Typography, Button, styled } from "@mui/material";
 import PropTypes from "prop-types";
 
-const Wrapper = styled("div")({
-  position: "relative",
-  width: "100%",
-  height: "100%",
-});
-
 const ResponsiveImage = styled("img")(({ theme }) => ({
   width: "890px",
   [theme.breakpoints.up("xs")]: {
@@ -58,60 +52,65 @@ const ResponsiveText = styled("span")(({ theme }) => ({
 }));
 
 const ResponsiveBackground = styled(Box)(({ theme }) => ({
-  position: "absolute",
-  top: "30px",
+  position: "relative",
+  top: "140px",
   width: "360px",
-  left: "50%",
+  left: "200px",
   transform: "translateX(-50%)",
   opacity: "0.22",
   zIndex: "0",
   [theme.breakpoints.up("xs")]: {
-    top: "310px",
+    top: "290px",
     width: "240px",
+    left: "125px",
   },
   [theme.breakpoints.up("sm")]: {
-    top: "230px",
+    top: "240px",
     width: "270px",
+    left: "145px",
   },
   [theme.breakpoints.up("md")]: {
-    top: "80px",
+    top: "140px",
     width: "300px",
+    left: "160px",
   },
   [theme.breakpoints.up("lg")]: {
-    top: "30px",
+    top: "140px",
     width: "360px",
+    left: "200px",
   },
   [theme.breakpoints.up("xl")]: {
-    top: "30px",
+    top: "140px",
     width: "360px",
+    left: "200px",
   },
 }));
 
 const ResponsiveLogo = styled(Box)(({ theme }) => ({
-  position: "absolute",
+  position: "relative",
   width: "22px",
-  top: "165px",
-  left: "50%",
+  top: "-10px",
+  left: "1%",
   transform: "translateX(-50%)",
   zIndex: "0",
   [theme.breakpoints.up("xs")]: {
-    top: "407px",
-    width: "16px",
+    top: "187px",
+    width: "14px",
   },
   [theme.breakpoints.up("sm")]: {
-    top: "351px",
+    top: "132px",
     width: "18px",
   },
   [theme.breakpoints.up("md")]: {
-    top: "214px",
+    top: "23px",
     width: "20px",
   },
   [theme.breakpoints.up("lg")]: {
-    top: "165px",
+    top: "-10px",
     width: "22px",
   },
   [theme.breakpoints.up("xl")]: {
-    top: "165px",
+    top: "-10px",
     width: "22px",
   },
 }));
@@ -203,24 +202,23 @@ export default function HomePageFifth() {
         userSelect: "none",
       }}
     >
-      <Wrapper>
-        <ResponsiveBackground
-          onDragStart={preventCopy}
-          onMouseDown={preventCopy}
-          onContextMenu={preventRightClick}
-          component="img"
-          src={`${process.env.PUBLIC_URL}/purplebackground.jpg`}
-          alt="purplebackground Image"
-        />
-        <ResponsiveLogo
-          onDragStart={preventCopy}
-          onMouseDown={preventCopy}
-          onContextMenu={preventRightClick}
-          component="img"
-          src={`${process.env.PUBLIC_URL}/logopurple.png`}
-          alt="logopurple Image"
-        />
-      </Wrapper>
+      <ResponsiveBackground
+        onDragStart={preventCopy}
+        onMouseDown={preventCopy}
+        onContextMenu={preventRightClick}
+        component="img"
+        src={`${process.env.PUBLIC_URL}/purplebackground.jpg`}
+        alt="purplebackground Image"
+      />
+      <ResponsiveLogo
+        onDragStart={preventCopy}
+        onMouseDown={preventCopy}
+        onContextMenu={preventRightClick}
+        component="img"
+        src={`${process.env.PUBLIC_URL}/logopurple.png`}
+        alt="logopurple Image"
+      />
+
       <div style={styles.pageContent}>
         <ResponsiveText>All categories and content</ResponsiveText>
       </div>

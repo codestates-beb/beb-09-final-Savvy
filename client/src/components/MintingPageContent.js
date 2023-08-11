@@ -523,6 +523,10 @@ export default function MintingPageContent({ web3Auth }) {
                     <a
                       href={`https://sepolia.etherscan.io/tx/${mintTxHash}`}
                       target="_blank"
+                      style={{
+                        color: "#576ff6",
+                        fontWeight: "600",
+                      }}
                     >
                       Etherscan
                     </a>
