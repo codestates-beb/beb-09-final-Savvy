@@ -662,7 +662,10 @@ export default function SettingPageContent({ web3Auth }) {
                             position: "absolute",
                             top: "42rem",
                             marginLeft: "-6.6rem",
-                            color: "#fff",
+                            color:
+                              currentPlan === plan.title.toLowerCase()
+                                ? "#6adec3"
+                                : "#fff",
                             fontSize: "12.5px",
                             fontWeight: "bold",
                             userSelect: "none",
