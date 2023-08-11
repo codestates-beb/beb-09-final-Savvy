@@ -113,7 +113,7 @@ $ foundryup
 
 # 기술 스택
 
-## Contracts
+- ## Contracts
 
 <a href="https://github.com/foundry-rs/foundry" target="_blank"><img src="https://img.shields.io/badge/foundry-003366?style=for-the-badge&logoColor=white"></a>
 <img src="https://img.shields.io/badge/solidity-363636?style=for-the-badge&logo=solidity&logoColor=white">
@@ -121,7 +121,7 @@ $ foundryup
 
 > 컨트랙트 배포(`forge`) 및 로컬 블록체인 노드 운영(`anvil`)
 
-## Backend
+- ## Backend
 
   <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"> 
   <img src="https://img.shields.io/badge/node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white"> 
@@ -138,7 +138,7 @@ $ foundryup
   <img src="https://img.shields.io/badge/swagger-85EA2D?style=for-the-badge&logo=Swagger&logoColor=white">
   <img src="https://img.shields.io/badge/Alchemy-0C0C0E?style=for-the-badge&logo=Alchemy&logoColor=white">
 
-## Frontend
+- ## Frontend
 
   <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black">
   <img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=black">
